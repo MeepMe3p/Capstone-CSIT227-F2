@@ -11,7 +11,7 @@ public class Job extends Character {
 
     // Setters
     public void setMana(int mana) {
-        // limits man up to 100
+        // limits mana up to 100
         this.mana = Math.min(mana, 100);
     }
 
