@@ -5,15 +5,19 @@ public class Job extends Character {
 
     public Job(String name, int level, int dmg, int hp) {
         super(name, level, dmg, hp);
+        this.mana = 100;
+        this.stamina = 100;
     }
 
     // Setters
     public void setMana(int mana) {
-        this.mana = mana;
+        // limits man up to 100
+        this.mana = Math.min(mana, 100);
     }
 
     public void setStamina(int stamina) {
-        this.stamina = stamina;
+        // limits stamina up to 100
+        this.stamina = Math.min(stamina, 100);
     }
 
     public void setArmor(int armor) {
