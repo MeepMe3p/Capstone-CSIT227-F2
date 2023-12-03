@@ -12,32 +12,34 @@ public abstract class Enemy extends Character{
     public static class Scorpion extends Enemy{
 
         public Scorpion(String name, int level, int dmg, int hp) {
-            super(name, level, dmg, hp);
+            super("Scorpion", 1, 20, 100);
         }
-
-
 
         @Override
         public void attack(Job ally) {
             //abot bitaw maybe kato nalang simple damage ra
+            ally.hp -= this.dmg;
+            System.out.println(this.name + " attacked dealing with " + this.dmg + " damage.");
         }
 
         @Override
         public void wait_and_see() {
-            System.out.println(this.name + " is watching and observing");
+            System.out.println(this.name + " is watching and observing.");
         }
 
         @Override
         public void skill(Job ally) {
             //Kanang poison sting
-            ally.hp -= this.dmg;
+            int sting_damage = poisonSting();
+            System.out.println(" attacked with his poison stinger dealing with " + sting_damage + " damage.");
         }
 
-        public int poisonSting(){
-            System.out.println(this.name +" attacked with his poison stinger");
-            return dmg;
+        private int poisonSting(){
+            System.out.println(this.name + " attacked with his poison stinger.");
+            return dmg + (level * 5);
         }
     }
+
     public static class SuicideRock extends Enemy{
 
         public SuicideRock(String name, int level, int dmg, int hp) {
@@ -73,32 +75,42 @@ public abstract class Enemy extends Character{
             System.out.println(this.name+ " blew himself up ");;
         }
     }
+
     public static class Skeleton extends Enemy{
 
         public Skeleton(String name, int level, int dmg, int hp) {
-            super(name, level, dmg, hp);
+            super("Skeleton", 1, 20, 80);
         }
 
         @Override
         public void attack(Job ally) {
-
+            int stab_damage = stab();
+            ally.hp -= this.dmg;
+            System.out.println(this.name + " stabbed you with his sword dealing with " + stab_damage + " damage");
         }
 
         @Override
         public void wait_and_see() {
-            System.out.println(this.name + " is watching and observing");
+            System.out.println(this.name + " is watching and observing.");
         }
 
         @Override
         public void skill(Job ally) {
-
+            heal();
         }
 
-        public int stab(){
-            System.out.println(this.name + " stabbed you with his sword");
+        private int stab(){
+            System.out.println(this.name + " stabbed you with his sword.");
             return dmg;
         }
+
+        private void heal(){
+            int max_heal = this.hp * 2;
+            System.out.println(this.name + " healed and recovers " + max_heal + " hp.");
+            this.hp += max_heal;
+        }
     }
+
     public static class DarkStalker extends Enemy{
 
         public DarkStalker() {
