@@ -1,7 +1,7 @@
 public class Job extends Character {
     private int mana;
     private int stamina;
-    private int armor;
+    private static int armor;
 
     public Job(String name, int level, int dmg, int hp) {
         super(name, level, dmg, hp);
@@ -21,7 +21,7 @@ public class Job extends Character {
     }
 
     public void setArmor(int armor) {
-        this.armor = armor;
+        Job.armor = armor;
     }
 
     // Getters
@@ -41,7 +41,7 @@ public class Job extends Character {
         System.out.println(" prepares for its enemies next move.");
     }
 
-    public class Mage extends Job {
+    public static class Mage extends Job {
         public Mage(String name, int level, int dmg, int hp) {
             super(name, level, dmg, hp);
         }
@@ -68,7 +68,7 @@ public class Job extends Character {
 
     }
 
-    public class Knight extends Job {
+    public static class Knight extends Job {
 
         public Knight(String name, int level, int dmg, int hp, int armor) {
             super(name, level, dmg, hp);
@@ -94,7 +94,7 @@ public class Job extends Character {
 
     }
 
-    public class Priest extends Job {
+    public static class Priest extends Job {
 
         public Priest(String name, int level, int dmg, int hp, int healingPower) {
             super(name, level, dmg, hp);

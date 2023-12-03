@@ -1,4 +1,4 @@
-public class Character {
+public abstract class Character {
     String name;
     int level;
     int dmg;
@@ -9,5 +9,10 @@ public class Character {
         this.level = level;
         this.dmg = dmg;
         this.hp = hp;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
