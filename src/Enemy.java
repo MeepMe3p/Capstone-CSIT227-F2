@@ -30,6 +30,7 @@ public abstract class Enemy extends Character{
         @Override
         public void skill(Job ally) {
             //Kanang poison sting
+            ally.hp -= this.dmg;
         }
 
         public int poisonSting(){
@@ -57,6 +58,7 @@ public abstract class Enemy extends Character{
         public void skill(Job ally) {
             //self destruct 0 hp dretso iya life(huhu rip in pieces) nya half sa current hp ni "ally" ang dmg
         }
+
 
         private int selfDestruct(){
             System.out.println(this.name+ " blew himself up ");
@@ -91,30 +93,43 @@ public abstract class Enemy extends Character{
     }
     public static class DarkStalker extends Enemy{
 
-        public DarkStalker(String name, int level, int dmg, int hp) {
-            super(name, level, dmg, hp);
+        public DarkStalker() {
+            super("Dark Stalker",1,15,100);
         }
 
         @Override
         public void attack(Job ally) {
             //muattack call ang dark ssword basically madamagean ang ally
+            int a = darkSlash();
+            ally.hp -= this.dmg;
+            System.out.println(this.name + " slashed you with a dark sword dealing" + a+ " damage");
+
 
         }
 
         @Override
         public void wait_and_see() {
-            //limot ko butang haha same ra shas ubam
+            //limot ko butang haha same ra shas uban
+            System.out.println(this.name + " is watching and observing");
+
         }
 
         @Override
         public void skill(Job ally) {
             //gahuna2 pakog skill ani ni dark stalker haha ako gihuna2 kay like triple attack nalang guro haha
+            int damage = triple_slash();
+            System.out.println(this.name + "perfomed a triple slash dealing"+ damage+ " dmg");
+            ally.hp -= damage;
         }
 
-        public int darkSlash(){
+        private int darkSlash(){
             System.out.println(this.name + " attacked using his dark sword ");
             return dmg;
         }
+        private int triple_slash(){
+            return (int) ((dmg*0.5)*3);
+        }
+
     }
     public static class AncientBishop extends Enemy{
 

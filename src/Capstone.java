@@ -21,7 +21,7 @@ public class Capstone extends JFrame{
         frame.setSize(500,800);
         frame.setVisible(true);
 
-        cbJobs.addItem(new Job.Priest("Priest",1,1,1,1));
+        cbJobs.addItem(new Job.Priest("Priest",1,1,1));
         cbJobs.addItem(new Job.Knight("Knight",1,1,1,1));
         cbJobs.addItem(new Job.Mage("Mage",1,1,1));
         cbJobs.setSelectedIndex(-1);

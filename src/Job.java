@@ -1,7 +1,11 @@
-public class Job extends Character {
+public abstract class Job extends Character {
     private int mana;
     private int stamina;
     private static int armor;
+
+    public abstract void attack(Enemy enemy);
+    public abstract void wait_and_see();
+    public abstract void skill(Enemy enemy);
 
     public Job(String name, int level, int dmg, int hp) {
         super(name, level, dmg, hp);
@@ -37,9 +41,9 @@ public class Job extends Character {
         return armor;
     }
 
-    void wait_and_see(){
-        System.out.println(" prepares for its enemies next move.");
-    }
+//    public void wait_and_see(){
+//        System.out.println(" prepares for its enemies next move.");
+//    }
 
     public static class Mage extends Job {
         public Mage(String name, int level, int dmg, int hp) {
@@ -96,26 +100,46 @@ public class Job extends Character {
 
     public static class Priest extends Job {
 
-        public Priest(String name, int level, int dmg, int hp, int healingPower) {
-            super(name, level, dmg, hp);
+        public Priest(String name, int level, int dmg, int hp) {
+            super("Priest",1,15,120);
         }
 
         void heal(){
             int heal_val = 10;
             // need setter
-            System.out.println(" casts healing and has recovered" + heal_val + " hp!");
         }
 
         int light_ray(){
-            int dmg = 8;
-            System.out.println(" casts light and deals " + dmg + " pts!");
-            return dmg;
+//            int dmg = 8;
+            System.out.println(" casts light and deals " + this.dmg + " pts!");
+            return this.dmg;
         }
 
         int holy_smite(){
-            int dmg = 16;
-            System.out.println(" invokes Holy Smite and deals " + dmg + " pts!");
-            return dmg;
+//            int dmg = 16;
+            System.out.println(" invokes Holy Smite and deals " + this.dmg + " pts!");
+            int healingPower = 10;
+            System.out.println(" casts healing and has recovered" + healingPower + " hp!");
+            this.hp += healingPower;
+
+            return this.dmg;
+        }
+
+        @Override
+        public void attack(Enemy enemy) {
+             int a = light_ray();
+             enemy.hp -= a;
+        }
+
+        @Override
+        public void wait_and_see() {
+            System.out.println(this.name + " is watching and observing");
+        }
+
+        @Override
+        public void skill(Enemy enemy) {
+            int a = holy_smite();
+            enemy.hp -= a;
         }
     }
 }
