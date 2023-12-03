@@ -8,9 +8,22 @@ import java.io.IOException;
 
 public class Capstone extends JFrame{
     private JPanel mainPanel;
+    private JPanel selectPanel;
+    private JPanel battlePanel;
+    private JPanel infoPanel;
+    private JButton bAttack;
+    private JButton bSelect2;
     private JComboBox<Job> cbJobs;
-    private JButton bStart;
     private JLabel imgLabel;
+    private JButton bStart;
+    private JButton bInfo;
+    private JComboBox cbCharacter;
+    private JTextArea taInfo;
+    private JButton bSkill;
+    private JButton bWaS;
+    private JButton bSelect;
+    private JTextField tfHPEnemy;
+    private JTextField tfHPChara;
     private Image image;
 
     public Capstone(){
@@ -25,6 +38,37 @@ public class Capstone extends JFrame{
         cbJobs.addItem(new Job.Knight("Knight",1,1,1,1));
         cbJobs.addItem(new Job.Mage("Mage",1,1,1));
         cbJobs.setSelectedIndex(-1);
+
+        mainPanel.add(selectPanel,"SelectPanel");
+        mainPanel.add(battlePanel,"BattlePanel");
+        mainPanel.add(infoPanel,"InfoPanel");
+
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        bStart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel,"BattlePanel");
+            }
+        });
+
+        bInfo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel,"InfoPanel");
+            }
+        });
+        bSelect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel,"SelectPanel");
+            }
+        });
+        bSelect2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel,"SelectPanel");
+            }
+        });
 
 
 
