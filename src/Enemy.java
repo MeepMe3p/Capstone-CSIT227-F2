@@ -7,6 +7,7 @@ public abstract class Enemy extends Character{
     public abstract void attack(Job ally);
 
     public abstract void wait_and_see();
+    public abstract void skill(Job ally);
 
     public static class Scorpion extends Enemy{
 
@@ -18,13 +19,19 @@ public abstract class Enemy extends Character{
 
         @Override
         public void attack(Job ally) {
-
+            //abot bitaw maybe kato nalang simple damage ra
         }
 
         @Override
         public void wait_and_see() {
             System.out.println(this.name + " is watching and observing");
         }
+
+        @Override
+        public void skill(Job ally) {
+            //Kanang poison sting
+        }
+
         public int poisonSting(){
             System.out.println(this.name +" attacked with his poison stinger");
             return dmg;
@@ -38,13 +45,19 @@ public abstract class Enemy extends Character{
 
         @Override
         public void attack(Job ally) {
-            int a = selfDestruct();
+            // damaging pero maminusan also iya hp... make another method
         }
 
         @Override
         public void wait_and_see() {
             System.out.println(this.name + " is watching and observing");
         }
+
+        @Override
+        public void skill(Job ally) {
+            //self destruct 0 hp dretso iya life(huhu rip in pieces) nya half sa current hp ni "ally" ang dmg
+        }
+
         private int selfDestruct(){
             System.out.println(this.name+ " blew himself up ");
             return dmg*2;
@@ -65,6 +78,12 @@ public abstract class Enemy extends Character{
         public void wait_and_see() {
             System.out.println(this.name + " is watching and observing");
         }
+
+        @Override
+        public void skill(Job ally) {
+
+        }
+
         public int stab(){
             System.out.println(this.name + " stabbed you with his sword");
             return dmg;
@@ -78,13 +97,20 @@ public abstract class Enemy extends Character{
 
         @Override
         public void attack(Job ally) {
+            //muattack call ang dark ssword basically madamagean ang ally
 
         }
 
         @Override
         public void wait_and_see() {
-
+            //limot ko butang haha same ra shas ubam
         }
+
+        @Override
+        public void skill(Job ally) {
+            //gahuna2 pakog skill ani ni dark stalker haha ako gihuna2 kay like triple attack nalang guro haha
+        }
+
         public int darkSlash(){
             System.out.println(this.name + " attacked using his dark sword ");
             return dmg;
@@ -98,13 +124,19 @@ public abstract class Enemy extends Character{
 
         @Override
         public void attack(Job ally) {
-
+            //muattack call ang holy sword basically madamagean ang ally/para,eters
         }
 
         @Override
         public void wait_and_see() {
             System.out.println(this.name + " is watching and observing");
         }
+
+        @Override
+        public void skill(Job ally) {
+            //Basically, muheal rani sha sa iya self mucall lang shas heal haha or if palisod2 ta mutimes two iya max hp haha
+        }
+
         public void heal(){
             int heal_power = 10;
             System.out.println(this.name + " healed and recovers "+ heal_power +" hp.");

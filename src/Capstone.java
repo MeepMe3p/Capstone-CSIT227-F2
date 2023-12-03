@@ -23,7 +23,7 @@ public class Capstone extends JFrame{
 
         cbJobs.addItem(new Job.Priest("Priest",1,1,1,1));
         cbJobs.addItem(new Job.Knight("Knight",1,1,1,1));
-        cbJobs.addItem(new Job.Mage("MAge",1,1,1));
+        cbJobs.addItem(new Job.Mage("Mage",1,1,1));
         cbJobs.setSelectedIndex(-1);
 
 
