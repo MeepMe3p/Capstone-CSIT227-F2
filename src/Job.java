@@ -113,6 +113,22 @@ public abstract class Job extends Character {
             return dmg;
         }
 
+        @Override
+        public void attack(Enemy enemy) {
+            int slash_damage = slash();
+            enemy.hp -= slash_damage;
+        }
+
+        @Override
+        public void wait_and_see() {
+            System.out.println(this.name + " is watching and observing.");
+        }
+
+        @Override
+        public void skill(Enemy enemy) {
+            int dualSlash_damage = dual_slash();
+            enemy.hp -= dualSlash_damage;
+        }
     }
 
     public static class Priest extends Job {
