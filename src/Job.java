@@ -46,6 +46,25 @@ public abstract class Job extends Character {
 //    }
 
     public static class Mage extends Job {
+
+
+        @Override
+        public void attack(Enemy e) {
+            int damage = lightning_bolt();
+            e.hp-=damage;
+        }
+
+        @Override
+        public void wait_and_see() {
+            System.out.println(" prepares for its enemies next move.");
+        }
+
+        @Override
+        public void skill(Enemy e) {
+            int damage = fire_ball();
+            e.hp-=damage;
+        }
+
         public Mage(String name, int level, int dmg, int hp) {
             super(name, level, dmg, hp);
         }
@@ -57,13 +76,11 @@ public abstract class Job extends Character {
         }
 
         int fire_ball(){
-            int dmg = 10;
             System.out.println(" casts a fire ball spell and deals" + dmg + " pts!");
             return dmg;
         }
 
         int lightning_bolt(){
-            int dmg = 6;
             System.out.println(" casts a lightning bolt spell and deals" + dmg + " pts!");
             return dmg;
         }

@@ -27,6 +27,7 @@ public class Capstone extends JFrame{
         cbJobs.setSelectedIndex(-1);
 
 
+
         cbJobs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -69,3 +70,4 @@ public class Capstone extends JFrame{
         });
     }
 }
+

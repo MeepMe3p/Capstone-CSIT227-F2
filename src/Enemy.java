@@ -47,6 +47,7 @@ public abstract class Enemy extends Character{
         @Override
         public void attack(Job ally) {
             // damaging pero maminusan also iya hp... make another method
+            ally.hp-=throwRock();
         }
 
         @Override
@@ -57,12 +58,19 @@ public abstract class Enemy extends Character{
         @Override
         public void skill(Job ally) {
             //self destruct 0 hp dretso iya life(huhu rip in pieces) nya half sa current hp ni "ally" ang dmg
+            this.selfDestruct();
+            ally.hp*=0.5;
         }
 
-
-        private int selfDestruct(){
-            System.out.println(this.name+ " blew himself up ");
-            return dmg*2;
+        private int throwRock(){
+            int damage = (int) ((int)this.hp*0.25);
+            this.hp-=damage+10;
+            System.out.println(this.name + " threw an exploding rock and dealt " + this.dmg + " damage");
+            return damage;
+        }
+        private void selfDestruct(){
+            this.hp = 0;
+            System.out.println(this.name+ " blew himself up ");;
         }
     }
     public static class Skeleton extends Enemy{
@@ -140,6 +148,8 @@ public abstract class Enemy extends Character{
         @Override
         public void attack(Job ally) {
             //muattack call ang holy sword basically madamagean ang ally/para,eters
+            int damage = holy_sword();
+            ally.hp-=damage;
         }
 
         @Override
@@ -150,14 +160,16 @@ public abstract class Enemy extends Character{
         @Override
         public void skill(Job ally) {
             //Basically, muheal rani sha sa iya self mucall lang shas heal haha or if palisod2 ta mutimes two iya max hp haha
+            heal();
+            ally.hp-=10;
         }
 
-        public void heal(){
+        private void heal(){
             int heal_power = 10;
             System.out.println(this.name + " healed and recovers "+ heal_power +" hp.");
             this.hp += heal_power;
         }
-        public int holy_sword(){
+        private int holy_sword(){
             System.out.println(this.name + " attacked you with his holy sword");
             return dmg;
         }
