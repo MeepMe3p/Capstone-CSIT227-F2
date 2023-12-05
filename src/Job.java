@@ -84,9 +84,6 @@ public abstract class Job extends Character {
             System.out.println(" casts a lightning bolt spell and deals" + dmg + " pts!");
             return dmg;
         }
-
-
-
     }
 
     public static class Knight extends Job {
