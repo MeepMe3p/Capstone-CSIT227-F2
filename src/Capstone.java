@@ -51,7 +51,7 @@ public class Capstone extends JFrame{
                 cardLayout.show(mainPanel,"BattlePanel");
                 //pangitaa paagi para makuha ang giselect sa combobox, and then mag use ug random para sa
 //                Random rand = new Random();
-                Job chosen = (Job) cbJobs.getSelectedItem();
+//                Job chosen = (Job) cbJobs.getSelectedItem();
 //                Battle battle = new Battle(chosen,).setBtuton(a);
 //                battle.startBattle();
             }
@@ -61,7 +61,7 @@ public class Capstone extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(mainPanel,"InfoPanel");
-                cbCharacter.addItem(new Job.Priest("1",1,1,1));
+//                cbCharacter.addItem(new Job.Priest("1",1,1,1));
             }
         });
         bSelect.addActionListener(new ActionListener() {
