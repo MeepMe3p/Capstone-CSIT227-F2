@@ -1,13 +1,13 @@
 public abstract class Enemy extends Character {
 
-    public Enemy(String name, int level, int dmg, int hp) {
-        super(name, level, dmg, hp);
+    public Enemy(String name, int level, int dmg, int hp,int maxhp) {
+        super(name, level, dmg, hp,maxhp);
     }
 
     public static class Scorpion extends Enemy implements EnemyActions{
 
-        public Scorpion(String name, int level, int dmg, int hp) {
-            super("Scorpion", 1, 20, 100);
+        public Scorpion() {
+            super("Scorpion", 1, 20, 100,100);
         }
 
         @Override
@@ -37,8 +37,8 @@ public abstract class Enemy extends Character {
 
     public static class SuicideRock extends Enemy implements EnemyActions{
 
-        public SuicideRock(String name, int level, int dmg, int hp) {
-            super("SuicideRock", level, dmg, hp);
+        public SuicideRock() {
+            super("Suicide Rock", 1,20, 100,100);
         }
 
         @Override
@@ -77,8 +77,8 @@ public abstract class Enemy extends Character {
 
     public static class Skeleton extends Enemy implements EnemyActions{
 
-        public Skeleton(String name, int level, int dmg, int hp) {
-            super("Skeleton", 1, 20, 80);
+        public Skeleton() {
+            super("Skeleton", 1, 20, 80,80);
         }
 
         @Override
@@ -115,7 +115,7 @@ public abstract class Enemy extends Character {
     public static class DarkStalker extends Enemy implements EnemyActions{
 
         public DarkStalker() {
-            super("Dark Stalker",1,15,100);
+            super("Dark Stalker",1,15,100,100);
         }
 
         @Override
@@ -160,8 +160,8 @@ public abstract class Enemy extends Character {
     }
     public static class AncientBishop extends Enemy implements EnemyActions{
 
-        public AncientBishop(String name, int level, int dmg, int hp) {
-            super("Ancient Bishop", level, dmg, hp);
+        public AncientBishop() {
+            super("Ancient Bishop",1,15,100,100);
         }
 
         @Override

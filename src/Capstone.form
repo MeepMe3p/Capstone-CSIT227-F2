@@ -41,7 +41,7 @@
               <text value="Wait and See"/>
             </properties>
           </component>
-          <component id="e087d" class="javax.swing.JLabel">
+          <component id="e087d" class="javax.swing.JLabel" binding="lbEName">
             <constraints>
               <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -57,20 +57,20 @@
             </constraints>
             <properties/>
           </component>
-          <component id="df93f" class="javax.swing.JLabel">
+          <component id="df93f" class="javax.swing.JLabel" binding="lbEPic">
             <constraints>
               <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <text value=""/>
             </properties>
           </component>
-          <component id="5475" class="javax.swing.JLabel">
+          <component id="5475" class="javax.swing.JLabel" binding="lbAPic">
             <constraints>
               <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="e4a41" class="javax.swing.JTextField" binding="tfHPChara">
@@ -83,7 +83,7 @@
               <text value=""/>
             </properties>
           </component>
-          <component id="3c759" class="javax.swing.JLabel">
+          <component id="3c759" class="javax.swing.JLabel" binding="lbAName">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
