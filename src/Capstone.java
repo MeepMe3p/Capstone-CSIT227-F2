@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -163,7 +165,10 @@ public class Capstone extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(mainPanel,"InfoPanel");
-
+                cbCharacter.addItem("Priest");
+                cbCharacter.addItem("Knight");
+                cbCharacter.addItem("Mage");
+                cbCharacter.setSelectedIndex(-1);
             }
         });
         bSelect.addActionListener(new ActionListener() {
@@ -184,6 +189,39 @@ public class Capstone extends JFrame{
         cbCharacter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String selectedChar = (String) cbCharacter.getSelectedItem();
+
+                taInfo.setText("");
+
+
+                String symbol;
+
+                if(selectedChar != null) {
+                    String charDetails = "src/JobDetails";
+
+                    try {
+                        String details = Files.readString(Paths.get(charDetails));
+
+                        symbol = switch (selectedChar) {
+                            case "Priest" -> "!";
+                            case "Knight" -> "@";
+                            case "Mage" -> "#";
+                            default -> "";
+                        };
+
+                        int startSymbol = details.indexOf(symbol);
+                        int endSymbol = details.indexOf(symbol, startSymbol+1);
+
+                        if(startSymbol != -1 && endSymbol != -1) {
+                            taInfo.setText(details.substring(startSymbol + symbol.length(), endSymbol));
+                        } else {
+                            taInfo.setText("Not found!");
+                        }
+
+                    } catch (IOException io) {
+                        throw new RuntimeException(io);
+                    }
+                }
             }
         });
 
