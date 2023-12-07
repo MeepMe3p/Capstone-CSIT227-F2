@@ -1,15 +1,26 @@
+import javax.swing.*;
+
 public class BattleBuilder {
     Job job;
     Enemy enemy;
     boolean attackButton;
     boolean skillButton;
     boolean waitButton;
-
-    //KONICHIWAANDAAHOOOY gibuhat na nako ang builder naa rakoy comments didtos uban just chat lang sa discord or sumn if need mog help
-
+    JTextField tfEnemyHP;
+    JTextField tfJobHP;
     public BattleBuilder(Job job, Enemy enemy) {
         this.job = job;
         this.enemy = enemy;
+    }
+
+    public BattleBuilder setTfEnemyHP(JTextField tfEnemyHP) {
+        this.tfEnemyHP = tfEnemyHP;
+        return this;
+    }
+
+    public BattleBuilder setTfJobHP(JTextField tfJobHP) {
+        this.tfJobHP = tfJobHP;
+        return this;
     }
 
     public BattleBuilder setAttackButton(boolean attackButton) {

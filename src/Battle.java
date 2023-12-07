@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.Random;
 
 
@@ -7,10 +8,11 @@ public class Battle {
     private boolean attackButton;
     private boolean skillButton;
     private boolean waitButton;
+    private JTextField tfEnemyHP;
+    private JTextField tfJobHP;
 
     Random random = new Random();
 
-    // himoag logic ang battle, basically is maselect ang button imo na sha iimplement ang logix
 
     @Override
     public String toString() {
@@ -29,21 +31,25 @@ public class Battle {
         this.attackButton = builder.attackButton;
         this.skillButton = builder.skillButton;
         this.waitButton = builder.waitButton;
+        this.tfEnemyHP = builder.tfEnemyHP;
+        this.tfJobHP = builder.tfJobHP;
+
+
     }
-    //haluuu im not sure if musugot ka diri ka anyway theodore hi so like ako plan diri kay naay usa ka method nga icall didtos main then
-    //kaw bahala sa name sa method basically mag agad ang mga methods nga icall diri sa ya so for example ang naa ras main
-    // kay battle.imongmethod(); unya ikaw na bahala sa sud anang imongmethod(); pwede ka mag if true ata
 
-
-    //Confused pa ko later nlng naho iadjust ang ally action
     public void performAction() {
-        //Ally action
         if (attackButton) {
-            performAttack();
+            job.attack(enemy);
+            tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxhp);
+            tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxhp);
         } else if (skillButton) {
-            performSkill();
+            job.skill(enemy);
+            tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxhp);
+            tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxhp);
         } else if (waitButton) {
-            performWait();
+            job.wait_and_see();
+            tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxhp);
+            tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxhp);
         }
         //Enemy action
         // Determine the type of enemy and perform their actions

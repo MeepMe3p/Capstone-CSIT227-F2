@@ -37,8 +37,6 @@ public class Capstone extends JFrame{
     private Enemy random_enemy;
     private Job chosen;
     private int chosen2;
-//    private Enemy random_enemy; so ako ni sha gideclare para mag assign mog enemy diri for rNdom
-//    private Job chosen; so ako sad ni sha gibutang para mao ni ang iassign sa gichoose sa user uwu
 
     public Capstone(){
 
@@ -46,19 +44,20 @@ public class Capstone extends JFrame{
         frame.setContentPane(this.mainPanel);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.pack();
-        frame.setSize(500,800);
+        frame.setSize(700,800);
         frame.setVisible(true);
         final int[] choice={0};
         choice[0]=0;
-
-        cbJobs.addItem(new Job.Priest("Priest",1,1,1,1));
-        cbJobs.addItem(new Job.Knight("Knight",1,1,1,1,1));
-        cbJobs.addItem(new Job.Mage("Mage",1,1,1,1));
+        cbJobs.addItem(new Job.Priest());
+        cbJobs.addItem(new Job.Knight());
+        cbJobs.addItem(new Job.Mage());
         cbJobs.setSelectedIndex(-1);
 
-        jobs[0] = new Job.Priest("Priest",1,1,1,1);
-        jobs[1] = new Job.Knight("Knight",1,1,1,1,1);
-        jobs[2] = new Job.Mage("Mage",1,1,1,1);
+//        MESSAGE TO CHAZ iwala nalang nang mga choice etc2 nimo iuse lang ang function nga cbJobs.getSelectedItem() kay if mag ingana ka marredundant sha
+
+        jobs[0] = new Job.Priest();
+        jobs[1] = new Job.Knight();
+        jobs[2] = new Job.Mage();
 
         enemies[0]=new Enemy.Scorpion();
         enemies[1]=new Enemy.AncientBishop();
@@ -146,11 +145,6 @@ public class Capstone extends JFrame{
                         }
                     }
                     //}
-                    //pangitaa paagi para makuha ang giselect sa combobox, and then mag use ug random para sa
-                    // halu chaz, in here kato ako giingon basically ako nahan man ani once ipislit ni kay naa nay enemy nga magpakita
-                    //so like ikaw ang muset sa kanang enemies using random like i told u while ago, then sa iyang text field i want it to be for example,
-                    //hp/maxhp example 90/90 or 34/90 naa pakoy iedit sa tanan or kay dapat naa shay current hp nga field di ra hp only. gambatte soldier
-                    //and ow ya btw iapil sad ang kanang character sa ubos
 
 //                Enemy random_enemy = /*find way para makuha ni basta kato random thingy i told u hahaah*/
                 //} catch (ClassNotFoundException ex) {
@@ -198,24 +192,12 @@ public class Capstone extends JFrame{
             }
         });
 
-        /*YOKOSO KIRAKIRA DOKIDOKI MOCHIMOCHI PUYOPUYO WAKUWAKU WASHOI NA WONDER STAGE YEAAA
-        AYM EMU OTORI EMU MEANING SMAAIRUUU hahah gomen wa koy lingaw gahuwat ko ninyo anyway maghuna2 sakog efficient way for now sa kaning battle kay
-        if kanotis mo sige kog declare ug new battle chuchu idk basta kana lang sa for now so like sa kinsay maassign nako diri dapita basically sa kaning ubos kay
-        mga buttons once pressed mupreform ang ila attack based sa napislitan aaand gagamit kog builder pattern ana */
 
-        bAttack.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Battle battle = new BattleBuilder(null,null /*ako ni sha ginullfor now but kani kay ang chosen ug randomenemy*/).setAttackButton(true).build();
-//                battle.doBattle(); basta method ni nga tawgon maybe maconsidered ni as Facade HAHHA
-//                System.out.println(battle);anyway ignore dis kay ako ni sha gikuan para makita ni nako if niwork ba ang builder
-            }
-        });
         bSkill.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Battle battle = new BattleBuilder(null,null /*ako ni sha ginullfor now but kani kay ang chosen ug randomenemy*/).setSkillButton(true).build();
-//                System.out.println(battle); anyway ignore dis kay ako ni sha gikuan para makita ni nako if niwork ba ang builder
+                Battle battle = new BattleBuilder(chosen,random_enemy).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).setSkillButton(true).build();
+                battle.performAction();
             }
         });
         cbJobs.addActionListener(e->{
@@ -263,15 +245,21 @@ public class Capstone extends JFrame{
         bWaS.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Battle battle = new BattleBuilder(null,null /*ako ni sha ginullfor now but kani kay ang chosen ug randomenemy*/).setWaitButton(true).build();
-//                System.out.println(battle); anyway ignore dis kay ako ni sha gikuan para makita ni nako if niwork ba ang builder
+                Battle battle = new BattleBuilder(chosen,random_enemy).setWaitButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
+                battle.performAction();
 
             }
 
         });
 
 
-
+        bAttack.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Battle battle = new BattleBuilder(chosen,random_enemy).setAttackButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
+                battle.performAction();
+            }
+        });
     }
     //gets the selected index sa jobs sa select panel
 //    public int getJobSelection() {
