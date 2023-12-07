@@ -1,8 +1,37 @@
 //hallu raya gambatte basically details ani niya, but first before ka mag fill up ani tanawa sa ang cbCharacter nga action listener, kay basin masayang imo effort haha
-!Knight
-- this is a knight chuchu naa ras wiki haha
-dmg , skils,!
 
-@Mage
-asfaa
-asfsfa@
+!
+One who has devoted her life to God.
+She is able to manifest the power of God through the strength of her faith.
+
+Skills:
+- Light Ray
+- Holy Smite
+- Healing
+- Wait and See
+!
+
+
+@
+A Knight that has tempered his body and relies on weapons.
+This is the most common job amongst adventurers.
+
+Skills:
+- Slash
+- Dual Slash
+- Shield
+- Wait and See
+@
+
+
+
+#
+A mage that fights by using the knowledge of spells and the power of his mind.
+He is unskilled in hand-to-hand combat, but is able to shield himself for defense.
+
+Skills:
+- Fireball
+- Lightning Bolt
+- Concentrate
+- Wait and See
+#
