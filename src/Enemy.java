@@ -1,4 +1,8 @@
-public abstract class Enemy extends Character {
+import java.util.Random;
+
+public abstract class Enemy extends Character implements Enemy_LevelUp{
+    Random rand = new Random();
+
 
     public Enemy(String name, int level, int dmg, int hp,int maxhp) {
         super(name, level, dmg, hp,maxhp);
@@ -32,6 +36,33 @@ public abstract class Enemy extends Character {
             int sting_damage = dmg + (level * 5);
             ally.hp -= sting_damage;
             System.out.println(this.name + " attacked with his poison stinger and dealt " + sting_damage + " damage");
+        }
+
+        @Override
+        public void level_up(Job job) {
+            int plusLevel = rand.nextInt(3)-1;
+            try{
+                int num = job.getLevel();
+                this.level = num + plusLevel;
+            }catch(NullPointerException a){
+                throw new NullPointerException("You need to get a job XD");
+            }
+            if(this.level == 0 || job.level == 1){
+                this.level = 1;
+                return;
+            }
+            improve_stats();
+        }
+
+        @Override
+        public void improve_stats() {
+            this.dmg += this.level * 3;
+            this.hp = this.level * 5;
+        }
+
+        @Override
+        public int give_exp(Job job) {
+            return 0;
         }
     }
 
@@ -73,6 +104,32 @@ public abstract class Enemy extends Character {
             this.hp = 0;
             System.out.println(this.name+ " blew himself up and dealt " + damage + " damage!");;
         }
+        @Override
+        public void level_up(Job job) {
+            int plusLevel = rand.nextInt(3)-1;
+            try{
+                int num = job.getLevel();
+                this.level = num + plusLevel;
+            }catch(NullPointerException a){
+                throw new NullPointerException("You need to get a job XD");
+            }
+            if(this.level == 0 || job.level == 1){
+                this.level = 1;
+                return;
+            }
+            improve_stats();
+        }
+
+        @Override
+        public void improve_stats() {
+            this.dmg += this.level * 3;
+            this.hp = this.level * 5;
+        }
+
+        @Override
+        public int give_exp(Job job) {
+            return 0;
+        }
     }
 
     public static class Skeleton extends Enemy implements EnemyActions{
@@ -109,6 +166,32 @@ public abstract class Enemy extends Character {
             int max_heal = this.hp * 2;
             System.out.println(this.name + "ate some calcium and recovers " + max_heal + " hp.");
             this.hp += max_heal;
+        }
+        @Override
+        public void level_up(Job job) {
+            int plusLevel = rand.nextInt(3)-1;
+            try{
+                int num = job.getLevel();
+                this.level = num + plusLevel;
+            }catch(NullPointerException a){
+                throw new NullPointerException("You need to get a job XD");
+            }
+            if(this.level == 0 || job.level == 1){
+                this.level = 1;
+                return;
+            }
+            improve_stats();
+        }
+
+        @Override
+        public void improve_stats() {
+            this.dmg += this.level * 3;
+            this.hp = this.level * 5;
+        }
+
+        @Override
+        public int give_exp(Job job) {
+            return 0;
         }
     }
 
@@ -156,6 +239,32 @@ public abstract class Enemy extends Character {
             System.out.println(this.name + "perfomed a triple slash dealing"+ damage+ " dmg");
 
         }
+        @Override
+        public void level_up(Job job) {
+            int plusLevel = rand.nextInt(3)-1;
+            try{
+                int num = job.getLevel();
+                this.level = num + plusLevel;
+            }catch(NullPointerException a){
+                throw new NullPointerException("You need to get a job XD");
+            }
+            if(this.level == 0 || job.level == 1){
+                this.level = 1;
+                return;
+            }
+            improve_stats();
+        }
+
+        @Override
+        public void improve_stats() {
+            this.dmg += this.level * 3;
+            this.hp = this.level * 5;
+        }
+
+        @Override
+        public int give_exp(Job job) {
+            return 0;
+        }
 
     }
     public static class AncientBishop extends Enemy implements EnemyActions{
@@ -194,6 +303,32 @@ public abstract class Enemy extends Character {
         private int holy_sword(){
             System.out.println(this.name + " attacked you with his holy sword");
             return dmg;
+        }
+        @Override
+        public void level_up(Job job) {
+            int plusLevel = rand.nextInt(3)-1;
+            try{
+                int num = job.getLevel();
+                this.level = num + plusLevel;
+            }catch(NullPointerException a){
+                throw new NullPointerException("You need to get a job XD");
+            }
+            if(this.level == 0 || job.level == 1){
+                this.level = 1;
+                return;
+            }
+            improve_stats();
+        }
+
+        @Override
+        public void improve_stats() {
+            this.dmg += this.level * 3;
+            this.hp = this.level * 5;
+        }
+
+        @Override
+        public int give_exp(Job job) {
+            return 0;
         }
     }
 }

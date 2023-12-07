@@ -78,21 +78,21 @@ public class Capstone extends JFrame{
             System.out.println(choice);
                     if (chosen2==0) {
                         chosen=jobs[0];
-                        lbAName.setText(chosen.name);
+                        lbAName.setText(chosen.name+" Lvl "+ chosen.level);
                         tfHPChara.setText(chosen.hp+" / " + chosen.maxhp);
                         image = ImageIO.read(new File("src/JobImages/priest.png"));
                         ImageIcon icon = new ImageIcon(image.getScaledInstance(250,250,Image.SCALE_SMOOTH));
                         lbAPic.setIcon(icon);
                     } else if (chosen2==1) {
                         chosen=jobs[1];
-                        lbAName.setText(chosen.name);
+                        lbAName.setText(chosen.name+" Lvl "+ chosen.level);
                         tfHPChara.setText(chosen.hp+" / " + chosen.maxhp);
                         image = ImageIO.read(new File("src/JobImages/knight.png"));
                         ImageIcon icon = new ImageIcon(image.getScaledInstance(250,250,Image.SCALE_SMOOTH));
                         lbAPic.setIcon(icon);
                     } else if (chosen2==2) {
                         chosen=jobs[2];
-                        lbAName.setText(chosen.name);
+                        lbAName.setText(chosen.name+" Lvl "+ chosen.level);
                         tfHPChara.setText(chosen.hp+" / " + chosen.maxhp);
                         image = ImageIO.read(new File("src/JobImages/mage.png"));
                         ImageIcon icon = new ImageIcon(image.getScaledInstance(250,250,Image.SCALE_SMOOTH));
@@ -107,7 +107,7 @@ public class Capstone extends JFrame{
                     switch (enemy_type) {
                         case 0: {
                             tfHPEnemy.setText(random_enemy.hp+" / " + random_enemy.maxhp);
-                            lbEName.setText(random_enemy.name);
+                            lbEName.setText(random_enemy.name + " Lvl "+ random_enemy.level);
                             EnemyImage = ImageIO.read(new File("src/EnemyImages/scorpion.png"));
                             ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250,250,Image.SCALE_SMOOTH));
                             lbEPic.setIcon(icon2);
@@ -115,7 +115,7 @@ public class Capstone extends JFrame{
                         }
                         case 1: {
                             tfHPEnemy.setText(random_enemy.hp+" / " + random_enemy.maxhp);
-                            lbEName.setText(random_enemy.name);
+                            lbEName.setText(random_enemy.name+" Lvl "+ random_enemy.level);
                             EnemyImage = ImageIO.read(new File("src/EnemyImages/ancientbishop.png"));
                             ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250,250,Image.SCALE_SMOOTH));
                             lbEPic.setIcon(icon2);
@@ -123,7 +123,7 @@ public class Capstone extends JFrame{
                         }
                         case 2: {
                             tfHPEnemy.setText(random_enemy.hp+" / " + random_enemy.maxhp);
-                            lbEName.setText(random_enemy.name);
+                            lbEName.setText(random_enemy.name+ " Lvl "+ random_enemy.level);
                             EnemyImage = ImageIO.read(new File("src/EnemyImages/darkstalker.png"));
                             ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250,250,Image.SCALE_SMOOTH));
                             lbEPic.setIcon(icon2);
@@ -131,7 +131,7 @@ public class Capstone extends JFrame{
                         }
                         case 3: {
                             tfHPEnemy.setText(random_enemy.hp+" / " + random_enemy.maxhp);
-                            lbEName.setText(random_enemy.name);
+                            lbEName.setText(random_enemy.name+" Lvl "+ random_enemy.level);
                             EnemyImage = ImageIO.read(new File("src/EnemyImages/skeleton.png"));
                             ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250,250,Image.SCALE_SMOOTH));
                             lbEPic.setIcon(icon2);
@@ -139,7 +139,7 @@ public class Capstone extends JFrame{
                         }
                         case 4: {
                             tfHPEnemy.setText(random_enemy.hp+" / " + random_enemy.maxhp);
-                            lbEName.setText(random_enemy.name);
+                            lbEName.setText(random_enemy.name+" Lvl "+ random_enemy.level);
                             EnemyImage = ImageIO.read(new File("src/EnemyImages/suiciderock.png"));
                                 ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
                                 lbEPic.setIcon(icon2);
@@ -155,6 +155,9 @@ public class Capstone extends JFrame{
                 }catch (Exception io){
                     throw new RuntimeException(io);
                 }
+
+            //level sa kontra
+            random_enemy.level_up(chosen);
 
 
 
