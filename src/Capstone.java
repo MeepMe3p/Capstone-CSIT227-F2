@@ -163,8 +163,7 @@ public class Capstone extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(mainPanel,"InfoPanel");
-                //halu raya ikaw diri so like basicaly once maopen ni sha dapat naa nay mga sulod ang combobox pwede raka mag cbCharacter.addItem() para sa each
-                //now go to cbCharacter
+
             }
         });
         bSelect.addActionListener(new ActionListener() {
@@ -185,10 +184,6 @@ public class Capstone extends JFrame{
         cbCharacter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //halu raya okaeri nice to meet you again hahaha so like kani sha kay once maselect ang for example ang kanang ya kay ang text area kay maset sha
-                //into something depending sa iyang naselect, for now gahuna2 pajud ko if iusa ba nato ka text file each character or iseparate ba nato pwede ta
-                //magsabot unsay mas maayu
-
             }
         });
 
@@ -197,7 +192,20 @@ public class Capstone extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Battle battle = new BattleBuilder(chosen,random_enemy).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).setSkillButton(true).build();
-                battle.performAction();
+                try{
+                    battle.performAction();
+                }catch(IllegalArgumentException a){
+                    JOptionPane.showMessageDialog(null, a.getMessage());
+                }catch(IllegalStateException b){
+                    int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
+                    chosen.gain_exp(10);
+                    if(selected == JOptionPane.YES_OPTION){
+                        bStart.doClick();
+                    }else if(selected == JOptionPane.NO_OPTION){
+                        //basta kani kay musave sha sa iya progress later ni nato iimplement
+                        System.out.println("EXIT");
+                    }
+                }
             }
         });
         cbJobs.addActionListener(e->{
@@ -246,7 +254,20 @@ public class Capstone extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Battle battle = new BattleBuilder(chosen,random_enemy).setWaitButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
-                battle.performAction();
+                try{
+                    battle.performAction();
+                }catch(IllegalArgumentException a){
+                    JOptionPane.showMessageDialog(null, a.getMessage());
+                }catch(IllegalStateException b){
+                    int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
+                    chosen.gain_exp(10);
+                    if(selected == JOptionPane.YES_OPTION){
+                        bStart.doClick();
+                    }else if(selected == JOptionPane.NO_OPTION){
+                        //basta kani kay musave sha sa iya progress later ni nato iimplement
+                        System.out.println("EXIT");
+                    }
+                }
 
             }
 
@@ -257,7 +278,20 @@ public class Capstone extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Battle battle = new BattleBuilder(chosen,random_enemy).setAttackButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
-                battle.performAction();
+                try{
+                    battle.performAction();
+                }catch(IllegalArgumentException a){
+                    JOptionPane.showMessageDialog(null, a.getMessage());
+                }catch(IllegalStateException b){
+                    int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
+                    chosen.gain_exp(10);
+                    if(selected == JOptionPane.YES_OPTION){
+                        bStart.doClick();
+                    }else if(selected == JOptionPane.NO_OPTION){
+                        //basta kani kay musave sha sa iya progress later ni nato iimplement
+                        System.out.println("EXIT");
+                    }
+                }
             }
         });
     }
