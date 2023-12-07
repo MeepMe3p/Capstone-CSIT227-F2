@@ -7,8 +7,8 @@ public abstract class Job extends Character {
     public abstract void wait_and_see();
     public abstract void skill(Enemy enemy);
 
-    public Job(String name, int level, int dmg, int hp) {
-        super(name, level, dmg, hp);
+    public Job(String name, int level, int dmg, int hp,int maxhp) {
+        super(name, level, dmg, hp,maxhp);
         this.mana = 100;
         this.stamina = 100;
     }
@@ -65,8 +65,8 @@ public abstract class Job extends Character {
             e.hp-=damage;
         }
 
-        public Mage(String name, int level, int dmg, int hp) {
-            super(name, level, dmg, hp);
+        public Mage(String name, int level, int dmg, int hp,int maxhp) {
+            super(name, level, dmg, hp,maxhp);
         }
 
         void concentrate(){
@@ -88,8 +88,8 @@ public abstract class Job extends Character {
 
     public static class Knight extends Job {
 
-        public Knight(String name, int level, int dmg, int hp, int armor) {
-            super(name, level, dmg, hp);
+        public Knight(String name, int level, int dmg, int hp,int maxhp,int armor) {
+            super(name, level, dmg, hp,maxhp);
         }
 
         void shield(){
@@ -130,8 +130,8 @@ public abstract class Job extends Character {
 
     public static class Priest extends Job {
 
-        public Priest(String name, int level, int dmg, int hp) {
-            super("Priest",1,15,120);
+        public Priest(String name, int level, int dmg, int hp,int maxhp) {
+            super("Priest",1,15,120,120);
         }
 
         void heal(){
