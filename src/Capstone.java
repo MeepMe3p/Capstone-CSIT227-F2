@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Capstone extends JFrame{
@@ -21,8 +20,8 @@ public class Capstone extends JFrame{
     private JLabel imgLabel;
     private JButton bStart;
     private JButton bInfo;
-    private JComboBox cbCharacter;
-    private JTextArea taInfo;
+    private JComboBox cbJobInfo;
+    private JTextArea jobsInfo;
     private JButton bSkill;
     private JButton bWaS;
     private JButton bSelect;
@@ -32,6 +31,8 @@ public class Capstone extends JFrame{
     private JLabel lbAName;
     private JLabel lbEPic;
     private JLabel lbAPic;
+    private JComboBox cbEnemyInfo;
+    private JTextArea enemiesInfo;
     private Image image;
     private Image EnemyImage;
     private Enemy[] enemies = new Enemy[5];
@@ -168,12 +169,25 @@ public class Capstone extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(mainPanel,"InfoPanel");
-                cbCharacter.addItem("Priest");
-                cbCharacter.addItem("Knight");
-                cbCharacter.addItem("Mage");
-                cbCharacter.setSelectedIndex(-1);
+
+                cbJobInfo.removeAllItems();
+
+                cbJobInfo.addItem("Jobs");
+                cbJobInfo.addItem("Priest");
+                cbJobInfo.addItem("Knight");
+                cbJobInfo.addItem("Mage");
+
+                cbEnemyInfo.removeAllItems();
+
+                cbEnemyInfo.addItem("Enemies");
+                cbEnemyInfo.addItem("Scorpion");
+                cbEnemyInfo.addItem("Suicide Rock");
+                cbEnemyInfo.addItem("Skeleton");
+                cbEnemyInfo.addItem("Dark Stalker");
+                cbEnemyInfo.addItem("Ancient Bishop");
             }
         });
+
         bSelect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -189,18 +203,17 @@ public class Capstone extends JFrame{
 
 
 
-        cbCharacter.addActionListener(new ActionListener() {
+        cbJobInfo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedChar = (String) cbCharacter.getSelectedItem();
+                String selectedChar = (String) cbJobInfo.getSelectedItem();
 
-                taInfo.setText("");
-
+                jobsInfo.setText("");
 
                 String symbol;
 
                 if(selectedChar != null) {
-                    String charDetails = "src/JobDetails";
+                    String charDetails = "src/CharacterDetails";
 
                     try {
                         String details = Files.readString(Paths.get(charDetails));
@@ -216,9 +229,49 @@ public class Capstone extends JFrame{
                         int endSymbol = details.indexOf(symbol, startSymbol+1);
 
                         if(startSymbol != -1 && endSymbol != -1) {
-                            taInfo.setText(details.substring(startSymbol + symbol.length(), endSymbol));
+                            jobsInfo.setText(details.substring(startSymbol + symbol.length(), endSymbol));
                         } else {
-                            taInfo.setText("Not found!");
+                            jobsInfo.setText("Not found!");
+                        }
+
+                    } catch (IOException io) {
+                        throw new RuntimeException(io);
+                    }
+                }
+            }
+        });
+
+        cbEnemyInfo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedChar = (String) cbEnemyInfo.getSelectedItem();
+
+                enemiesInfo.setText("");
+
+                String symbol;
+
+                if(selectedChar != null) {
+                    String charDetails = "src/CharacterDetails";
+
+                    try {
+                        String details = Files.readString(Paths.get(charDetails));
+
+                        symbol = switch (selectedChar) {
+                            case "Scorpion" -> "$";
+                            case "Suicide Rock" -> "%";
+                            case "Skeleton" -> "^";
+                            case "Dark Stalker" -> "&";
+                            case "Ancient Bishop" -> "*";
+                            default -> "";
+                        };
+
+                        int startSymbol = details.indexOf(symbol);
+                        int endSymbol = details.indexOf(symbol, startSymbol+1);
+
+                        if(startSymbol != -1 && endSymbol != -1) {
+                            enemiesInfo.setText(details.substring(startSymbol + symbol.length(), endSymbol));
+                        } else {
+                            enemiesInfo.setText("Not found!");
                         }
 
                     } catch (IOException io) {
