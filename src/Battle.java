@@ -51,9 +51,19 @@ public class Battle {
             tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxhp);
             tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxhp);
         }
-        //Enemy action
-        // Determine the type of enemy and perform their actions
         determineEnemyType();
+
+        // note so ako ni gituyo lahi ang ithrow kay ako idea naay 2 ka catches depedning if win or lose
+        if(job.hp <= 0){
+            tfJobHP.setText("HP: 0 / "+ job.maxhp);
+
+            throw new IllegalArgumentException("You lose");
+        }
+        if(enemy.hp <= 0){
+            tfEnemyHP.setText("HP: 0 / "+ enemy.maxhp);
+            throw new IllegalStateException("You win. Would you like to continue?");
+        }
+
     }
 
     private void determineEnemyType() {

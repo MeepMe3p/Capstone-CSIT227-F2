@@ -1,4 +1,4 @@
-public abstract class Job extends Character {
+public abstract class Job extends Character implements LevelUp {
     private int mana;
     private int stamina;
     private static int armor;
@@ -15,7 +15,7 @@ public abstract class Job extends Character {
     }
 
     public void setExp(int exp) {
-        this.exp = exp;
+        this.exp += exp;
     }
 
     public int getExp_points() {
@@ -62,9 +62,7 @@ public abstract class Job extends Character {
         return armor;
     }
 
-//    public void wait_and_see(){
-//        System.out.println(" prepares for its enemies next move.");
-//    }
+
 
     public static class Mage extends Job {
 
@@ -105,9 +103,33 @@ public abstract class Job extends Character {
             System.out.println(" casts a lightning bolt spell and deals" + dmg + " pts!");
             return dmg;
         }
+
+        @Override
+        public void gain_exp(int exp_amount) {
+            this.setExp_points(this.getExp() + exp_amount);
+            if(this.getExp_points() >= this.getExp()){
+                this.setExp(10);
+                this.setExp_points(0);
+                this.level_up();
+                System.out.println(this.name + " leveled up");
+            }
+        }
+
+        @Override
+        public void level_up() {
+            level++;
+            improve_stats();
+        }
+
+        @Override
+        public void improve_stats() {
+            this.dmg +=  5;
+            this.maxhp += 10;
+            this.hp = this.maxhp;
+        }
     }
 
-    public static class Knight extends Job {
+    public static class Knight extends Job{
 
         public Knight() {
             super("Knight",1,5,250,250,20,0);
@@ -146,6 +168,30 @@ public abstract class Job extends Character {
         public void skill(Enemy enemy) {
             int dualSlash_damage = dual_slash();
             enemy.hp -= dualSlash_damage;
+        }
+        @Override
+        public void gain_exp(int exp_amount) {
+            this.setExp_points(this.getExp() + exp_amount);
+            if(this.getExp_points() >= this.getExp()){
+                this.setExp(10);
+                this.setExp_points(0);
+                this.level_up();
+                System.out.println(this.name + " leveled up");
+
+            }
+        }
+
+        @Override
+        public void level_up() {
+            level++;
+            improve_stats();
+        }
+
+        @Override
+        public void improve_stats() {
+            this.dmg +=  5;
+            this.maxhp += 10;
+            this.hp = this.maxhp;
         }
     }
 
@@ -191,6 +237,29 @@ public abstract class Job extends Character {
         public void skill(Enemy enemy) {
             int a = holy_smite();
             enemy.hp -= a;
+        }
+        @Override
+        public void gain_exp(int exp_amount) {
+            this.setExp_points(this.getExp() + exp_amount);
+            if(this.getExp_points() >= this.getExp()){
+                this.setExp(10);
+                this.setExp_points(0);
+                this.level_up();
+                System.out.println(this.name + " leveled up");
+            }
+        }
+
+        @Override
+        public void level_up() {
+            level++;
+            improve_stats();
+        }
+
+        @Override
+        public void improve_stats() {
+            this.dmg +=  5;
+            this.maxhp += 10;
+            this.hp = this.maxhp;
         }
     }
 }

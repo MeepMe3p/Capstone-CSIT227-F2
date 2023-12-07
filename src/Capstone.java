@@ -5,8 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -165,15 +163,9 @@ public class Capstone extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(mainPanel,"InfoPanel");
-                //halu raya ikaw diri so like basicaly once maopen ni sha dapat naa nay mga sulod ang combobox pwede raka mag cbCharacter.addItem() para sa each
-                //now go to cbCharacter
-                cbCharacter.addItem("Priest");
-                cbCharacter.addItem("Knight");
-                cbCharacter.addItem("Mage");
-                cbCharacter.setSelectedIndex(-1);
+
             }
         });
-
         bSelect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -192,42 +184,6 @@ public class Capstone extends JFrame{
         cbCharacter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //halu raya okaeri nice to meet you again hahaha so like kani sha kay once maselect ang for example ang kanang ya kay ang text area kay maset sha
-                //into something depending sa iyang naselect, for now gahuna2 pajud ko if iusa ba nato ka text file each character or iseparate ba nato pwede ta
-                //magsabot unsay mas maayu
-                String selectedChar = (String) cbCharacter.getSelectedItem();
-
-                taInfo.setText("");
-
-
-                String symbol;
-
-                if(selectedChar != null) {
-                    String charDetails = "src/JobDetails";
-
-                    try {
-                        String details = Files.readString(Paths.get(charDetails));
-
-                        symbol = switch (selectedChar) {
-                            case "Priest" -> "!";
-                            case "Knight" -> "@";
-                            case "Mage" -> "#";
-                            default -> "";
-                        };
-
-                        int startSymbol = details.indexOf(symbol);
-                        int endSymbol = details.indexOf(symbol, startSymbol+1);
-
-                        if(startSymbol != -1 && endSymbol != -1) {
-                            taInfo.setText(details.substring(startSymbol + symbol.length(), endSymbol));
-                        } else {
-                            taInfo.setText("Not found!");
-                        }
-
-                    } catch (IOException io) {
-                        throw new RuntimeException(io);
-                    }
-                }
             }
         });
 
@@ -236,7 +192,20 @@ public class Capstone extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Battle battle = new BattleBuilder(chosen,random_enemy).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).setSkillButton(true).build();
-                battle.performAction();
+                try{
+                    battle.performAction();
+                }catch(IllegalArgumentException a){
+                    JOptionPane.showMessageDialog(null, a.getMessage());
+                }catch(IllegalStateException b){
+                    int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
+                    chosen.gain_exp(10);
+                    if(selected == JOptionPane.YES_OPTION){
+                        bStart.doClick();
+                    }else if(selected == JOptionPane.NO_OPTION){
+                        //basta kani kay musave sha sa iya progress later ni nato iimplement
+                        System.out.println("EXIT");
+                    }
+                }
             }
         });
         cbJobs.addActionListener(e->{
@@ -285,7 +254,20 @@ public class Capstone extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Battle battle = new BattleBuilder(chosen,random_enemy).setWaitButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
-                battle.performAction();
+                try{
+                    battle.performAction();
+                }catch(IllegalArgumentException a){
+                    JOptionPane.showMessageDialog(null, a.getMessage());
+                }catch(IllegalStateException b){
+                    int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
+                    chosen.gain_exp(10);
+                    if(selected == JOptionPane.YES_OPTION){
+                        bStart.doClick();
+                    }else if(selected == JOptionPane.NO_OPTION){
+                        //basta kani kay musave sha sa iya progress later ni nato iimplement
+                        System.out.println("EXIT");
+                    }
+                }
 
             }
 
@@ -296,7 +278,20 @@ public class Capstone extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Battle battle = new BattleBuilder(chosen,random_enemy).setAttackButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
-                battle.performAction();
+                try{
+                    battle.performAction();
+                }catch(IllegalArgumentException a){
+                    JOptionPane.showMessageDialog(null, a.getMessage());
+                }catch(IllegalStateException b){
+                    int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
+                    chosen.gain_exp(10);
+                    if(selected == JOptionPane.YES_OPTION){
+                        bStart.doClick();
+                    }else if(selected == JOptionPane.NO_OPTION){
+                        //basta kani kay musave sha sa iya progress later ni nato iimplement
+                        System.out.println("EXIT");
+                    }
+                }
             }
         });
     }
