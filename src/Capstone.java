@@ -40,7 +40,7 @@ public class Capstone extends JFrame{
 //    private Enemy random_enemy; so ako ni sha gideclare para mag assign mog enemy diri for rNdom
 //    private Job chosen; so ako sad ni sha gibutang para mao ni ang iassign sa gichoose sa user uwu
 
-    public Capstone() throws ClassNotFoundException {
+    public Capstone(){
 
         JFrame frame = new JFrame("Group 8 Capstone");
         frame.setContentPane(this.mainPanel);
