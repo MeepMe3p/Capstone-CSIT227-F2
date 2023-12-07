@@ -62,11 +62,6 @@ public class Capstone extends JFrame{
         jobs[1] = new Job.Knight();
         jobs[2] = new Job.Mage();
 
-        enemies[0]=new Enemy.Scorpion();
-        enemies[1]=new Enemy.AncientBishop();
-        enemies[2]=new Enemy.DarkStalker();
-        enemies[3]=new Enemy.Skeleton();
-        enemies[4]=new Enemy.SuicideRock();
 
         mainPanel.add(selectPanel,"SelectPanel");
         mainPanel.add(battlePanel,"BattlePanel");
@@ -101,11 +96,11 @@ public class Capstone extends JFrame{
                     }
                     cardLayout.show(mainPanel, "BattlePanel");
                     Random random = new Random();
-                    int enemy_type;
+                    int val;
                    // while(chosen.hp>0) {
-                    enemy_type = random.nextInt(5);
-                    random_enemy=enemies[enemy_type];
-                    switch (enemy_type) {
+                    val = random.nextInt(5);
+                    random_enemy= generateEnemy(val);
+                    switch (val) {
                         case 0: {
                             tfHPEnemy.setText(random_enemy.hp+" / " + random_enemy.maxhp);
                             lbEName.setText(random_enemy.name + " Lvl "+ random_enemy.level);
@@ -388,7 +383,26 @@ public class Capstone extends JFrame{
                 }
             }
         });
+
+
     }
+
+    private Enemy generateEnemy(int val) {
+        switch (val){
+            case 0:
+                return new Enemy.Scorpion();
+            case 1:
+                return new Enemy.AncientBishop();
+            case 2:
+                return new Enemy.DarkStalker();
+            case 3:
+                return new Enemy.Skeleton();
+            default:
+                return new Enemy.SuicideRock();
+        }
+    }
+
+
     //gets the selected index sa jobs sa select panel
 //    public int getJobSelection() {
 //        return choice[0];
