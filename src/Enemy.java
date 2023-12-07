@@ -1,15 +1,10 @@
-public abstract class Enemy extends Character{
+public abstract class Enemy extends Character {
 
     public Enemy(String name, int level, int dmg, int hp) {
         super(name, level, dmg, hp);
     }
 
-    public abstract void attack(Job ally);
-
-    public abstract void wait_and_see();
-    public abstract void skill(Job ally);
-
-    public static class Scorpion extends Enemy{
+    public static class Scorpion extends Enemy implements EnemyActions{
 
         public Scorpion(String name, int level, int dmg, int hp) {
             super("Scorpion", 1, 20, 100);
@@ -28,28 +23,28 @@ public abstract class Enemy extends Character{
         }
 
         @Override
-        public void skill(Job ally) {
-            //Kanang poison sting
-            int sting_damage = poisonSting();
-            System.out.println(" attacked with his poison stinger dealing with " + sting_damage + " damage.");
+        public void skill(Job ally, int index) {
+            if (index == 1) {
+                poisonSting(ally);
+            }
         }
-
-        private int poisonSting(){
-            System.out.println(this.name + " attacked with his poison stinger.");
-            return dmg + (level * 5);
+        private void poisonSting(Job ally){
+            int sting_damage = dmg + (level * 5);
+            ally.hp -= sting_damage;
+            System.out.println(this.name + " attacked with his poison stinger and dealt " + sting_damage + " damage");
         }
     }
 
-    public static class SuicideRock extends Enemy{
+    public static class SuicideRock extends Enemy implements EnemyActions{
 
         public SuicideRock(String name, int level, int dmg, int hp) {
-            super(name, level, dmg, hp);
+            super("SuicideRock", level, dmg, hp);
         }
 
         @Override
         public void attack(Job ally) {
             // damaging pero maminusan also iya hp... make another method
-            ally.hp-=throwRock();
+            throwRock(ally);
         }
 
         @Override
@@ -58,25 +53,29 @@ public abstract class Enemy extends Character{
         }
 
         @Override
-        public void skill(Job ally) {
-            //self destruct 0 hp dretso iya life(huhu rip in pieces) nya half sa current hp ni "ally" ang dmg
-            this.selfDestruct();
-            ally.hp*=0.5;
+        public void skill(Job ally, int index) {
+            if(index == 0){
+                selfDestruct(ally);
+            }
+
+
+        }
+        private void throwRock(Job ally){
+            int damage = (int) ((int)this.hp*0.25);
+            ally.hp -= damage+10;
+            System.out.println(this.name + " threw an exploding rock and dealt " + damage + " damage");
         }
 
-        private int throwRock(){
-            int damage = (int) ((int)this.hp*0.25);
-            this.hp-=damage+10;
-            System.out.println(this.name + " threw an exploding rock and dealt " + this.dmg + " damage");
-            return damage;
-        }
-        private void selfDestruct(){
+        //self destruct 0 hp dretso iya life(huhu rip in pieces) nya half sa current hp ni "ally" ang dmg
+        private void selfDestruct(Job ally){
+            int damage = ally.hp / 2;
+            ally.hp -= damage;
             this.hp = 0;
-            System.out.println(this.name+ " blew himself up ");;
+            System.out.println(this.name+ " blew himself up and dealt " + damage + " damage!");;
         }
     }
 
-    public static class Skeleton extends Enemy{
+    public static class Skeleton extends Enemy implements EnemyActions{
 
         public Skeleton(String name, int level, int dmg, int hp) {
             super("Skeleton", 1, 20, 80);
@@ -95,10 +94,12 @@ public abstract class Enemy extends Character{
         }
 
         @Override
-        public void skill(Job ally) {
-            heal();
-        }
+        public void skill(Job ally, int index) {
+            if(index == 0){
+                heal();
+            }
 
+        }
         private int stab(){
             System.out.println(this.name + " stabbed you with his sword.");
             return dmg;
@@ -106,12 +107,12 @@ public abstract class Enemy extends Character{
 
         private void heal(){
             int max_heal = this.hp * 2;
-            System.out.println(this.name + " healed and recovers " + max_heal + " hp.");
+            System.out.println(this.name + "ate some calcium and recovers " + max_heal + " hp.");
             this.hp += max_heal;
         }
     }
 
-    public static class DarkStalker extends Enemy{
+    public static class DarkStalker extends Enemy implements EnemyActions{
 
         public DarkStalker() {
             super("Dark Stalker",1,15,100);
@@ -135,26 +136,32 @@ public abstract class Enemy extends Character{
         }
 
         @Override
-        public void skill(Job ally) {
-            //gahuna2 pakog skill ani ni dark stalker haha ako gihuna2 kay like triple attack nalang guro haha
-            int damage = triple_slash();
-            System.out.println(this.name + "perfomed a triple slash dealing"+ damage+ " dmg");
-            ally.hp -= damage;
+        public void skill(Job ally, int index) {
+            if(index == 0){
+                triple_slash(ally);
+            }
+
         }
 
         private int darkSlash(){
             System.out.println(this.name + " attacked using his dark sword ");
             return dmg;
         }
-        private int triple_slash(){
-            return (int) ((dmg*0.5)*3);
+
+        //gahuna2 pakog skill ani ni dark stalker haha ako gihuna2 kay like triple attack nalang guro haha
+        private void triple_slash(Job ally){
+            int damage = (int) ((dmg*0.5)*3);
+            ally.hp -= damage;
+
+            System.out.println(this.name + "perfomed a triple slash dealing"+ damage+ " dmg");
+
         }
 
     }
-    public static class AncientBishop extends Enemy{
+    public static class AncientBishop extends Enemy implements EnemyActions{
 
         public AncientBishop(String name, int level, int dmg, int hp) {
-            super(name, level, dmg, hp);
+            super("Ancient Bishop", level, dmg, hp);
         }
 
         @Override
@@ -170,17 +177,20 @@ public abstract class Enemy extends Character{
         }
 
         @Override
-        public void skill(Job ally) {
-            //Basically, muheal rani sha sa iya self mucall lang shas heal haha or if palisod2 ta mutimes two iya max hp haha
-            heal();
-            ally.hp-=10;
+        public void skill(Job ally, int index) {
+            if(index==0){
+                heal(ally);
+            }
         }
 
-        private void heal(){
+        //Basically, muheal rani sha sa iya self mucall lang shas heal haha or if palisod2 ta mutimes two iya max hp haha
+        private void heal(Job ally){
             int heal_power = 10;
-            System.out.println(this.name + " healed and recovers "+ heal_power +" hp.");
+            ally.hp -= heal_power;
+            System.out.println(this.name + " healed and dealt "+ heal_power +" hp.");
             this.hp += heal_power;
         }
+
         private int holy_sword(){
             System.out.println(this.name + " attacked you with his holy sword");
             return dmg;
