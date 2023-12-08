@@ -65,24 +65,45 @@ public class Battle {
         }
 
     }
-
     private void determineEnemyType() {
+        double[] probabilities = enemy.getProbabilities();
         EnemyActions monster = (EnemyActions) enemy;
-        int randomAction = random.nextInt(3);
-        switch (randomAction) {
-            case 0:
-                monster.attack(job);
-                break;
-            case 1:
-                int numberOfSkills = 1;
-                int randomSkillIndex = random.nextInt(numberOfSkills);
-                monster.skill(job, randomSkillIndex);
-                break;
-            case 2:
-                monster.wait_and_see();
-                break;
+        double randomAction = random.nextDouble();
+
+        // Calculate cumulative probabilities
+        double AttackProb = probabilities[0];
+        double SkillsProb = AttackProb + probabilities[1];
+
+        if (randomAction <= AttackProb) {
+            monster.attack(job);
+        } else if (randomAction <= SkillsProb) {
+            int numberOfSkills = 1; // You might want to get this dynamically from the enemy
+            int randomSkillIndex = random.nextInt(numberOfSkills);
+            monster.skill(job, randomSkillIndex);
+        } else {
+            monster.wait_and_see();
         }
     }
+
+//    private void determineEnemyType() {
+//        double[] probabilities = enemy.getProbabilities();
+//        EnemyActions monster = (EnemyActions) enemy;
+//        double randomAction = random.nextDouble();
+//        if(randomAction > 0 && randomAction <= probabilities[0])
+//        switch ( {
+//            case 0:
+//                monster.attack(job);
+//                break;
+//            case 1:
+//                int numberOfSkills = 1;
+//                int randomSkillIndex = random.nextInt(numberOfSkills);
+//                monster.skill(job, randomSkillIndex);
+//                break;
+//            case 2:
+//                monster.wait_and_see();
+//                break;
+//        }
+//    }
 
 
 }

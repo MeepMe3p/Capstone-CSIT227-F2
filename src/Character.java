@@ -33,4 +33,8 @@ public abstract class Character {
     public String toString() {
         return name;
     }
+
+    public boolean isAlive(){
+        return hp >= 0;
+    }
 }

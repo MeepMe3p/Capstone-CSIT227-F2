@@ -3,15 +3,21 @@ import java.util.Random;
 public abstract class Enemy extends Character implements Enemy_LevelUp{
     Random rand = new Random();
 
+    private double[]  probabilities;
 
-    public Enemy(String name, int level, int dmg, int hp,int maxhp) {
+    public Enemy(String name, int level, int dmg, int hp, int maxhp, double[] probabilities) {
         super(name, level, dmg, hp,maxhp);
+        this.probabilities = probabilities;
     }
 
-    public static class Scorpion extends Enemy implements EnemyActions{
+    public double[] getProbabilities() {
+        return probabilities;
+    }
 
+
+    public static class Scorpion extends Enemy implements EnemyActions{
         public Scorpion() {
-            super("Scorpion", 1, 20, 100,100);
+            super("Scorpion", 1, 20, 100,100,  new double[]{0.4, 0.4});
         }
 
         @Override
@@ -69,7 +75,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
     public static class SuicideRock extends Enemy implements EnemyActions{
 
         public SuicideRock() {
-            super("Suicide Rock", 1,20, 100,100);
+            super("Suicide Rock", 1,20, 100,100,  new double[]{0.4, 0.1});
         }
 
         @Override
@@ -135,7 +141,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
     public static class Skeleton extends Enemy implements EnemyActions{
 
         public Skeleton() {
-            super("Skeleton", 1, 20, 80,80);
+            super("Skeleton", 1, 20, 80,80,  new double[]{0.4, 0.2});
         }
 
         @Override
@@ -163,7 +169,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         }
 
         private void heal(){
-            int max_heal = this.hp * 2;
+            int max_heal = (int) (this.hp * 0.1);
             System.out.println(this.name + "ate some calcium and recovers " + max_heal + " hp.");
             this.hp += max_heal;
         }
@@ -198,7 +204,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
     public static class DarkStalker extends Enemy implements EnemyActions{
 
         public DarkStalker() {
-            super("Dark Stalker",1,15,100,100);
+            super("Dark Stalker",1,15,100,100,  new double[]{0.2, 0.8});
         }
 
         @Override
@@ -270,19 +276,18 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
     public static class AncientBishop extends Enemy implements EnemyActions{
 
         public AncientBishop() {
-            super("Ancient Bishop",1,15,100,100);
+            super("Ancient Bishop",1,15,100,100, new double[]{0.2, 0.6});
         }
 
         @Override
         public void attack(Job ally) {
-            //muattack call ang holy sword basically madamagean ang ally/para,eters
             int damage = holy_sword();
             ally.hp-=damage;
         }
 
         @Override
         public void wait_and_see() {
-            System.out.println(this.name + " is watching and observing");
+            System.out.println(this.name + " prays and observing");
         }
 
         @Override
@@ -292,7 +297,6 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
             }
         }
 
-        //Basically, muheal rani sha sa iya self mucall lang shas heal haha or if palisod2 ta mutimes two iya max hp haha
         private void heal(Job ally){
             int heal_power = 10;
             ally.hp -= heal_power;
@@ -304,6 +308,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
             System.out.println(this.name + " attacked you with his holy sword");
             return dmg;
         }
+
         @Override
         public void level_up(Job job) {
             int plusLevel = rand.nextInt(3)-1;

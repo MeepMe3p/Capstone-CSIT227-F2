@@ -58,9 +58,11 @@ public class Capstone extends JFrame{
 
 //        MESSAGE TO CHAZ iwala nalang nang mga choice etc2 nimo iuse lang ang function nga cbJobs.getSelectedItem() kay if mag ingana ka marredundant sha
 
-        jobs[0] = new Job.Priest();
-        jobs[1] = new Job.Knight();
-        jobs[2] = new Job.Mage();
+
+
+//        jobs[0] = new Job.Priest();
+//        jobs[1] = new Job.Knight();
+//        jobs[2] = new Job.Mage();
 
 
         mainPanel.add(selectPanel,"SelectPanel");
@@ -73,21 +75,27 @@ public class Capstone extends JFrame{
 //                    int jobSelect = getJobSelection();
             System.out.println(choice);
                     if (chosen2==0) {
-                        chosen=jobs[0];
+                        if (chosen == null || !chosen.isAlive()) {
+                            chosen = new Job.Priest();
+                        }
                         lbAName.setText(chosen.name+" Lvl "+ chosen.level);
                         tfHPChara.setText(chosen.hp+" / " + chosen.maxhp);
                         image = ImageIO.read(new File("src/JobImages/priest.png"));
                         ImageIcon icon = new ImageIcon(image.getScaledInstance(250,250,Image.SCALE_SMOOTH));
                         lbAPic.setIcon(icon);
                     } else if (chosen2==1) {
-                        chosen=jobs[1];
+                        if (chosen == null || !chosen.isAlive()) {
+                            chosen = new Job.Knight();
+                        }
                         lbAName.setText(chosen.name+" Lvl "+ chosen.level);
                         tfHPChara.setText(chosen.hp+" / " + chosen.maxhp);
                         image = ImageIO.read(new File("src/JobImages/knight.png"));
                         ImageIcon icon = new ImageIcon(image.getScaledInstance(250,250,Image.SCALE_SMOOTH));
                         lbAPic.setIcon(icon);
                     } else if (chosen2==2) {
-                        chosen=jobs[2];
+                        if (chosen == null || !chosen.isAlive()) {
+                            chosen  = new Job.Mage();
+                        }
                         lbAName.setText(chosen.name+" Lvl "+ chosen.level);
                         tfHPChara.setText(chosen.hp+" / " + chosen.maxhp);
                         image = ImageIO.read(new File("src/JobImages/mage.png"));
@@ -401,6 +409,17 @@ public class Capstone extends JFrame{
                 return new Enemy.SuicideRock();
         }
     }
+
+    private Job generateClass(int val) {
+        if(val == 0){
+            return new Job.Priest();
+        }else if(val == 1){
+            return new Job.Knight();
+        }else{
+            return new Job.Mage();
+        }
+    }
+
 
 
     //gets the selected index sa jobs sa select panel
