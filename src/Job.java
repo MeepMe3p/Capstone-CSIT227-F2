@@ -5,6 +5,15 @@ public abstract class Job extends Character implements LevelUp {
 
     private int exp;
     private int exp_points;
+    private int total_dmg;
+
+    public int getTotal_dmg() {
+        return total_dmg;
+    }
+
+    public void setTotal_dmg(int total_dmg) {
+        this.total_dmg = total_dmg;
+    }
 
     public abstract String attack(Enemy enemy);
     public abstract String wait_and_see();
@@ -93,16 +102,18 @@ public abstract class Job extends Character implements LevelUp {
         void concentrate(){
             int mana_val = 10;
             setMana(getMana() + mana_val);
-            System.out.println(" concentrates and recovered" + mana_val + " mana!");
+//            System.out.println(" concentrates and recovered" + mana_val + " mana!");
         }
 
         int fire_ball(){
-            System.out.println(" casts a fire ball spell and deals" + dmg + " pts!");
+//            System.out.println(" casts a fire ball spell and deals" + dmg + " pts!");
+            setTotal_dmg(dmg);
             return dmg;
         }
 
         int lightning_bolt(){
-            System.out.println(" casts a lightning bolt spell and deals" + dmg + " pts!");
+//            System.out.println(" casts a lightning bolt spell and deals" + dmg + " pts!");
+            setTotal_dmg(dmg);
             return dmg;
         }
 
@@ -134,25 +145,27 @@ public abstract class Job extends Character implements LevelUp {
     public static class Knight extends Job{
 
         public Knight() {
-            super("Knight",1,5,250,250,20,0);
+            super("Knight",1,8,250,250,20,0);
         }
 
         void shield(){
             int armor_val = 10;
             setArmor(getArmor() + armor_val);
-            System.out.println(" used shield and now has " + armor + " armor!");
+//            System.out.println(" used shield and now has " + armor + " armor!");
         }
 
         int slash(){
-            int dmg = 8;
-            System.out.println(" slashed the enemy and dealt " + dmg + " pts!");
+
+//            System.out.println(" slashed the enemy and dealt " + dmg + " pts!");
+            setTotal_dmg(dmg);
             return dmg;
         }
 
         int dual_slash(){
-            int dmg = 16;
-            System.out.println(" slashed the enemy twice and dealt " + dmg + " pts!");
-            return dmg;
+//            System.out.println(" slashed the enemy twice and dealt " + dmg + " pts!");
+            setTotal_dmg(dmg*2);
+
+            return dmg*2;
         }
 
         @Override
@@ -213,16 +226,18 @@ public abstract class Job extends Character implements LevelUp {
 
         int light_ray(){
 //            int dmg = 8;
-            System.out.println(" casts light and deals " + this.dmg + " pts!");
+//            System.out.println(" casts light and deals " + this.dmg + " pts!");
+            setTotal_dmg(dmg);
             return this.dmg;
         }
 
         int holy_smite(){
 //            int dmg = 16;
-            System.out.println(" invokes Holy Smite and deals " + this.dmg + " pts!");
+//            System.out.println(" invokes Holy Smite and deals " + this.dmg + " pts!");
             int healingPower = 10;
-            System.out.println(" casts healing and has recovered" + healingPower + " hp!");
+//            System.out.println(" casts healing and has recovered" + healingPower + " hp!");
             this.hp += healingPower;
+            setTotal_dmg(dmg);
 
             return this.dmg;
         }

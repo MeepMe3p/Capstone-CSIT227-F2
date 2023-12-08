@@ -3,7 +3,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -33,6 +35,13 @@ public class Capstone extends JFrame{
     private JLabel lbAPic;
     private JComboBox cbEnemyInfo;
     private JTextArea enemiesInfo;
+    private JPanel highscorePanel;
+    private JButton sortByDamageButton;
+    private JButton sortByNameButton;
+    private JButton sortByBossesKilledButton;
+    private JButton sortByEnemiesKilledButton;
+    private JTextArea taHighScore;
+    private JButton highscoresButton;
     private Image image;
     private Image EnemyImage;
     private Enemy[] enemies = new Enemy[5];
@@ -42,6 +51,10 @@ public class Capstone extends JFrame{
     private int chosen2;
     private BattleSequence battleSeq = null;
 
+    private final String highScoreFile = "src/HighScores";
+    private int total_dmg;
+    private int enemies_killed;
+    private int bosses_killed;
     public Capstone(){
 
         JFrame frame = new JFrame("Group 8 Capstone");
@@ -63,6 +76,7 @@ public class Capstone extends JFrame{
         mainPanel.add(selectPanel,"SelectPanel");
         mainPanel.add(battlePanel,"BattlePanel");
         mainPanel.add(infoPanel,"InfoPanel");
+        mainPanel.add(highscorePanel,"highScorePanel");
 
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
         bStart.addActionListener(e-> {
@@ -293,13 +307,45 @@ public class Capstone extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Battle battle = new BattleBuilder(chosen,random_enemy,battleSeq).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).setSkillButton(true).build();
+                BufferedWriter write_hs = null;
+                //if magmake ug antoher buffered writer declare lang diri pareha sa line 398
+                try {
+                    write_hs = new BufferedWriter(new FileWriter(highScoreFile,true));
+                    //and then declare new diri sa try catch pina line 401
+
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 try{
                     battle.performAction();
+                    total_dmg += chosen.getTotal_dmg();
+
                 }catch(IllegalArgumentException a){
                     JOptionPane.showMessageDialog(null, a.getMessage());
+                    //lose diri ra masave sa highscores once mapildi na ayaw ni ninyo iadjust
+                    try {
+                        write_hs.append(chosen.name+","+chosen.level+","+total_dmg+","+enemies_killed+","+bosses_killed);
+                        write_hs.newLine();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    } finally{
+                        try {
+                            write_hs.close();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                    battleSeq.removeFrame();
+                    bSelect.doClick();
                 }catch(IllegalStateException b){
                     int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
                     chosen.gain_exp(10);
+                    enemies_killed++;
+                    System.out.println("EK: "+enemies_killed);
+                    if(random_enemy instanceof Enemy.DarkStalker || random_enemy instanceof Enemy.AncientBishop){
+                        bosses_killed++;
+                        System.out.println("BK: "+bosses_killed);
+                    }
                     if(selected == JOptionPane.YES_OPTION){
                         battleSeq.removeFrame();
                         bStart.doClick();
@@ -356,13 +402,45 @@ public class Capstone extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Battle battle = new BattleBuilder(chosen,random_enemy,battleSeq).setWaitButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
+                BufferedWriter write_hs = null;
+                //if magmake ug antoher buffered writer declare lang diri pareha sa line 398
+                try {
+                    write_hs = new BufferedWriter(new FileWriter(highScoreFile,true));
+                    //and then declare new diri sa try catch pina line 401
+
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 try{
                     battle.performAction();
+                    total_dmg += chosen.getTotal_dmg();
+
                 }catch(IllegalArgumentException a){
                     JOptionPane.showMessageDialog(null, a.getMessage());
+                    //lose diri ra masave sa highscores once mapildi na ayaw ni ninyo iadjust
+                    try {
+                        write_hs.append(chosen.name+","+chosen.level+","+total_dmg+","+enemies_killed+","+bosses_killed);
+                        write_hs.newLine();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    } finally{
+                        try {
+                            write_hs.close();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                    battleSeq.removeFrame();
+                    bSelect.doClick();
                 }catch(IllegalStateException b){
                     int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
                     chosen.gain_exp(10);
+                    enemies_killed++;
+                    System.out.println("EK: "+enemies_killed);
+                    if(random_enemy instanceof Enemy.DarkStalker || random_enemy instanceof Enemy.AncientBishop){
+                        bosses_killed++;
+                        System.out.println("BK: "+bosses_killed);
+                    }
                     if(selected == JOptionPane.YES_OPTION){
                         battleSeq.removeFrame();
                         bStart.doClick();
@@ -381,13 +459,44 @@ public class Capstone extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Battle battle = new BattleBuilder(chosen,random_enemy,battleSeq).setAttackButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
+                BufferedWriter write_hs = null;
+                //if magmake ug antoher buffered writer declare lang diri pareha sa line 398
+                try {
+                    write_hs = new BufferedWriter(new FileWriter(highScoreFile,true));
+                    //and then declare new diri sa try catch pina line 401
+
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 try{
                     battle.performAction();
+                    total_dmg += chosen.getTotal_dmg();
                 }catch(IllegalArgumentException a){
                     JOptionPane.showMessageDialog(null, a.getMessage());
+                    //lose diri ra masave sa highscores once mapildi na ayaw ni ninyo iadjust
+                    try {
+                        write_hs.append(chosen.name+","+chosen.level+","+total_dmg+","+enemies_killed+","+bosses_killed);
+                        write_hs.newLine();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    } finally{
+                        try {
+                            write_hs.close();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                    battleSeq.removeFrame();
+                    bSelect.doClick();
                 }catch(IllegalStateException b){
                     int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
                     chosen.gain_exp(10);
+                    enemies_killed++;
+                    System.out.println("EK: "+enemies_killed);
+                    if(random_enemy instanceof Enemy.DarkStalker || random_enemy instanceof Enemy.AncientBishop){
+                        bosses_killed++;
+                        System.out.println("BK: "+bosses_killed);
+                    }
                     if(selected == JOptionPane.YES_OPTION){
                         battleSeq.removeFrame();
 
@@ -402,6 +511,49 @@ public class Capstone extends JFrame{
         });
 
 
+        highscoresButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel,"highScorePanel");
+            }
+        });
+        sortByNameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                taHighScore.setText("");
+                HighScore hs = new HighScore(taHighScore);
+                hs.showByName();
+                taHighScore.append("yamete kudasai");
+            }
+        });
+        sortByDamageButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                taHighScore.setText("");
+                HighScore hs = new HighScore(taHighScore);
+                hs.showByDamage();
+                taHighScore.append("frieren kawaii");
+
+            }
+        });
+        sortByEnemiesKilledButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                taHighScore.setText("");
+                HighScore hs = new HighScore(taHighScore);
+                hs.showByEnemiesKilled();
+                taHighScore.append("niwork sha uwu");
+            }
+        });
+        sortByBossesKilledButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                taHighScore.setText("");
+                HighScore hs = new HighScore(taHighScore);
+                hs.showByBossesKilled();
+                taHighScore.append("kaila mong tokoyami towa");
+            }
+        });
     }
 
     private Enemy generateEnemy(int val) {
@@ -431,9 +583,5 @@ public class Capstone extends JFrame{
 
 
 
-    //gets the selected index sa jobs sa select panel
-//    public int getJobSelection() {
-//        return choice[0];
-//    }
 }
 

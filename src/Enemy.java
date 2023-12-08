@@ -43,7 +43,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         private void poisonSting(Job ally){
             int sting_damage = dmg + (level * 5);
             ally.hp -= sting_damage;
-            System.out.println(this.name + " attacked with his poison stinger and dealt " + sting_damage + " damage");
+//            System.out.println(this.name + " attacked with his poison stinger and dealt " + sting_damage + " damage");
         }
 
         @Override
@@ -103,7 +103,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         private void throwRock(Job ally){
             int damage = (int) ((int)this.hp*0.25);
             ally.hp -= damage+10;
-            System.out.println(this.name + " threw an exploding rock and dealt " + damage + " damage");
+//            System.out.println(this.name + " threw an exploding rock and dealt " + damage + " damage");
         }
 
         //self destruct 0 hp dretso iya life(huhu rip in pieces) nya half sa current hp ni "ally" ang dmg
@@ -111,7 +111,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
             int damage = ally.hp / 2;
             ally.hp -= damage;
             this.hp = 0;
-            System.out.println(this.name+ " blew himself up and dealt " + damage + " damage!");;
+//            System.out.println(this.name+ " blew himself up and dealt " + damage + " damage!");;
         }
         @Override
         public void level_up(Job job) {
@@ -168,13 +168,13 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
             return this.name+ " healed itself";
         }
         private int stab(){
-            System.out.println(this.name + " stabbed you with his sword.");
+//            System.out.println(this.name + " stabbed you with his sword.");
             return dmg;
         }
 
         private void heal(){
             int max_heal = (int) (this.hp * 0.1);
-            System.out.println(this.name + "ate some calcium and recovers " + max_heal + " hp.");
+//            System.out.println(this.name + "ate some calcium and recovers " + max_heal + " hp.");
             this.hp += max_heal;
         }
         @Override
@@ -236,7 +236,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         }
 
         private int darkSlash(){
-            System.out.println(this.name + " attacked using his dark sword ");
+//            System.out.println(this.name + " attacked using his dark sword ");
             return dmg;
         }
 
@@ -245,7 +245,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
             int damage = (int) ((dmg*0.5)*3);
             ally.hp -= damage;
 
-            System.out.println(this.name + "perfomed a triple slash dealing"+ damage+ " dmg");
+//            System.out.println(this.name + "perfomed a triple slash dealing"+ damage+ " dmg");
 
         }
         @Override
@@ -309,12 +309,12 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         private void heal(Job ally){
             int heal_power = 10;
             ally.hp -= heal_power;
-            System.out.println(this.name + " healed and dealt "+ heal_power +" hp.");
+//            System.out.println(this.name + " healed and dealt "+ heal_power +" hp.");
             this.hp += heal_power;
         }
 
         private int holy_sword(){
-            System.out.println(this.name + " attacked you with his holy sword");
+//            System.out.println(this.name + " attacked you with his holy sword");
             return dmg;
         }
 
