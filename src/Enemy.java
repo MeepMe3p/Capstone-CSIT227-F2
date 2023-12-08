@@ -21,22 +21,24 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         }
 
         @Override
-        public void attack(Job ally) {
+        public String attack(Job ally) {
             //abot bitaw maybe kato nalang simple damage ra
             ally.hp -= this.dmg;
-            System.out.println(this.name + " attacked dealing with " + this.dmg + " damage.");
+            return this.name + " attacked dealing with " + this.dmg + " damage.";
         }
 
         @Override
-        public void wait_and_see() {
-            System.out.println(this.name + " is watching and observing.");
+        public String wait_and_see() {
+            return this.name + " is watching and observing.";
         }
 
         @Override
-        public void skill(Job ally, int index) {
+        public String skill(Job ally, int index) {
             if (index == 1) {
                 poisonSting(ally);
             }
+            return this.name + " stung " + ally.name+" with its stinger";
+
         }
         private void poisonSting(Job ally){
             int sting_damage = dmg + (level * 5);
@@ -80,23 +82,23 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         }
 
         @Override
-        public void attack(Job ally) {
+        public String attack(Job ally) {
             // damaging pero maminusan also iya hp... make another method
             throwRock(ally);
+            return this.name + " threw an explosive rock at "+ ally.name;
         }
 
         @Override
-        public void wait_and_see() {
-            System.out.println(this.name + " is watching and observing");
+        public String wait_and_see() {
+            return this.name + " is watching and observing";
         }
 
         @Override
-        public void skill(Job ally, int index) {
+        public String skill(Job ally, int index) {
             if(index == 0){
                 selfDestruct(ally);
             }
-
-
+            return this.name + " blew itself up";
         }
         private void throwRock(Job ally){
             int damage = (int) ((int)this.hp*0.25);
@@ -147,23 +149,23 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         }
 
         @Override
-        public void attack(Job ally) {
+        public String attack(Job ally) {
             int stab_damage = stab();
             ally.hp -= this.dmg;
-            System.out.println(this.name + " stabbed you with his sword dealing with " + stab_damage + " damage");
+            return this.name + " stabbed "+ this.name + " with its sword";
         }
 
         @Override
-        public void wait_and_see() {
-            System.out.println(this.name + " is watching and observing.");
+        public String wait_and_see() {
+            return this.name + " is watching and observing.";
         }
 
         @Override
-        public void skill(Job ally, int index) {
+        public String skill(Job ally, int index) {
             if(index == 0){
                 heal();
             }
-
+            return this.name+ " healed itself";
         }
         private int stab(){
             System.out.println(this.name + " stabbed you with his sword.");
@@ -211,28 +213,26 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         }
 
         @Override
-        public void attack(Job ally) {
+        public String attack(Job ally) {
             //muattack call ang dark ssword basically madamagean ang ally
             int a = darkSlash();
             ally.hp -= this.dmg;
-            System.out.println(this.name + " slashed you with a dark sword dealing" + a+ " damage");
-
-
+            return this.name + " slashed "+ally.name+" with its dark sword";
         }
 
         @Override
-        public void wait_and_see() {
+        public String wait_and_see() {
             //limot ko butang haha same ra shas uban
-            System.out.println(this.name + " is watching and observing");
+            return this.name + " is watching and observing";
 
         }
 
         @Override
-        public void skill(Job ally, int index) {
+        public String skill(Job ally, int index) {
             if(index == 0){
                 triple_slash(ally);
             }
-
+            return this.name + " performed a triple slash at "+ ally.name;
         }
 
         private int darkSlash(){
@@ -284,21 +284,26 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         }
 
         @Override
-        public void attack(Job ally) {
+        public String attack(Job ally) {
+            //walay sword ang bishop uy HAHAHHAHAHHHAHA
             int damage = holy_sword();
             ally.hp-=damage;
+            return this.name + " used its sword to pierce " + ally.name;
         }
 
         @Override
-        public void wait_and_see() {
-            System.out.println(this.name + " prays and observing");
+        public String wait_and_see() {
+            //amen
+            return this.name + " prays and observing";
         }
 
         @Override
-        public void skill(Job ally, int index) {
+        public  String skill(Job ally, int index) {
             if(index==0){
                 heal(ally);
             }
+            //kaevil ba nako AHHAHAH
+            return this.name + " pierced " + ally.name + " with a beam and sucked every bit of your life force WAHAHAHA";
         }
 
         private void heal(Job ally){

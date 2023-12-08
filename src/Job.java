@@ -6,9 +6,9 @@ public abstract class Job extends Character implements LevelUp {
     private int exp;
     private int exp_points;
 
-    public abstract void attack(Enemy enemy);
-    public abstract void wait_and_see();
-    public abstract void skill(Enemy enemy);
+    public abstract String attack(Enemy enemy);
+    public abstract String wait_and_see();
+    public abstract String skill(Enemy enemy);
 
     public int getExp() {
         return exp;
@@ -68,20 +68,22 @@ public abstract class Job extends Character implements LevelUp {
 
 
         @Override
-        public void attack(Enemy e) {
+        public String attack(Enemy e) {
             int damage = lightning_bolt();
             e.hp-=damage;
+            return this.name + " shocked "+ e.name +" with a lightning bolt";
         }
 
         @Override
-        public void wait_and_see() {
-            System.out.println(" prepares for its enemies next move.");
+        public String wait_and_see() {
+            return this.name + " is watching and observing";
         }
 
         @Override
-        public void skill(Enemy e) {
+        public String skill(Enemy e) {
             int damage = fire_ball();
             e.hp-=damage;
+            return this.name + " lauched a fireball to "+e.name;
         }
 
         public Mage() {
@@ -154,20 +156,23 @@ public abstract class Job extends Character implements LevelUp {
         }
 
         @Override
-        public void attack(Enemy enemy) {
+        public String attack(Enemy enemy) {
             int slash_damage = slash();
             enemy.hp -= slash_damage;
+            return this.name + " slashed "+enemy.name+" with his sword";
         }
 
         @Override
-        public void wait_and_see() {
-            System.out.println(this.name + " is watching and observing.");
+        public String wait_and_see() {
+            return this.name + " is watching and observing";
+
         }
 
         @Override
-        public void skill(Enemy enemy) {
+        public String skill(Enemy enemy) {
             int dualSlash_damage = dual_slash();
             enemy.hp -= dualSlash_damage;
+            return this.name + " performed a dual slash to "+ enemy.name;
         }
         @Override
         public void gain_exp(int exp_amount) {
@@ -223,20 +228,23 @@ public abstract class Job extends Character implements LevelUp {
         }
 
         @Override
-        public void attack(Enemy enemy) {
+        public String attack(Enemy enemy) {
              int a = light_ray();
              enemy.hp -= a;
+             return this.name + " pierced "+enemy.name+" with a light ray";
         }
 
         @Override
-        public void wait_and_see() {
-            System.out.println(this.name + " is watching and observing");
+        public String wait_and_see() {
+            return this.name + " is watching and observing";
         }
 
         @Override
-        public void skill(Enemy enemy) {
+        public String skill(Enemy enemy) {
             int a = holy_smite();
             enemy.hp -= a;
+            //haha smote ang past tense sa smite??
+            return this.name+" smote "+enemy.name+" and healed himself";
         }
         @Override
         public void gain_exp(int exp_amount) {

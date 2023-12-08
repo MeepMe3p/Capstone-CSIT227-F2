@@ -10,6 +10,7 @@ public class Battle {
     private boolean waitButton;
     private JTextField tfEnemyHP;
     private JTextField tfJobHP;
+    private BattleSequence battleSeq;
 
     Random random = new Random();
 
@@ -33,21 +34,21 @@ public class Battle {
         this.waitButton = builder.waitButton;
         this.tfEnemyHP = builder.tfEnemyHP;
         this.tfJobHP = builder.tfJobHP;
-
+        this.battleSeq = builder.battleSeq;
 
     }
 
     public void performAction() {
         if (attackButton) {
-            job.attack(enemy);
+            battleSeq.getTextArea1().append(job.attack(enemy)+"\n");
             tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxhp);
             tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxhp);
         } else if (skillButton) {
-            job.skill(enemy);
+            battleSeq.getTextArea1().append(job.skill(enemy)+"\n");
             tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxhp);
             tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxhp);
         } else if (waitButton) {
-            job.wait_and_see();
+            battleSeq.getTextArea1().append(job.wait_and_see()+"\n");
             tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxhp);
             tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxhp);
         }
@@ -75,13 +76,13 @@ public class Battle {
         double SkillsProb = AttackProb + probabilities[1];
 
         if (randomAction <= AttackProb) {
-            monster.attack(job);
+            battleSeq.getTextArea1().append(monster.attack(job)+"\n");
         } else if (randomAction <= SkillsProb) {
             int numberOfSkills = 1; // You might want to get this dynamically from the enemy
             int randomSkillIndex = random.nextInt(numberOfSkills);
-            monster.skill(job, randomSkillIndex);
+            battleSeq.getTextArea1().append(monster.skill(job, randomSkillIndex)+"\n");
         } else {
-            monster.wait_and_see();
+            battleSeq.getTextArea1().append(monster.wait_and_see());
         }
     }
 

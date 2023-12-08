@@ -40,6 +40,7 @@ public class Capstone extends JFrame{
     private Enemy random_enemy;
     private Job chosen;
     private int chosen2;
+    private BattleSequence battleSeq = null;
 
     public Capstone(){
 
@@ -56,13 +57,7 @@ public class Capstone extends JFrame{
         cbJobs.addItem(new Job.Mage());
         cbJobs.setSelectedIndex(-1);
 
-//        MESSAGE TO CHAZ iwala nalang nang mga choice etc2 nimo iuse lang ang function nga cbJobs.getSelectedItem() kay if mag ingana ka marredundant sha
 
-
-
-//        jobs[0] = new Job.Priest();
-//        jobs[1] = new Job.Knight();
-//        jobs[2] = new Job.Mage();
 
 
         mainPanel.add(selectPanel,"SelectPanel");
@@ -71,6 +66,11 @@ public class Capstone extends JFrame{
 
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
         bStart.addActionListener(e-> {
+
+            if(battleSeq != null){
+                battleSeq.removeFrame();
+            }
+            battleSeq = new BattleSequence();
                 try {
 
 //                    int jobSelect = getJobSelection();
@@ -292,7 +292,7 @@ public class Capstone extends JFrame{
         bSkill.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Battle battle = new BattleBuilder(chosen,random_enemy).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).setSkillButton(true).build();
+                Battle battle = new BattleBuilder(chosen,random_enemy,battleSeq).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).setSkillButton(true).build();
                 try{
                     battle.performAction();
                 }catch(IllegalArgumentException a){
@@ -301,6 +301,7 @@ public class Capstone extends JFrame{
                     int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
                     chosen.gain_exp(10);
                     if(selected == JOptionPane.YES_OPTION){
+                        battleSeq.removeFrame();
                         bStart.doClick();
                     }else if(selected == JOptionPane.NO_OPTION){
                         //basta kani kay musave sha sa iya progress later ni nato iimplement
@@ -354,7 +355,7 @@ public class Capstone extends JFrame{
         bWaS.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Battle battle = new BattleBuilder(chosen,random_enemy).setWaitButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
+                Battle battle = new BattleBuilder(chosen,random_enemy,battleSeq).setWaitButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
                 try{
                     battle.performAction();
                 }catch(IllegalArgumentException a){
@@ -363,6 +364,7 @@ public class Capstone extends JFrame{
                     int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
                     chosen.gain_exp(10);
                     if(selected == JOptionPane.YES_OPTION){
+                        battleSeq.removeFrame();
                         bStart.doClick();
                     }else if(selected == JOptionPane.NO_OPTION){
                         //basta kani kay musave sha sa iya progress later ni nato iimplement
@@ -378,7 +380,7 @@ public class Capstone extends JFrame{
         bAttack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Battle battle = new BattleBuilder(chosen,random_enemy).setAttackButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
+                Battle battle = new BattleBuilder(chosen,random_enemy,battleSeq).setAttackButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
                 try{
                     battle.performAction();
                 }catch(IllegalArgumentException a){
@@ -387,9 +389,12 @@ public class Capstone extends JFrame{
                     int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
                     chosen.gain_exp(10);
                     if(selected == JOptionPane.YES_OPTION){
+                        battleSeq.removeFrame();
+
                         bStart.doClick();
                     }else if(selected == JOptionPane.NO_OPTION){
                         //basta kani kay musave sha sa iya progress later ni nato iimplement
+
                         System.out.println("EXIT");
                     }
                 }

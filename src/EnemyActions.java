@@ -1,7 +1,7 @@
 public interface EnemyActions {
-    void attack(Job ally);
+    String attack(Job ally);
 
-    void wait_and_see();
+    String wait_and_see();
 
-    void skill(Job ally, int skillIndex);
+    String skill(Job ally, int skillIndex);
 }
