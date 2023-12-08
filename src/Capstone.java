@@ -72,6 +72,7 @@ public class Capstone extends JFrame{
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
         bStart.addActionListener(e-> {
                 try {
+
 //                    int jobSelect = getJobSelection();
             System.out.println(choice);
                     if (chosen2==0) {
@@ -108,6 +109,8 @@ public class Capstone extends JFrame{
                    // while(chosen.hp>0) {
                     val = random.nextInt(5);
                     random_enemy= generateEnemy(val);
+                    random_enemy.level_up(chosen);
+
                     switch (val) {
                         case 0: {
                             tfHPEnemy.setText(random_enemy.hp+" / " + random_enemy.maxhp);
@@ -150,6 +153,9 @@ public class Capstone extends JFrame{
                         break;
                         }
                     }
+
+                    //level sa kontra
+                    System.out.println("This is random enemy "+random_enemy);
                     //}
 
 //                Enemy random_enemy = /*find way para makuha ni basta kato random thingy i told u hahaah*/
@@ -160,8 +166,6 @@ public class Capstone extends JFrame{
                     throw new RuntimeException(io);
                 }
 
-            //level sa kontra
-            random_enemy.level_up(chosen);
 
 
 

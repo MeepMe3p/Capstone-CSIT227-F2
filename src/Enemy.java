@@ -63,7 +63,8 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         @Override
         public void improve_stats() {
             this.dmg += this.level * 3;
-            this.hp = this.level * 5;
+            this.maxhp += this.level * 5;
+            this.hp = this.maxhp;
         }
 
         @Override
@@ -129,7 +130,8 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         @Override
         public void improve_stats() {
             this.dmg += this.level * 3;
-            this.hp = this.level * 5;
+            this.maxhp += this.level * 5;
+            this.hp = this.maxhp;
         }
 
         @Override
@@ -192,7 +194,8 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         @Override
         public void improve_stats() {
             this.dmg += this.level * 3;
-            this.hp = this.level * 5;
+            this.maxhp += this.level * 5;
+            this.hp = this.maxhp;
         }
 
         @Override
@@ -264,7 +267,8 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         @Override
         public void improve_stats() {
             this.dmg += this.level * 3;
-            this.hp = this.level * 5;
+            this.maxhp += this.level * 5;
+            this.hp = this.maxhp;
         }
 
         @Override
@@ -328,7 +332,8 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         @Override
         public void improve_stats() {
             this.dmg += this.level * 3;
-            this.hp = this.level * 5;
+            this.maxhp += this.level * 5;
+            this.hp = this.maxhp;
         }
 
         @Override
