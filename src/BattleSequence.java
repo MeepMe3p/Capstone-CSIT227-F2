@@ -11,7 +11,7 @@ public class BattleSequence {
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.pack();
         frame.setSize(500,250);
-        frame.setLocation(750,250);
+        frame.setLocation(100,100);
         frame.setVisible(true);
     }
 

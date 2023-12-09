@@ -43,7 +43,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         private void poisonSting(Job ally){
             int sting_damage = dmg + (level * 5);
             ally.hp -= sting_damage;
-//            System.out.println(this.name + " attacked with his poison stinger and dealt " + sting_damage + " damage");
+//            +out.println(this.name + " attacked with his poison stinger and dealt " + sting_damage + " damage");
         }
 
         @Override

@@ -90,11 +90,11 @@ public class Capstone extends JFrame {
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
 
         bStart.addActionListener(e -> {
-
-            if(battleSeq != null){
-                battleSeq.removeFrame();
-            }
-            battleSeq = new BattleSequence();
+//
+//            if(battleSeq != null){
+//                battleSeq.removeFrame();
+//            }
+//            battleSeq = new BattleSequence();
 
             try {
                 cardLayout.show(mainPanel, "BattlePanel");
@@ -287,7 +287,7 @@ public class Capstone extends JFrame {
         bSkill.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Battle battle = new BattleBuilder(chosen,random_enemy,battleSeq).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).setSkillButton(true).build();
+                Battle battle = new BattleBuilder(chosen,random_enemy/*,battleSeq*/).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).setSkillButton(true).build();
                 BufferedWriter write_hs = null;
                 //if magmake ug antoher buffered writer declare lang diri pareha sa line 398
                 try {
@@ -316,7 +316,7 @@ public class Capstone extends JFrame {
                             throw new RuntimeException(ex);
                         }
                     }
-                    battleSeq.removeFrame();
+//                    battleSeq.removeFrame();
                     bSelect.doClick();
                 }catch(IllegalStateException b){
                     int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
@@ -328,7 +328,7 @@ public class Capstone extends JFrame {
                         System.out.println("BK: "+bosses_killed);
                     }
                     if(selected == JOptionPane.YES_OPTION){
-                        battleSeq.removeFrame();
+//                        battleSeq.removeFrame();
                         bStart.doClick();
                     }else if(selected == JOptionPane.NO_OPTION){
                         //basta kani kay musave sha sa iya progress later ni nato iimplement
@@ -378,7 +378,7 @@ public class Capstone extends JFrame {
         bWaS.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Battle battle = new BattleBuilder(chosen,random_enemy,battleSeq).setWaitButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
+                Battle battle = new BattleBuilder(chosen,random_enemy/*,battleSeq*/).setWaitButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
                 BufferedWriter write_hs = null;
                 //if magmake ug antoher buffered writer declare lang diri pareha sa line 398
                 try {
@@ -407,7 +407,7 @@ public class Capstone extends JFrame {
                             throw new RuntimeException(ex);
                         }
                     }
-                    battleSeq.removeFrame();
+//                    battleSeq.removeFrame();
                     bSelect.doClick();
                 }catch(IllegalStateException b){
                     int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
@@ -419,7 +419,7 @@ public class Capstone extends JFrame {
                         System.out.println("BK: "+bosses_killed);
                     }
                     if(selected == JOptionPane.YES_OPTION){
-                        battleSeq.removeFrame();
+//                        battleSeq.removeFrame();
                         bStart.doClick();
                     }else if(selected == JOptionPane.NO_OPTION){
                         //basta kani kay musave sha sa iya progress later ni nato iimplement
@@ -435,7 +435,7 @@ public class Capstone extends JFrame {
         bAttack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Battle battle = new BattleBuilder(chosen,random_enemy,battleSeq).setAttackButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
+                Battle battle = new BattleBuilder(chosen,random_enemy/*,battleSeq*/).setAttackButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
                 BufferedWriter write_hs = null;
                 //if magmake ug antoher buffered writer declare lang diri pareha sa line 398
                 try {
@@ -463,7 +463,7 @@ public class Capstone extends JFrame {
                             throw new RuntimeException(ex);
                         }
                     }
-                    battleSeq.removeFrame();
+//                    battleSeq.removeFrame();
                     bSelect.doClick();
                 }catch(IllegalStateException b){
                     int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
@@ -475,7 +475,7 @@ public class Capstone extends JFrame {
                         System.out.println("BK: "+bosses_killed);
                     }
                     if(selected == JOptionPane.YES_OPTION){
-                        battleSeq.removeFrame();
+//                        battleSeq.removeFrame();
 
                         bStart.doClick();
                     }else if(selected == JOptionPane.NO_OPTION){

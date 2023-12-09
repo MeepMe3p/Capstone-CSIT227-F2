@@ -10,10 +10,10 @@ public class BattleBuilder {
     JTextField tfJobHP;
     BattleSequence battleSeq;
 
-    public BattleBuilder(Job job, Enemy enemy,BattleSequence battleSeq) {
+    public BattleBuilder(Job job, Enemy enemy/*,BattleSequence battleSeq*/) {
         this.job = job;
         this.enemy = enemy;
-        this.battleSeq = battleSeq;
+//        this.battleSeq = battleSeq;
     }
 
     public BattleBuilder setTfEnemyHP(JTextField tfEnemyHP) {

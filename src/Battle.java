@@ -40,15 +40,18 @@ public class Battle {
 
     public void performAction() {
         if (attackButton) {
-            battleSeq.getTextArea1().append(job.attack(enemy)+"\n");
+//            battleSeq.getTextArea1().append(job.attack(enemy)+"\n");
+            job.attack(enemy);
             tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxhp);
             tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxhp);
         } else if (skillButton) {
-            battleSeq.getTextArea1().append(job.skill(enemy)+"\n");
+//            battleSeq.getTextArea1().append(job.skill(enemy)+"\n");
+            job.skill(enemy);
             tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxhp);
             tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxhp);
         } else if (waitButton) {
-            battleSeq.getTextArea1().append(job.wait_and_see()+"\n");
+//            battleSeq.getTextArea1().append(job.wait_and_see()+"\n");
+            job.wait_and_see();
             tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxhp);
             tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxhp);
         }
@@ -76,13 +79,17 @@ public class Battle {
         double SkillsProb = AttackProb + probabilities[1];
 
         if (randomAction <= AttackProb) {
-            battleSeq.getTextArea1().append(monster.attack(job)+"\n");
+//            battleSeq.getTextArea1().append(monster.attack(job)+"\n");
+            monster.attack(job);
         } else if (randomAction <= SkillsProb) {
             int numberOfSkills = 1; // You might want to get this dynamically from the enemy
             int randomSkillIndex = random.nextInt(numberOfSkills);
-            battleSeq.getTextArea1().append(monster.skill(job, randomSkillIndex)+"\n");
+//            battleSeq.getTextArea1().append(monster.skill(job, randomSkillIndex)+"\n");
+            monster.skill(job, randomSkillIndex);
+
         } else {
-            battleSeq.getTextArea1().append(monster.wait_and_see());
+//            battleSeq.getTextArea1().append(monster.wait_and_see());
+            monster.wait_and_see();
         }
     }
 

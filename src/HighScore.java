@@ -8,15 +8,6 @@ import java.util.Comparator;
 public class HighScore {
     JTextArea taHighScore;
     ArrayList <CharacterDetails> sortMeKudasai = new ArrayList<>();
-    /*huhuhuhu tagda ko ninyu pls sige rman mog seen atleast like or reply wid "ok" para makaybaw ko nakakita mos ako message huhuhu
-      TAGDA KO NINYOOOOOOO HAHAHAHAAHHA
-      NABUHAT NA NAKO ANG STICKING YOUR GYAT FOR THE RIZZLER UR SO SKIBIDI YOURE SO FANUM TAX I WANNA BE YOUR SIGMA
-      GIMME YOUR OHIO AYM EMU OTORI EMU MEANING SMAAAAIRRUUUU
-
-     https://www.youtube.com/watch?v=BbeeuzU5Qc8 👈 open na ninyo tutorial ppara saon if naglisod mo or chatta lang ko
-
-      gibuhat na nako ang sort by damage dealt using comparator pagtry daw mog sabot kinsa ang nahan muimplement sa uban
-      nga comparators and sorting sayon rana icall rana ang .sort function */
     private String highScoreFile = "src/HighScores";
 
     public HighScore(JTextArea taHighScore) {
@@ -24,7 +15,11 @@ public class HighScore {
     }
     public void showByName(){
         sortMeKudasai = create();
-        //PAREHAA RAS SHOWBYDAMAGE
+        sortMeKudasai.sort(new SortByName());
+        for(CharacterDetails cd: sortMeKudasai){
+            taHighScore.append(cd.toString()+"\n");
+        }
+//        taHighScore.append("dddddddddAAAAAAAAAA\n");
 
     }
     public void showByDamage(){
@@ -33,14 +28,26 @@ public class HighScore {
         for(CharacterDetails cd: sortMeKudasai){
             taHighScore.append(cd.toString()+"\n");
         }
+//        taHighScore.append("cccccccccccAAAAAAAAAA\n");
+
     }
     public void showByEnemiesKilled(){
-        create();
-        //PAREHAA RAS SHOWBYDAMAGE
+        sortMeKudasai = create();
+        sortMeKudasai.sort(new SortByEnemiesKilled());
+        for(CharacterDetails cd: sortMeKudasai){
+            taHighScore.append(cd.toString()+"\n");
+        }
+//        taHighScore.append("BBBBBBBBBAAAAAAAA\n");
+
     }
     public void showByBossesKilled(){
-        create();
-        //PAREHAA RAS SHOWBYDAMAGE
+        sortMeKudasai = create();
+        sortMeKudasai.sort(new SortByEnemiesKilled());
+        for(CharacterDetails cd: sortMeKudasai){
+            taHighScore.append(cd.toString()+"\n");
+        }
+//        taHighScore.append("AAAAAAAAAAAAAAAAA\n");
+
 
     }
 
@@ -83,7 +90,7 @@ public class HighScore {
 
                 CharacterDetails amp = new CharacterDetails(name,level,dmg_dealt,enemies_killed,boss_killed);
                 details.add(amp);
-                System.out.println(amp);
+//                System.out.println(amp);
             }
 
         } catch (IOException ex) {
@@ -105,6 +112,26 @@ public class HighScore {
             return Integer.compare(o2.dmg_dealt,o1.dmg_dealt);
         }
     }
-    //HIMO MOG COMPARATOR PARA SA NAME, ENEMIES KILLED, BOSS KILLED, SA NAME COMPARATOR IF SAME SILA KAY ISORT BY DAMAGE
-    //THANK YOU KAAYU GOMEN KATUGON NA KAAYU KO AAAA HAHAHHAHA
+    public static class SortByName implements Comparator<CharacterDetails>{
+
+        @Override
+        public int compare(CharacterDetails o1, CharacterDetails o2) {
+            if(o1.name == o2.name){
+                return Integer.compare(o2.dmg_dealt, o1.dmg_dealt);
+            }
+            return o1.name.compareTo(o2.name);
+        }
+    }
+    public static class SortByEnemiesKilled implements Comparator<CharacterDetails>{
+        @Override
+        public int compare(CharacterDetails o1, CharacterDetails o2) {
+            return Integer.compare(o2.enemies_killed, o1.enemies_killed);
+        }
+    }
+    public static class SortByBossesKilled implements Comparator<CharacterDetails>{
+        @Override
+        public int compare(CharacterDetails o1, CharacterDetails o2) {
+            return Integer.compare(o2.bosses_killed,o1.bosses_killed);
+        }
+    }
 }
