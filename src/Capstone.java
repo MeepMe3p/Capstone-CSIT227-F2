@@ -9,9 +9,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Random;
+import java.nio.file.Path;
+import java.util.List;
 
-public class Capstone extends JFrame{
+public class Capstone extends JFrame {
     private JPanel mainPanel;
     private JPanel selectPanel;
     private JPanel battlePanel;
@@ -42,13 +45,19 @@ public class Capstone extends JFrame{
     private JButton sortByEnemiesKilledButton;
     private JTextArea taHighScore;
     private JButton highscoresButton;
+    private JButton bNewGame;
+    private JButton bLoadGame;
+    private JPanel startPanel;
+    private JPanel loadPanel;
+    private JButton bGoBack;
+    private JRadioButton rbGame2;
+    private JRadioButton rbGame1;
+    private JRadioButton rbGame3;
+    private JButton bStartBtn;
     private Image image;
     private Image EnemyImage;
-    private Enemy[] enemies = new Enemy[5];
-    private Job[] jobs = new Job[3];
     private Enemy random_enemy;
     private Job chosen;
-    private int chosen2;
     private BattleSequence battleSeq = null;
 
     private final String highScoreFile = "src/HighScores";
@@ -63,8 +72,6 @@ public class Capstone extends JFrame{
         frame.pack();
         frame.setSize(700,800);
         frame.setVisible(true);
-        final int[] choice={0};
-        choice[0]=0;
         cbJobs.addItem(new Job.Priest());
         cbJobs.addItem(new Job.Knight());
         cbJobs.addItem(new Job.Mage());
@@ -73,112 +80,68 @@ public class Capstone extends JFrame{
 
 
 
+        mainPanel.add(startPanel, "StartPanel");
         mainPanel.add(selectPanel,"SelectPanel");
         mainPanel.add(battlePanel,"BattlePanel");
         mainPanel.add(infoPanel,"InfoPanel");
         mainPanel.add(highscorePanel,"highScorePanel");
+        mainPanel.add(loadPanel, "LoadPanel");
 
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
-        bStart.addActionListener(e-> {
+
+        bStart.addActionListener(e -> {
 
             if(battleSeq != null){
                 battleSeq.removeFrame();
             }
             battleSeq = new BattleSequence();
-                try {
 
-//                    int jobSelect = getJobSelection();
-            System.out.println(choice);
-                    if (chosen2==0) {
-                        if (chosen == null || !chosen.isAlive()) {
-                            chosen = new Job.Priest();
-                        }
-                        lbAName.setText(chosen.name+" Lvl "+ chosen.level);
-                        tfHPChara.setText(chosen.hp+" / " + chosen.maxhp);
-                        image = ImageIO.read(new File("src/JobImages/priest.png"));
-                        ImageIcon icon = new ImageIcon(image.getScaledInstance(250,250,Image.SCALE_SMOOTH));
-                        lbAPic.setIcon(icon);
-                    } else if (chosen2==1) {
-                        if (chosen == null || !chosen.isAlive()) {
-                            chosen = new Job.Knight();
-                        }
-                        lbAName.setText(chosen.name+" Lvl "+ chosen.level);
-                        tfHPChara.setText(chosen.hp+" / " + chosen.maxhp);
-                        image = ImageIO.read(new File("src/JobImages/knight.png"));
-                        ImageIcon icon = new ImageIcon(image.getScaledInstance(250,250,Image.SCALE_SMOOTH));
-                        lbAPic.setIcon(icon);
-                    } else if (chosen2==2) {
-                        if (chosen == null || !chosen.isAlive()) {
-                            chosen  = new Job.Mage();
-                        }
-                        lbAName.setText(chosen.name+" Lvl "+ chosen.level);
-                        tfHPChara.setText(chosen.hp+" / " + chosen.maxhp);
-                        image = ImageIO.read(new File("src/JobImages/mage.png"));
-                        ImageIcon icon = new ImageIcon(image.getScaledInstance(250,250,Image.SCALE_SMOOTH));
-                        lbAPic.setIcon(icon);
+            try {
+                cardLayout.show(mainPanel, "BattlePanel");
+                chosen = (Job) cbJobs.getSelectedItem();
+                if (chosen instanceof Job.Priest) {
+                    if (chosen == null || !chosen.isAlive()) {
+                        chosen = new Job.Priest();
                     }
-                    cardLayout.show(mainPanel, "BattlePanel");
-                    Random random = new Random();
-                    int val;
-                   // while(chosen.hp>0) {
-                    val = random.nextInt(5);
-                    random_enemy= generateEnemy(val);
-                    random_enemy.level_up(chosen);
-
-                    switch (val) {
-                        case 0: {
-                            tfHPEnemy.setText(random_enemy.hp+" / " + random_enemy.maxhp);
-                            lbEName.setText(random_enemy.name + " Lvl "+ random_enemy.level);
-                            EnemyImage = ImageIO.read(new File("src/EnemyImages/scorpion.png"));
-                            ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250,250,Image.SCALE_SMOOTH));
-                            lbEPic.setIcon(icon2);
-                            break;
-                        }
-                        case 1: {
-                            tfHPEnemy.setText(random_enemy.hp+" / " + random_enemy.maxhp);
-                            lbEName.setText(random_enemy.name+" Lvl "+ random_enemy.level);
-                            EnemyImage = ImageIO.read(new File("src/EnemyImages/ancientbishop.png"));
-                            ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250,250,Image.SCALE_SMOOTH));
-                            lbEPic.setIcon(icon2);
-                            break;
-                        }
-                        case 2: {
-                            tfHPEnemy.setText(random_enemy.hp+" / " + random_enemy.maxhp);
-                            lbEName.setText(random_enemy.name+ " Lvl "+ random_enemy.level);
-                            EnemyImage = ImageIO.read(new File("src/EnemyImages/darkstalker.png"));
-                            ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250,250,Image.SCALE_SMOOTH));
-                            lbEPic.setIcon(icon2);
-                        break;
-                        }
-                        case 3: {
-                            tfHPEnemy.setText(random_enemy.hp+" / " + random_enemy.maxhp);
-                            lbEName.setText(random_enemy.name+" Lvl "+ random_enemy.level);
-                            EnemyImage = ImageIO.read(new File("src/EnemyImages/skeleton.png"));
-                            ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250,250,Image.SCALE_SMOOTH));
-                            lbEPic.setIcon(icon2);
-                            break;
-                        }
-                        case 4: {
-                            tfHPEnemy.setText(random_enemy.hp+" / " + random_enemy.maxhp);
-                            lbEName.setText(random_enemy.name+" Lvl "+ random_enemy.level);
-                            EnemyImage = ImageIO.read(new File("src/EnemyImages/suiciderock.png"));
-                                ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
-                                lbEPic.setIcon(icon2);
-                        break;
-                        }
+                    lbAName.setText(chosen.name + " Lvl " + chosen.level);
+                    tfHPChara.setText(chosen.hp + " / " + chosen.maxhp);
+                    image = ImageIO.read(new File("src/JobImages/priest.png"));
+                    ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
+                    lbAPic.setIcon(icon);
+                } else if (chosen instanceof Job.Knight) {
+                    if (chosen == null || !chosen.isAlive()) {
+                        chosen = new Job.Knight();
                     }
+                    lbAName.setText(chosen.name + " Lvl " + chosen.level);
+                    tfHPChara.setText(chosen.hp + " / " + chosen.maxhp);
+                    image = ImageIO.read(new File("src/JobImages/knight.png"));
+                    ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
+                    lbAPic.setIcon(icon);
+                } else if (chosen instanceof Job.Mage) {
+                    if (chosen == null || !chosen.isAlive()) {
+                        chosen = new Job.Mage();
+                    }
+                    lbAName.setText(chosen.name + " Lvl " + chosen.level);
+                    tfHPChara.setText(chosen.hp + " / " + chosen.maxhp);
+                    image = ImageIO.read(new File("src/JobImages/mage.png"));
+                    ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
+                    lbAPic.setIcon(icon);
+                }
 
-                    //level sa kontra
-                    System.out.println("This is random enemy "+random_enemy);
-                    //}
+                getEnemy();
+
+
+                //level sa kontra
+                System.out.println("This is random enemy " + random_enemy);
+                //}
 
 //                Enemy random_enemy = /*find way para makuha ni basta kato random thingy i told u hahaah*/
                 //} catch (ClassNotFoundException ex) {
-                 //   System.out.println(ex.getMessage());
+                //   System.out.println(ex.getMessage());
 //                    JOptionPane.showMessageDialog(this, "Select a class");
-                }catch (Exception io){
-                    throw new RuntimeException(io);
-                }
+            } catch (Exception io) {
+                throw new RuntimeException(io);
+            }
 
 
 
@@ -189,7 +152,7 @@ public class Capstone extends JFrame{
         bInfo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(mainPanel,"InfoPanel");
+                cardLayout.show(mainPanel, "InfoPanel");
 
                 cbJobInfo.removeAllItems();
 
@@ -209,19 +172,37 @@ public class Capstone extends JFrame{
             }
         });
 
-        bSelect.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(mainPanel,"SelectPanel");
-            }
-        });
-        bSelect2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(mainPanel,"SelectPanel");
-            }
+        bSelect.addActionListener(e->{
+           //di mogana lolz
+            //if (chosen.hp <= 0) {
+                System.out.println("hi");
+                try {
+                    JOptionPane.showConfirmDialog(this, "Would you like to save your character's progress?");
+                int slot = 0;
+                    System.out.println(slot);
+                if (JOptionPane.YES_OPTION == 0) {
+                    String filePath = "src/gameProgress.txt";
+                    List<String> Stats = readBetween(filePath, '!');
+                        if (slot == 0 && chosen != null) {
+                            changeContent(filePath,'!');
+                        } else if (slot == 1) {
+                            changeContent(filePath,'@');
+                        } else if (slot == 2) {
+                            changeContent(filePath,'#');
+                        } else {
+                            JOptionPane.showConfirmDialog(this, "Slot is full.\n Would you like to replace slot 3?");
+                        }
+                }
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+           // }
+                cardLayout.show(mainPanel, "SelectPanel");
         });
 
+        bSelect2.addActionListener(e->{
+                cardLayout.show(mainPanel, "SelectPanel");
+        });
 
 
         cbJobInfo.addActionListener(new ActionListener() {
@@ -233,7 +214,7 @@ public class Capstone extends JFrame{
 
                 String symbol;
 
-                if(selectedChar != null) {
+                if (selectedChar != null) {
                     String charDetails = "src/CharacterDetails";
 
                     try {
@@ -247,9 +228,9 @@ public class Capstone extends JFrame{
                         };
 
                         int startSymbol = details.indexOf(symbol);
-                        int endSymbol = details.indexOf(symbol, startSymbol+1);
+                        int endSymbol = details.indexOf(symbol, startSymbol + 1);
 
-                        if(startSymbol != -1 && endSymbol != -1) {
+                        if (startSymbol != -1 && endSymbol != -1) {
                             jobsInfo.setText(details.substring(startSymbol + symbol.length(), endSymbol));
                         } else {
                             jobsInfo.setText("Not found!");
@@ -271,7 +252,7 @@ public class Capstone extends JFrame{
 
                 String symbol;
 
-                if(selectedChar != null) {
+                if (selectedChar != null) {
                     String charDetails = "src/CharacterDetails";
 
                     try {
@@ -287,9 +268,9 @@ public class Capstone extends JFrame{
                         };
 
                         int startSymbol = details.indexOf(symbol);
-                        int endSymbol = details.indexOf(symbol, startSymbol+1);
+                        int endSymbol = details.indexOf(symbol, startSymbol + 1);
 
-                        if(startSymbol != -1 && endSymbol != -1) {
+                        if (startSymbol != -1 && endSymbol != -1) {
                             enemiesInfo.setText(details.substring(startSymbol + symbol.length(), endSymbol));
                         } else {
                             enemiesInfo.setText("Not found!");
@@ -356,46 +337,42 @@ public class Capstone extends JFrame{
                 }
             }
         });
-        cbJobs.addActionListener(e->{
+        cbJobs.addActionListener(e -> {
 
-                System.out.println("work");
-                Job chosen = (Job) cbJobs.getSelectedItem();
-                chosen2=cbJobs.getSelectedIndex();
-                System.out.println(chosen);
-                if(chosen instanceof Job.Knight){
-                    try {
-                        image = ImageIO.read(new File("src/JobImages/knight.png"));
-                        ImageIcon icon = new ImageIcon(image.getScaledInstance(250,250,Image.SCALE_SMOOTH));
-                        imgLabel.setIcon(icon);
-                        System.out.println("WOrk");
-                        choice[0]=1;
-                    } catch (IOException a) {
-                        throw new RuntimeException(a);
-                    }
-                }else if(chosen instanceof Job.Mage){
-                    try {
-                        image = ImageIO.read(new File("src/JobImages/mage.png"));
-                        ImageIcon icon = new ImageIcon(image.getScaledInstance(250,250,Image.SCALE_SMOOTH));
-                        imgLabel.setIcon(icon);
-                        System.out.println("WOrk");
-                        choice[0]=3;
-                    } catch (IOException a) {
-                        throw new RuntimeException(a);
-                    }
-
-                }else if(chosen instanceof Job.Priest){
-                    try {
-                        image = ImageIO.read(new File("src/JobImages/priest.png"));
-                        ImageIcon icon = new ImageIcon(image.getScaledInstance(250,250,Image.SCALE_SMOOTH));
-                        imgLabel.setIcon(icon);
-                        System.out.println("WOrk");
-                        choice[0]=1;
-                    } catch (IOException a) {
-                       throw new RuntimeException(a);
-                    }
-
+            System.out.println("work");
+            Job chosen = (Job) cbJobs.getSelectedItem();
+            System.out.println(chosen);
+            if (chosen instanceof Job.Knight) {
+                try {
+                    image = ImageIO.read(new File("src/JobImages/knight.png"));
+                    ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
+                    imgLabel.setIcon(icon);
+                    System.out.println("WOrk");
+                } catch (IOException a) {
+                    throw new RuntimeException(a);
                 }
-                System.out.println("worked");
+            } else if (chosen instanceof Job.Mage) {
+                try {
+                    image = ImageIO.read(new File("src/JobImages/mage.png"));
+                    ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
+                    imgLabel.setIcon(icon);
+                    System.out.println("WOrk");
+                } catch (IOException a) {
+                    throw new RuntimeException(a);
+                }
+
+            } else if (chosen instanceof Job.Priest) {
+                try {
+                    image = ImageIO.read(new File("src/JobImages/priest.png"));
+                    ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
+                    imgLabel.setIcon(icon);
+                    System.out.println("WOrk");
+                } catch (IOException a) {
+                    throw new RuntimeException(a);
+                }
+
+            }
+            System.out.println("worked");
 
         });
         bWaS.addActionListener(new ActionListener() {
@@ -554,10 +531,170 @@ public class Capstone extends JFrame{
                 taHighScore.append("kaila mong tokoyami towa");
             }
         });
+        bNewGame.addActionListener(e->{
+            cardLayout.show(mainPanel, "SelectPanel");
+        });
+
+
+        bLoadGame.addActionListener(e -> {
+            cardLayout.show(mainPanel, "LoadPanel");
+        });
+        bGoBack.addActionListener(e -> {
+            cardLayout.show(mainPanel, "StartPanel");
+        });
+
+        bStartBtn.addActionListener(e->{
+            String selected = "Game2";
+
+            String symbol;
+
+            if (selected != null) {
+                String Char = "src/gameProgress.txt";
+
+//                try {
+//                    String details = Files.readString(Paths.get(Char));
+//                    symbol = switch (selected) {
+//                        case "Game1" -> "!";
+//                        case "Game2" -> "@";
+//                        case "Game3" -> "#";
+//                        default -> "";
+//                    };
+//
+//                    int startSym = details.indexOf(symbol);
+//                    int endSym = details.indexOf(symbol, startSym + 1);
+//
+//                    if (startSym != -1 && endSym != -1) {
+//                        System.out.println(details.substring(startSym + symbol.length(), endSym));
+//                    }
+//                } catch (IOException io) {
+//                    throw new RuntimeException(io);
+//                }
+        String loadedFile;
+        List<String> Stats;
+        Battle bat;
+        Random ran;
+        try {
+            if (rbGame1.isSelected()) {
+                Stats = readBetween(Char,'!');
+                if (Stats.size() != 0) {
+                    JOptionPane.showConfirmDialog(this, "Stats: \n Type: " + Stats.get(0) +
+                            "\n Lvl: " + Stats.get(1) +
+                            "\n Dmg: " + Stats.get(2) +
+                            "\n Hp: " + Stats.get(3) +
+                            "\n Maxhp: " + Stats.get(4) +
+                            "\n Exp: " + Stats.get(5) +
+                            "\n Exp Pts: " + Stats.get(6));
+                if (JOptionPane.YES_OPTION == 0) {
+                    ran = new Random();
+                    int val = ran.nextInt(4);
+                    random_enemy = generateEnemy(val);
+
+                    loadJob(Stats);
+                    getEnemy();
+                    cardLayout.show(mainPanel, "BattlePanel");
+
+                } else if (JOptionPane.CANCEL_OPTION == 2) {
+                    return;
+                } else if (JOptionPane.NO_OPTION == 1) {
+                    return;
+                }
+                }else{
+                        System.out.println("No Game Found");
+                }
+            } else if(rbGame2.isSelected()){
+                Stats = readBetween(Char,'@');
+                if (Stats.size() != 0) {
+                    JOptionPane.showConfirmDialog(null, "Stats: \n Type: " + Stats.get(0) +
+                            "\n Lvl: " + Stats.get(1) +
+                            "\n Dmg: " + Stats.get(2) +
+                            "\n Hp: " + Stats.get(3) +
+                            "\n Maxhp: " + Stats.get(4) +
+                            "\n Exp: " + Stats.get(5) +
+                            "\n Exp Pts: " + Stats.get(6));
+                    if (JOptionPane.YES_OPTION == 0) {
+                        ran = new Random();
+                        int val = ran.nextInt(4);
+                        random_enemy = generateEnemy(val);
+
+                        loadJob(Stats);
+                        getEnemy();
+                        cardLayout.show(mainPanel, "BattlePanel");
+
+                    } else if (JOptionPane.CANCEL_OPTION == 2) {
+                        return;
+                    } else if (JOptionPane.NO_OPTION == 1) {
+                        return;
+                    }
+                }else{
+                    System.out.println("No Game Found");
+                }
+            } else if (rbGame3.isSelected()) {
+                bStart.doClick();
+            }
+        }catch (Exception io){
+            throw new RuntimeException(io);
+        }
+            }
+        });
     }
+    private void getEnemy() {
+            try {
+                Random random = new Random();
+                int val;
+                // while(chosen.hp>0) {
+                val = random.nextInt(5);
+                random_enemy = generateEnemy(val);
+                random_enemy.level_up(chosen);
+                switch (val) {
+                    case 0: {
+                        tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxhp);
+                        lbEName.setText(random_enemy.name + " Lvl " + random_enemy.level);
+                        EnemyImage = ImageIO.read(new File("src/EnemyImages/scorpion.png"));
+                        ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
+                        lbEPic.setIcon(icon2);
+                        break;
+                    }
+                    case 1: {
+                        tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxhp);
+                        lbEName.setText(random_enemy.name + " Lvl " + random_enemy.level);
+                        EnemyImage = ImageIO.read(new File("src/EnemyImages/ancientbishop.png"));
+                        ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
+                        lbEPic.setIcon(icon2);
+                        break;
+                    }
+                    case 2: {
+                        tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxhp);
+                        lbEName.setText(random_enemy.name + " Lvl " + random_enemy.level);
+                        EnemyImage = ImageIO.read(new File("src/EnemyImages/darkstalker.png"));
+                        ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
+                        lbEPic.setIcon(icon2);
+                        break;
+                    }
+                    case 3: {
+                        tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxhp);
+                        lbEName.setText(random_enemy.name + " Lvl " + random_enemy.level);
+                        EnemyImage = ImageIO.read(new File("src/EnemyImages/skeleton.png"));
+                        ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
+                        lbEPic.setIcon(icon2);
+                        break;
+                    }
+                    case 4: {
+                        tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxhp);
+                        lbEName.setText(random_enemy.name + " Lvl " + random_enemy.level);
+                        EnemyImage = ImageIO.read(new File("src/EnemyImages/suiciderock.png"));
+                        ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
+                        lbEPic.setIcon(icon2);
+                        break;
+                    }
+                }
+            } catch (IOException io) {
+                throw new RuntimeException(io);
+            }
+        }
 
     private Enemy generateEnemy(int val) {
-        switch (val){
+
+        switch (val) {
             case 0:
                 return new Enemy.Scorpion();
             case 1:
@@ -570,18 +707,135 @@ public class Capstone extends JFrame{
                 return new Enemy.SuicideRock();
         }
     }
+            private Job generateClass(int val) {
+                if(val == 0){
+                    return new Job.Priest();
+                }else if(val == 1){
+                    return new Job.Knight();
+                }else{
+                    return new Job.Mage();
+                }
+            }
 
-    private Job generateClass(int val) {
-        if(val == 0){
-            return new Job.Priest();
-        }else if(val == 1){
-            return new Job.Knight();
-        }else{
-            return new Job.Mage();
+//    private static List<String> readAndAssign(String filePath) throws IOException{
+//        Path path = Paths.get(filePath);
+//        return Files.readAllLines(path);
+//    }
+
+    private void loadJob(List<String> ally) {
+        try {
+            if (ally.get(0).equals("Priest")) {
+                chosen = new Job.Priest("Priest", Integer.parseInt(ally.get(1)),
+                        Integer.parseInt(ally.get(2)), Integer.parseInt(ally.get(3)),
+                        Integer.parseInt(ally.get(4)), Integer.parseInt(ally.get(6)),
+                        Integer.parseInt(ally.get(6)));
+                lbAName.setText(chosen.name + " Lvl " + chosen.level);
+                tfHPChara.setText(chosen.hp + " / " + chosen.maxhp);
+                image = ImageIO.read(new File("src/JobImages/priest.png"));
+                ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
+                lbAPic.setIcon(icon);
+            } else if(ally.get(0).equals("Knight")) {
+                chosen = new Job.Knight("Knight", Integer.parseInt(ally.get(1)),
+                        Integer.parseInt(ally.get(2)), Integer.parseInt(ally.get(3)),
+                        Integer.parseInt(ally.get(4)), Integer.parseInt(ally.get(6)),
+                        Integer.parseInt(ally.get(6)));
+                lbAName.setText(chosen.name + " Lvl " + chosen.level);
+                tfHPChara.setText(chosen.hp + " / " + chosen.maxhp);
+                image = ImageIO.read(new File("src/JobImages/knight.png"));
+                ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
+                lbAPic.setIcon(icon);
+            } else {
+                chosen = new Job.Mage("Mage", Integer.parseInt(ally.get(1)),
+                        Integer.parseInt(ally.get(2)), Integer.parseInt(ally.get(3)),
+                        Integer.parseInt(ally.get(4)), Integer.parseInt(ally.get(6)),
+                        Integer.parseInt(ally.get(6)));
+                lbAName.setText(chosen.name + " Lvl " + chosen.level);
+                tfHPChara.setText(chosen.hp + " / " + chosen.maxhp);
+                image = ImageIO.read(new File("src/JobImages/mage.png"));
+                ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
+                lbAPic.setIcon(icon);
+            }
+        }catch(IOException io) {
+            throw new RuntimeException(io);
         }
     }
 
+    private List<String> readBetween(String filePath, char symbol) throws IOException{
+        char startSymbol, endSymbol;
+        startSymbol = endSymbol = symbol;
+        Path path = Paths.get(filePath);
+        List<String> Stats = Files.readAllLines(path);
+        List<String> between = new ArrayList<>();
+        boolean isInside = false;
 
+        for(String s : Stats){
+            if(s.equals(String.valueOf(startSymbol))){
+                isInside = true;
+            } else if(s.equals(String.valueOf(endSymbol))){
+                isInside = false;
+            } else if(isInside){
+                between.add(s);
+            }
+        }
+        return between;
+    }
 
+    private String saveGame(String stats, String sym, List<String> replacement){
+        int startSym = stats.indexOf(sym);
+        int endSym = stats.indexOf(sym, startSym+1);
+
+        if(startSym != -1 && endSym != -1){
+            String prefix = stats.substring(0, startSym + sym.length());
+            String suffix = stats.substring(endSym);
+            return prefix + replacement + suffix;
+        }else{
+            return stats;
+        }
+    }
+    private int getSlot() throws IOException {
+        List<String> tempslot = readBetween("src/gameProgress.txt",'$');
+        int slot = Integer.parseInt(tempslot.toString());
+        return slot;
+    }
+    private void writeStats(String path, char sym, List<String> content) throws IOException{
+        List<String> fileContent = Files.readAllLines(Paths.get(path));
+        List<String> newFileContent = new ArrayList<>();
+
+        char startSym = sym;
+        boolean isInside = false;
+        for (String line : fileContent) {
+            if (line.equals(String.valueOf(startSym))) {
+                isInside = !isInside;
+                newFileContent.add(line);
+                if (isInside) {
+                    newFileContent.addAll(content);
+                }
+            } else if (!isInside) {
+                newFileContent.add(line);
+            }else if(line.equals(String.valueOf(sym))){
+                newFileContent.add(line);
+                isInside = false;
+            }
+        }
+
+        Files.write(Paths.get(path), newFileContent);
+    }
+    private void changeContent(String filePath,char sym) throws IOException {
+        List <String> saved = new ArrayList<>();
+        saved.add(chosen.getName());
+        saved.add(String.valueOf(chosen.getLevel()));
+        saved.add(String.valueOf(chosen.getDmg()));
+        saved.add(String.valueOf(chosen.getHp()));
+        saved.add(String.valueOf(chosen.maxhp));
+        saved.add(String.valueOf(chosen.getExp()));
+        saved.add(String.valueOf(chosen.getExp_points()));
+        System.out.println(saved);
+        writeStats(filePath,sym,saved);
+    }
+    private void addSlot(){
+        char sym = '$';
+    }
 }
+
+
 

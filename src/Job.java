@@ -1,7 +1,10 @@
+import javax.swing.*;
+
 public abstract class Job extends Character implements LevelUp {
     private int mana;
     private int stamina;
     private static int armor;
+    private Job jobObject;
 
     private int exp;
     private int exp_points;
@@ -35,6 +38,7 @@ public abstract class Job extends Character implements LevelUp {
         this.exp_points = exp_points;
     }
 
+
     public Job(String name, int level, int dmg, int hp, int maxhp,int exp, int exp_points) {
         super(name, level, dmg, hp,maxhp);
         this.exp = exp;
@@ -42,6 +46,7 @@ public abstract class Job extends Character implements LevelUp {
         this.mana = 100;
         this.stamina = 100;
     }
+
 
     // Setters
     public void setMana(int mana) {
@@ -75,7 +80,9 @@ public abstract class Job extends Character implements LevelUp {
 
     public static class Mage extends Job {
 
-
+        public Mage(String name, int level, int dmg, int hp, int maxhp, int exp, int exp_points) {
+            super(name, level, dmg, hp, maxhp, exp, exp_points);
+        }
         @Override
         public String attack(Enemy e) {
             int damage = lightning_bolt();
@@ -148,6 +155,10 @@ public abstract class Job extends Character implements LevelUp {
             super("Knight",1,8,250,250,20,0);
         }
 
+        public Knight(String name, int level, int dmg, int hp, int maxhp, int exp, int exp_points) {
+            super(name, level, dmg, hp, maxhp, exp, exp_points);
+        }
+
         void shield(){
             int armor_val = 10;
             setArmor(getArmor() + armor_val);
@@ -214,10 +225,14 @@ public abstract class Job extends Character implements LevelUp {
     }
 
     public static class Priest extends Job {
-
         public Priest() {
             super("Priest",1,15,120,120,20,0);
         }
+
+        public Priest(String name, int level, int dmg, int hp, int maxhp, int exp, int exp_points) {
+            super(name, level, dmg, hp, maxhp, exp, exp_points);
+        }
+
 
         void heal(){
             int heal_val = 10;
