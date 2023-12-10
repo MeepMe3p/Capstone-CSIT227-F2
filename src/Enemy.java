@@ -2,7 +2,6 @@ import java.util.Random;
 
 public abstract class Enemy extends Character implements Enemy_LevelUp{
     Random rand = new Random();
-
     private double[]  probabilities;
 
     public Enemy(String name, int level, int dmg, int hp, int maxhp, double[] probabilities) {
@@ -12,6 +11,31 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
 
     public double[] getProbabilities() {
         return probabilities;
+    }
+
+    public void level_up(Job job) {
+        if(job == null){
+            throw new NullPointerException("You need to get a job XD");
+        }
+        int plusLevel = rand.nextInt(3)-1;
+        int num = job.getLevel();
+        this.level = num + plusLevel;
+
+        if(this.level == 0 || job.level == 1){
+            this.level = 1;
+            return;
+        }
+        improve_stats();
+    }
+
+    public void improve_stats() {
+        this.dmg += this.level * 3;
+        this.maxHp += this.level * 5;
+        this.hp = this.maxHp;
+    }
+
+    public int give_exp(Job job) {
+        return 0;
     }
 
 
@@ -46,33 +70,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
 //            +out.println(this.name + " attacked with his poison stinger and dealt " + sting_damage + " damage");
         }
 
-        @Override
-        public void level_up(Job job) {
-            int plusLevel = rand.nextInt(3)-1;
-            try{
-                int num = job.getLevel();
-                this.level = num + plusLevel;
-            }catch(NullPointerException a){
-                throw new NullPointerException("You need to get a job XD");
-            }
-            if(this.level == 0 || job.level == 1){
-                this.level = 1;
-                return;
-            }
-            improve_stats();
-        }
 
-        @Override
-        public void improve_stats() {
-            this.dmg += this.level * 3;
-            this.maxhp += this.level * 5;
-            this.hp = this.maxhp;
-        }
-
-        @Override
-        public int give_exp(Job job) {
-            return 0;
-        }
     }
 
     public static class SuicideRock extends Enemy implements EnemyActions{
@@ -132,8 +130,8 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         @Override
         public void improve_stats() {
             this.dmg += this.level * 3;
-            this.maxhp += this.level * 5;
-            this.hp = this.maxhp;
+            this.maxHp += this.level * 5;
+            this.hp = this.maxHp;
         }
 
         @Override
@@ -196,8 +194,8 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         @Override
         public void improve_stats() {
             this.dmg += this.level * 3;
-            this.maxhp += this.level * 5;
-            this.hp = this.maxhp;
+            this.maxHp += this.level * 5;
+            this.hp = this.maxHp;
         }
 
         @Override
@@ -267,8 +265,8 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         @Override
         public void improve_stats() {
             this.dmg += this.level * 3;
-            this.maxhp += this.level * 5;
-            this.hp = this.maxhp;
+            this.maxHp += this.level * 5;
+            this.hp = this.maxHp;
         }
 
         @Override
@@ -337,8 +335,8 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         @Override
         public void improve_stats() {
             this.dmg += this.level * 3;
-            this.maxhp += this.level * 5;
-            this.hp = this.maxhp;
+            this.maxHp += this.level * 5;
+            this.hp = this.maxHp;
         }
 
         @Override

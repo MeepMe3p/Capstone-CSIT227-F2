@@ -8,12 +8,12 @@ public class BattleBuilder {
     boolean waitButton;
     JTextField tfEnemyHP;
     JTextField tfJobHP;
-    BattleSequence battleSeq;
+    JTextArea battleSeq;
 
-    public BattleBuilder(Job job, Enemy enemy/*,BattleSequence battleSeq*/) {
+    public BattleBuilder(Job job, Enemy enemy,/*,BattleSequence battleSeq*/JTextArea textField) {
         this.job = job;
         this.enemy = enemy;
-//        this.battleSeq = battleSeq;
+      this.battleSeq = textField;
     }
 
     public BattleBuilder setTfEnemyHP(JTextField tfEnemyHP) {

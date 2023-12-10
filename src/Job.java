@@ -1,11 +1,6 @@
-import javax.swing.*;
+
 
 public abstract class Job extends Character implements LevelUp {
-    private int mana;
-    private int stamina;
-    private static int armor;
-    private Job jobObject;
-
     private int exp;
     private int exp_points;
     private int total_dmg;
@@ -39,50 +34,27 @@ public abstract class Job extends Character implements LevelUp {
     }
 
 
-    public Job(String name, int level, int dmg, int hp, int maxhp,int exp, int exp_points) {
-        super(name, level, dmg, hp,maxhp);
+    public Job(String name, int level, int dmg, int hp, int maxHp,int exp, int exp_points) {
+        super(name, level, dmg, hp,maxHp);
         this.exp = exp;
         this.exp_points = exp_points;
-        this.mana = 100;
-        this.stamina = 100;
     }
 
 
-    // Setters
-    public void setMana(int mana) {
-        // limits mana up to 100
-        this.mana = Math.min(mana, 100);
-    }
 
-    public void setStamina(int stamina) {
-        // limits stamina up to 100
-        this.stamina = Math.min(stamina, 100);
-    }
-
-    public void setArmor(int armor) {
-        Job.armor = armor;
-    }
-
-    // Getters
-    public int getMana() {
-        return mana;
-    }
-
-    public int getStamina() {
-        return stamina;
-    }
-
-    public int getArmor() {
-        return armor;
-    }
 
 
 
     public static class Mage extends Job {
 
-        public Mage(String name, int level, int dmg, int hp, int maxhp, int exp, int exp_points) {
-            super(name, level, dmg, hp, maxhp, exp, exp_points);
+        public Mage(String name, int level, int dmg, int hp, int maxHp, int exp, int exp_points) {
+            super(name, level, dmg, hp, maxHp, exp, exp_points);
         }
+
+        public Mage() {
+            super("Mage",1,7,75,75,20,0);
+        }
+
         @Override
         public String attack(Enemy e) {
             int damage = lightning_bolt();
@@ -99,21 +71,11 @@ public abstract class Job extends Character implements LevelUp {
         public String skill(Enemy e) {
             int damage = fire_ball();
             e.hp-=damage;
-            return this.name + " lauched a fireball to "+e.name;
+            return this.name + "  casts a fire ball spell to "+e.name;
         }
 
-        public Mage() {
-            super("Mage",1,7,75,75,20,0);
-        }
-
-        void concentrate(){
-            int mana_val = 10;
-            setMana(getMana() + mana_val);
-//            System.out.println(" concentrates and recovered" + mana_val + " mana!");
-        }
 
         int fire_ball(){
-//            System.out.println(" casts a fire ball spell and deals" + dmg + " pts!");
             setTotal_dmg(dmg);
             return dmg;
         }
@@ -144,8 +106,8 @@ public abstract class Job extends Character implements LevelUp {
         @Override
         public void improve_stats() {
             this.dmg +=  5;
-            this.maxhp += 10;
-            this.hp = this.maxhp;
+            this.maxHp += 10;
+            this.hp = this.maxHp;
         }
     }
 
@@ -155,14 +117,8 @@ public abstract class Job extends Character implements LevelUp {
             super("Knight",1,8,250,250,20,0);
         }
 
-        public Knight(String name, int level, int dmg, int hp, int maxhp, int exp, int exp_points) {
-            super(name, level, dmg, hp, maxhp, exp, exp_points);
-        }
-
-        void shield(){
-            int armor_val = 10;
-            setArmor(getArmor() + armor_val);
-//            System.out.println(" used shield and now has " + armor + " armor!");
+        public Knight(String name, int level, int dmg, int hp, int maxHp, int exp, int exp_points) {
+            super(name, level, dmg, hp, maxHp, exp, exp_points);
         }
 
         int slash(){
@@ -219,8 +175,8 @@ public abstract class Job extends Character implements LevelUp {
         @Override
         public void improve_stats() {
             this.dmg +=  5;
-            this.maxhp += 10;
-            this.hp = this.maxhp;
+            this.maxHp += 10;
+            this.hp = this.maxHp;
         }
     }
 
@@ -229,28 +185,18 @@ public abstract class Job extends Character implements LevelUp {
             super("Priest",1,15,120,120,20,0);
         }
 
-        public Priest(String name, int level, int dmg, int hp, int maxhp, int exp, int exp_points) {
-            super(name, level, dmg, hp, maxhp, exp, exp_points);
+        public Priest(String name, int level, int dmg, int hp, int maxHp, int exp, int exp_points) {
+            super(name, level, dmg, hp, maxHp, exp, exp_points);
         }
 
-
-        void heal(){
-            int heal_val = 10;
-            // need setter
-        }
 
         int light_ray(){
-//            int dmg = 8;
-//            System.out.println(" casts light and deals " + this.dmg + " pts!");
             setTotal_dmg(dmg);
             return this.dmg;
         }
 
         int holy_smite(){
-//            int dmg = 16;
-//            System.out.println(" invokes Holy Smite and deals " + this.dmg + " pts!");
             int healingPower = 10;
-//            System.out.println(" casts healing and has recovered" + healingPower + " hp!");
             this.hp += healingPower;
             setTotal_dmg(dmg);
 
@@ -296,8 +242,8 @@ public abstract class Job extends Character implements LevelUp {
         @Override
         public void improve_stats() {
             this.dmg +=  5;
-            this.maxhp += 10;
-            this.hp = this.maxhp;
+            this.maxHp += 10;
+            this.hp = this.maxHp;
         }
     }
 }

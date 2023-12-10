@@ -3,7 +3,7 @@ public abstract class Character {
     int level;
     int dmg;
     int hp;
-    int maxhp;
+    int maxHp;
 
     public String getName() {
         return name;
@@ -21,12 +21,12 @@ public abstract class Character {
         return hp;
     }
 
-    public Character(String name, int level, int dmg, int hp, int maxhp) {
+    public Character(String name, int level, int dmg, int hp, int maxHp) {
         this.name = name;
         this.level = level;
         this.dmg = dmg;
         this.hp = hp;
-        this.maxhp = maxhp;
+        this.maxHp = maxHp;
     }
 
     @Override

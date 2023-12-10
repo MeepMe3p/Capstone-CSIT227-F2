@@ -54,18 +54,19 @@ public class Capstone extends JFrame {
     private JRadioButton rbGame1;
     private JRadioButton rbGame3;
     private JButton bStartBtn;
+    private JTextArea textArea1;
     private Image image;
     private Image EnemyImage;
     private Enemy random_enemy;
     private Job chosen;
-    private BattleSequence battleSeq = null;
+
+    private JScrollPane jScrollPane;
 
     private final String highScoreFile = "src/HighScores";
     private int total_dmg;
     private int enemies_killed;
     private int bosses_killed;
     public Capstone(){
-
         JFrame frame = new JFrame("Group 8 Capstone");
         frame.setContentPane(this.mainPanel);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -93,18 +94,23 @@ public class Capstone extends JFrame {
 //
 //            if(battleSeq != null){
 //                battleSeq.removeFrame();
-//            }
-//            battleSeq = new BattleSequence();
+//
+//            textArea1 = (JTextArea) jScrollPane.getViewport().getView();
 
+            // clear text area inside when a battle starts
+
+            textArea1 .setText("");
             try {
                 cardLayout.show(mainPanel, "BattlePanel");
                 chosen = (Job) cbJobs.getSelectedItem();
+
+
                 if (chosen instanceof Job.Priest) {
                     if (chosen == null || !chosen.isAlive()) {
                         chosen = new Job.Priest();
                     }
                     lbAName.setText(chosen.name + " Lvl " + chosen.level);
-                    tfHPChara.setText(chosen.hp + " / " + chosen.maxhp);
+                    tfHPChara.setText(chosen.hp + " / " + chosen.maxHp);
                     image = ImageIO.read(new File("src/JobImages/priest.png"));
                     ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
                     lbAPic.setIcon(icon);
@@ -113,7 +119,7 @@ public class Capstone extends JFrame {
                         chosen = new Job.Knight();
                     }
                     lbAName.setText(chosen.name + " Lvl " + chosen.level);
-                    tfHPChara.setText(chosen.hp + " / " + chosen.maxhp);
+                    tfHPChara.setText(chosen.hp + " / " + chosen.maxHp);
                     image = ImageIO.read(new File("src/JobImages/knight.png"));
                     ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
                     lbAPic.setIcon(icon);
@@ -122,7 +128,7 @@ public class Capstone extends JFrame {
                         chosen = new Job.Mage();
                     }
                     lbAName.setText(chosen.name + " Lvl " + chosen.level);
-                    tfHPChara.setText(chosen.hp + " / " + chosen.maxhp);
+                    tfHPChara.setText(chosen.hp + " / " + chosen.maxHp);
                     image = ImageIO.read(new File("src/JobImages/mage.png"));
                     ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
                     lbAPic.setIcon(icon);
@@ -287,7 +293,7 @@ public class Capstone extends JFrame {
         bSkill.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Battle battle = new BattleBuilder(chosen,random_enemy/*,battleSeq*/).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).setSkillButton(true).build();
+                Battle battle = new BattleBuilder(chosen,random_enemy,textArea1).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).setSkillButton(true).build();
                 BufferedWriter write_hs = null;
                 //if magmake ug antoher buffered writer declare lang diri pareha sa line 398
                 try {
@@ -378,7 +384,7 @@ public class Capstone extends JFrame {
         bWaS.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Battle battle = new BattleBuilder(chosen,random_enemy/*,battleSeq*/).setWaitButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
+                Battle battle = new BattleBuilder(chosen,random_enemy,/*,battleSeq*/textArea1).setWaitButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
                 BufferedWriter write_hs = null;
                 //if magmake ug antoher buffered writer declare lang diri pareha sa line 398
                 try {
@@ -435,7 +441,7 @@ public class Capstone extends JFrame {
         bAttack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Battle battle = new BattleBuilder(chosen,random_enemy/*,battleSeq*/).setAttackButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
+                Battle battle = new BattleBuilder(chosen,random_enemy,/*,battleSeq*/textArea1).setAttackButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
                 BufferedWriter write_hs = null;
                 //if magmake ug antoher buffered writer declare lang diri pareha sa line 398
                 try {
@@ -647,7 +653,7 @@ public class Capstone extends JFrame {
                 random_enemy.level_up(chosen);
                 switch (val) {
                     case 0: {
-                        tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxhp);
+                        tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxHp);
                         lbEName.setText(random_enemy.name + " Lvl " + random_enemy.level);
                         EnemyImage = ImageIO.read(new File("src/EnemyImages/scorpion.png"));
                         ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
@@ -655,7 +661,7 @@ public class Capstone extends JFrame {
                         break;
                     }
                     case 1: {
-                        tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxhp);
+                        tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxHp);
                         lbEName.setText(random_enemy.name + " Lvl " + random_enemy.level);
                         EnemyImage = ImageIO.read(new File("src/EnemyImages/ancientbishop.png"));
                         ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
@@ -663,7 +669,7 @@ public class Capstone extends JFrame {
                         break;
                     }
                     case 2: {
-                        tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxhp);
+                        tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxHp);
                         lbEName.setText(random_enemy.name + " Lvl " + random_enemy.level);
                         EnemyImage = ImageIO.read(new File("src/EnemyImages/darkstalker.png"));
                         ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
@@ -671,7 +677,7 @@ public class Capstone extends JFrame {
                         break;
                     }
                     case 3: {
-                        tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxhp);
+                        tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxHp);
                         lbEName.setText(random_enemy.name + " Lvl " + random_enemy.level);
                         EnemyImage = ImageIO.read(new File("src/EnemyImages/skeleton.png"));
                         ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
@@ -679,7 +685,7 @@ public class Capstone extends JFrame {
                         break;
                     }
                     case 4: {
-                        tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxhp);
+                        tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxHp);
                         lbEName.setText(random_enemy.name + " Lvl " + random_enemy.level);
                         EnemyImage = ImageIO.read(new File("src/EnemyImages/suiciderock.png"));
                         ImageIcon icon2 = new ImageIcon(EnemyImage.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
@@ -691,7 +697,7 @@ public class Capstone extends JFrame {
                 throw new RuntimeException(io);
             }
         }
-
+    // creates the enemy specified by the random generator
     private Enemy generateEnemy(int val) {
 
         switch (val) {
@@ -707,15 +713,6 @@ public class Capstone extends JFrame {
                 return new Enemy.SuicideRock();
         }
     }
-            private Job generateClass(int val) {
-                if(val == 0){
-                    return new Job.Priest();
-                }else if(val == 1){
-                    return new Job.Knight();
-                }else{
-                    return new Job.Mage();
-                }
-            }
 
 //    private static List<String> readAndAssign(String filePath) throws IOException{
 //        Path path = Paths.get(filePath);
@@ -730,7 +727,7 @@ public class Capstone extends JFrame {
                         Integer.parseInt(ally.get(4)), Integer.parseInt(ally.get(6)),
                         Integer.parseInt(ally.get(6)));
                 lbAName.setText(chosen.name + " Lvl " + chosen.level);
-                tfHPChara.setText(chosen.hp + " / " + chosen.maxhp);
+                tfHPChara.setText(chosen.hp + " / " + chosen.maxHp);
                 image = ImageIO.read(new File("src/JobImages/priest.png"));
                 ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
                 lbAPic.setIcon(icon);
@@ -740,7 +737,7 @@ public class Capstone extends JFrame {
                         Integer.parseInt(ally.get(4)), Integer.parseInt(ally.get(6)),
                         Integer.parseInt(ally.get(6)));
                 lbAName.setText(chosen.name + " Lvl " + chosen.level);
-                tfHPChara.setText(chosen.hp + " / " + chosen.maxhp);
+                tfHPChara.setText(chosen.hp + " / " + chosen.maxHp);
                 image = ImageIO.read(new File("src/JobImages/knight.png"));
                 ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
                 lbAPic.setIcon(icon);
@@ -750,7 +747,7 @@ public class Capstone extends JFrame {
                         Integer.parseInt(ally.get(4)), Integer.parseInt(ally.get(6)),
                         Integer.parseInt(ally.get(6)));
                 lbAName.setText(chosen.name + " Lvl " + chosen.level);
-                tfHPChara.setText(chosen.hp + " / " + chosen.maxhp);
+                tfHPChara.setText(chosen.hp + " / " + chosen.maxHp);
                 image = ImageIO.read(new File("src/JobImages/mage.png"));
                 ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
                 lbAPic.setIcon(icon);
@@ -826,7 +823,7 @@ public class Capstone extends JFrame {
         saved.add(String.valueOf(chosen.getLevel()));
         saved.add(String.valueOf(chosen.getDmg()));
         saved.add(String.valueOf(chosen.getHp()));
-        saved.add(String.valueOf(chosen.maxhp));
+        saved.add(String.valueOf(chosen.maxHp));
         saved.add(String.valueOf(chosen.getExp()));
         saved.add(String.valueOf(chosen.getExp_points()));
         System.out.println(saved);
