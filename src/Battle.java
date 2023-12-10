@@ -42,17 +42,17 @@ public class Battle {
     public void performAction() {
         if (attackButton) {
             battleSeq.append(job.attack(enemy)+"\n");
-            job.attack(enemy);
+//            job.attack(enemy);
             tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxHp);
             tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxHp);
         } else if (skillButton) {
             battleSeq.append(job.skill(enemy)+"\n");
-            job.skill(enemy);
+//            job.skill(enemy);
             tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxHp);
             tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxHp);
         } else if (waitButton) {
             battleSeq.append(job.wait_and_see()+"\n");
-            job.wait_and_see();
+//            job.wait_and_see();
             tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxHp);
             tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxHp);
         }
@@ -88,7 +88,7 @@ public class Battle {
             battleSeq.append(monster.skill(job, randomSkillIndex)+"\n");
         } else {
             battleSeq.append(monster.wait_and_see()+"\n");
-            monster.wait_and_see();
+//            monster.wait_and_see();
         }
         battleSeq.setForeground(Color.WHITE);
     }

@@ -34,8 +34,8 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         this.hp = this.maxHp;
     }
 
-    public int give_exp(Job job) {
-        return 0;
+    public int give_exp() {
+        return level*5;
     }
 
 
@@ -135,8 +135,8 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         }
 
         @Override
-        public int give_exp(Job job) {
-            return 0;
+        public int give_exp() {
+            return level * 5;
         }
     }
 
@@ -199,8 +199,8 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         }
 
         @Override
-        public int give_exp(Job job) {
-            return 0;
+        public int give_exp() {
+            return level*5;
         }
     }
 
@@ -270,8 +270,8 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         }
 
         @Override
-        public int give_exp(Job job) {
-            return 0;
+        public int give_exp() {
+            return level * 10;
         }
 
     }
@@ -340,8 +340,8 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         }
 
         @Override
-        public int give_exp(Job job) {
-            return 0;
+        public int give_exp() {
+            return level * 10;
         }
     }
 }

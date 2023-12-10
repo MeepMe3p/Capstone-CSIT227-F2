@@ -88,7 +88,7 @@ public abstract class Job extends Character implements LevelUp {
 
         @Override
         public void gain_exp(int exp_amount) {
-            this.setExp_points(this.getExp() + exp_amount);
+            this.setExp_points(this.getExp_points() + exp_amount);
             if(this.getExp_points() >= this.getExp()){
                 this.setExp(10);
                 this.setExp_points(0);
@@ -156,7 +156,7 @@ public abstract class Job extends Character implements LevelUp {
         }
         @Override
         public void gain_exp(int exp_amount) {
-            this.setExp_points(this.getExp() + exp_amount);
+            this.setExp_points(this.getExp_points() + exp_amount);
             if(this.getExp_points() >= this.getExp()){
                 this.setExp(10);
                 this.setExp_points(0);
@@ -224,7 +224,9 @@ public abstract class Job extends Character implements LevelUp {
         }
         @Override
         public void gain_exp(int exp_amount) {
-            this.setExp_points(this.getExp() + exp_amount);
+            this.setExp_points(this.getExp_points() + exp_amount);
+//            System.out.println("exp needed "+getExp()+" "+getExp_points()+"aaaaaaa");
+
             if(this.getExp_points() >= this.getExp()){
                 this.setExp(10);
                 this.setExp_points(0);
@@ -241,8 +243,8 @@ public abstract class Job extends Character implements LevelUp {
 
         @Override
         public void improve_stats() {
-            this.dmg +=  5;
-            this.maxHp += 10;
+            this.dmg +=  level + 5;
+            this.maxHp += maxHp + 10;
             this.hp = this.maxHp;
         }
     }
