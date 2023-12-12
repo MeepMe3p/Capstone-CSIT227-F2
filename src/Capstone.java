@@ -72,7 +72,7 @@ public class Capstone extends JFrame implements MusicPlayer{
     private Clip main_Sound = null;
     public Capstone(){
         if(main_Sound == null){
-            main_Sound = MusicPlayer.startMusic("C:\\Users\\hp\\Downloads\\main.wav");
+            main_Sound = MusicPlayer.startMusic("src\\sounds\\main.wav");
         }
 
         JFrame frame = new JFrame("Group 8 Capstone");
@@ -112,7 +112,7 @@ public class Capstone extends JFrame implements MusicPlayer{
             if(battle_Sound == null){
                 main_Sound.close();
                 main_Sound = null;
-                battle_Sound = MusicPlayer.startMusic("C:\\Users\\hp\\Downloads\\battle.wav");
+                battle_Sound = MusicPlayer.startMusic("src\\sounds\\battle.wav");
             }
 
 
@@ -207,7 +207,7 @@ public class Capstone extends JFrame implements MusicPlayer{
                     if(battle_Sound != null){
                         battle_Sound.close();
                         battle_Sound = null;
-                        main_Sound = MusicPlayer.startMusic("C:\\Users\\hp\\Downloads\\main.wav");
+                        main_Sound = MusicPlayer.startMusic("src\\sounds\\main.wav");
                     }
 
                     String filePath = "src/gameProgress.txt";
@@ -594,7 +594,7 @@ public class Capstone extends JFrame implements MusicPlayer{
             if(!chosen.isAlive()){
                 battle_Sound.close();
                 battle_Sound = null;
-                main_Sound = MusicPlayer.startMusic("C:\\Users\\hp\\Downloads\\main.wav");
+                main_Sound = MusicPlayer.startMusic("src\\sounds\\main.wav");
             }
             bSelect.doClick();
         } catch (IllegalStateException b) {
@@ -611,7 +611,7 @@ public class Capstone extends JFrame implements MusicPlayer{
                 if(!chosen.isAlive()){
                     battle_Sound.close();
                     battle_Sound = null;
-                    main_Sound = MusicPlayer.startMusic("C:\\Users\\hp\\Downloads\\main.wav");
+                    main_Sound = MusicPlayer.startMusic("src\\sounds\\main.wav");
                 }
                 bStart.doClick();
             } else if (selected == JOptionPane.NO_OPTION) {
