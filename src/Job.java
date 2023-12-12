@@ -45,7 +45,7 @@ public abstract class Job extends Character implements LevelUp {
 
 
 
-    public static class Mage extends Job {
+    public static class Mage extends Job implements MusicPlayer{
 
         public Mage(String name, int level, int dmg, int hp, int maxHp, int exp, int exp_points) {
             super(name, level, dmg, hp, maxHp, exp, exp_points);
@@ -57,6 +57,7 @@ public abstract class Job extends Character implements LevelUp {
 
         @Override
         public String attack(Enemy e) {
+            MusicPlayer.startEffect("src\\Sounds\\thunder.wav");
             int damage = lightning_bolt();
             e.hp-=damage;
             return this.name + " shocked "+ e.name +" with a lightning bolt";
@@ -64,11 +65,13 @@ public abstract class Job extends Character implements LevelUp {
 
         @Override
         public String wait_and_see() {
+            MusicPlayer.startEffect("src\\Sounds\\wait.wav");
             return this.name + " is watching and observing";
         }
 
         @Override
         public String skill(Enemy e) {
+            MusicPlayer.startEffect("src\\Sounds\\fire.wav");
             int damage = fire_ball();
             e.hp-=damage;
             return this.name + "  casts a fire ball spell to "+e.name;
@@ -125,13 +128,14 @@ public abstract class Job extends Character implements LevelUp {
 
 //            System.out.println(" slashed the enemy and dealt " + dmg + " pts!");
             setTotal_dmg(dmg);
+
             return dmg;
         }
 
         int dual_slash(){
 //            System.out.println(" slashed the enemy twice and dealt " + dmg + " pts!");
             setTotal_dmg(dmg*2);
-
+            MusicPlayer.startEffect("src\\Sounds\\double-slash.wav");
             return dmg*2;
         }
 
@@ -139,11 +143,13 @@ public abstract class Job extends Character implements LevelUp {
         public String attack(Enemy enemy) {
             int slash_damage = slash();
             enemy.hp -= slash_damage;
+            MusicPlayer.startEffect("src\\Sounds\\slash.wav");
             return this.name + " slashed "+enemy.name+" with his sword";
         }
 
         @Override
         public String wait_and_see() {
+            MusicPlayer.startEffect("src\\Sounds\\wait.wav");
             return this.name + " is watching and observing";
 
         }
@@ -207,11 +213,13 @@ public abstract class Job extends Character implements LevelUp {
         public String attack(Enemy enemy) {
              int a = light_ray();
              enemy.hp -= a;
+             MusicPlayer.startEffect("src\\Sounds\\heal1.wav");
              return this.name + " pierced "+enemy.name+" with a light ray";
         }
 
         @Override
         public String wait_and_see() {
+            MusicPlayer.startEffect("src\\Sounds\\wait.wav");
             return this.name + " is watching and observing";
         }
 
@@ -220,6 +228,7 @@ public abstract class Job extends Character implements LevelUp {
             int a = holy_smite();
             enemy.hp -= a;
             //haha smote ang past tense sa smite??
+            MusicPlayer.startEffect("src\\Sounds\\heal1.wav");
             return this.name+" smote "+enemy.name+" and healed himself";
         }
         @Override
