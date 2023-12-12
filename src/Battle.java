@@ -41,10 +41,11 @@ public class Battle {
 
     public void performAction() {
         if (attackButton) {
-            battleSeq.append(job.attack(enemy)+"\n");
+            battleSeq.append(job.attack(enemy)+"\n" );
 //            job.attack(enemy);
             tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxHp);
             tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxHp);
+
         } else if (skillButton) {
             battleSeq.append(job.skill(enemy)+"\n");
 //            job.skill(enemy);

@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +15,7 @@ import java.util.Random;
 import java.nio.file.Path;
 import java.util.List;
 
-public class Capstone extends JFrame {
+public class Capstone extends JFrame implements MusicPlayer{
     private JPanel mainPanel;
     private JPanel selectPanel;
     private JPanel battlePanel;
@@ -66,7 +67,14 @@ public class Capstone extends JFrame {
     private int total_dmg;
     private int enemies_killed;
     private int bosses_killed;
+
+    private Clip battle_Sound = null;
+    private Clip main_Sound = null;
     public Capstone(){
+        if(main_Sound == null){
+            main_Sound = MusicPlayer.startMusic("C:\\Users\\hp\\Downloads\\main.wav");
+        }
+
         JFrame frame = new JFrame("Group 8 Capstone");
         frame.setContentPane(this.mainPanel);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -79,8 +87,6 @@ public class Capstone extends JFrame {
         cbJobs.setSelectedIndex(-1);
 
 
-
-
         mainPanel.add(startPanel, "StartPanel");
         mainPanel.add(selectPanel,"SelectPanel");
         mainPanel.add(battlePanel,"BattlePanel");
@@ -89,6 +95,7 @@ public class Capstone extends JFrame {
         mainPanel.add(loadPanel, "LoadPanel");
 
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+
 
         bStart.addActionListener(e -> {
 //
@@ -100,6 +107,15 @@ public class Capstone extends JFrame {
             // clear text area inside when a battle starts
 
             textArea1 .setText("");
+
+            // Added this so when creating a new chosen character will start music and end main
+            if(battle_Sound == null){
+                main_Sound.close();
+                main_Sound = null;
+                battle_Sound = MusicPlayer.startMusic("C:\\Users\\hp\\Downloads\\battle.wav");
+            }
+
+
             try {
                 cardLayout.show(mainPanel, "BattlePanel");
                 chosen = (Job) cbJobs.getSelectedItem();
@@ -187,6 +203,13 @@ public class Capstone extends JFrame {
                 int slot = 0;
                     System.out.println(slot);
                 if (JOptionPane.YES_OPTION == 0) {
+                    //Close battle music
+                    if(battle_Sound != null){
+                        battle_Sound.close();
+                        battle_Sound = null;
+                        main_Sound = MusicPlayer.startMusic("C:\\Users\\hp\\Downloads\\main.wav");
+                    }
+
                     String filePath = "src/gameProgress.txt";
                     List<String> Stats = readBetween(filePath, '!');
                         if (slot == 0 && chosen != null) {
@@ -249,6 +272,11 @@ public class Capstone extends JFrame {
             }
         });
 
+
+        // Simplified the actionListener for the items below!
+        bWaS.addActionListener(e -> performBattleAction(new BattleBuilder(chosen, random_enemy, /*,battleSeq*/ textArea1).setWaitButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy)));
+        bAttack.addActionListener(e -> performBattleAction(new BattleBuilder(chosen, random_enemy, /*,battleSeq*/ textArea1).setAttackButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy)));
+        bSkill.addActionListener(e -> performBattleAction(new BattleBuilder(chosen, random_enemy, textArea1).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).setSkillButton(true)));
         cbEnemyInfo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -289,60 +317,6 @@ public class Capstone extends JFrame {
             }
         });
 
-
-        bSkill.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Battle battle = new BattleBuilder(chosen,random_enemy,textArea1).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).setSkillButton(true).build();
-                BufferedWriter write_hs = null;
-                //if magmake ug antoher buffered writer declare lang diri pareha sa line 398
-                try {
-                    write_hs = new BufferedWriter(new FileWriter(highScoreFile,true));
-                    //and then declare new diri sa try catch pina line 401
-
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                try{
-                    battle.performAction();
-                    total_dmg += chosen.getTotal_dmg();
-
-                }catch(IllegalArgumentException a){
-                    JOptionPane.showMessageDialog(null, a.getMessage());
-                    //lose diri ra masave sa highscores once mapildi na ayaw ni ninyo iadjust
-                    try {
-                        write_hs.append(chosen.name+","+chosen.level+","+total_dmg+","+enemies_killed+","+bosses_killed);
-                        write_hs.newLine();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    } finally{
-                        try {
-                            write_hs.close();
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-//                    battleSeq.removeFrame();
-                    bSelect.doClick();
-                }catch(IllegalStateException b){
-                    int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
-                    chosen.gain_exp(10);
-                    enemies_killed++;
-                    System.out.println("EK: "+enemies_killed);
-                    if(random_enemy instanceof Enemy.DarkStalker || random_enemy instanceof Enemy.AncientBishop){
-                        bosses_killed++;
-                        System.out.println("BK: "+bosses_killed);
-                    }
-                    if(selected == JOptionPane.YES_OPTION){
-//                        battleSeq.removeFrame();
-                        bStart.doClick();
-                    }else if(selected == JOptionPane.NO_OPTION){
-                        //basta kani kay musave sha sa iya progress later ni nato iimplement
-                        System.out.println("EXIT");
-                    }
-                }
-            }
-        });
         cbJobs.addActionListener(e -> {
 
             System.out.println("work");
@@ -380,117 +354,6 @@ public class Capstone extends JFrame {
             }
             System.out.println("worked");
 
-        });
-        bWaS.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Battle battle = new BattleBuilder(chosen,random_enemy,/*,battleSeq*/textArea1).setWaitButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
-                BufferedWriter write_hs = null;
-                //if magmake ug antoher buffered writer declare lang diri pareha sa line 398
-                try {
-                    write_hs = new BufferedWriter(new FileWriter(highScoreFile,true));
-                    //and then declare new diri sa try catch pina line 401
-
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                try{
-                    battle.performAction();
-                    total_dmg += chosen.getTotal_dmg();
-
-                }catch(IllegalArgumentException a){
-                    JOptionPane.showMessageDialog(null, a.getMessage());
-                    //lose diri ra masave sa highscores once mapildi na ayaw ni ninyo iadjust
-                    try {
-                        write_hs.append(chosen.name+","+chosen.level+","+total_dmg+","+enemies_killed+","+bosses_killed);
-                        write_hs.newLine();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    } finally{
-                        try {
-                            write_hs.close();
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-//                    battleSeq.removeFrame();
-                    bSelect.doClick();
-                }catch(IllegalStateException b){
-                    int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
-                    chosen.gain_exp(10);
-                    enemies_killed++;
-                    System.out.println("EK: "+enemies_killed);
-                    if(random_enemy instanceof Enemy.DarkStalker || random_enemy instanceof Enemy.AncientBishop){
-                        bosses_killed++;
-                        System.out.println("BK: "+bosses_killed);
-                    }
-                    if(selected == JOptionPane.YES_OPTION){
-//                        battleSeq.removeFrame();
-                        bStart.doClick();
-                    }else if(selected == JOptionPane.NO_OPTION){
-                        //basta kani kay musave sha sa iya progress later ni nato iimplement
-                        System.out.println("EXIT");
-                    }
-                }
-
-            }
-
-        });
-
-
-        bAttack.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Battle battle = new BattleBuilder(chosen,random_enemy,/*,battleSeq*/textArea1).setAttackButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).build();
-                BufferedWriter write_hs = null;
-                //if magmake ug antoher buffered writer declare lang diri pareha sa line 398
-                try {
-                    write_hs = new BufferedWriter(new FileWriter(highScoreFile,true));
-                    //and then declare new diri sa try catch pina line 401
-
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                try{
-                    battle.performAction();
-                    total_dmg += chosen.getTotal_dmg();
-                }catch(IllegalArgumentException a){
-                    JOptionPane.showMessageDialog(null, a.getMessage());
-                    //lose diri ra masave sa highscores once mapildi na ayaw ni ninyo iadjust
-                    try {
-                        write_hs.append(chosen.name+","+chosen.level+","+total_dmg+","+enemies_killed+","+bosses_killed);
-                        write_hs.newLine();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    } finally{
-                        try {
-                            write_hs.close();
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-//                    battleSeq.removeFrame();
-                    bSelect.doClick();
-                }catch(IllegalStateException b){
-                    int selected = JOptionPane.showConfirmDialog(null,b.getMessage());
-                    chosen.gain_exp(10);
-                    enemies_killed++;
-                    System.out.println("EK: "+enemies_killed);
-                    if(random_enemy instanceof Enemy.DarkStalker || random_enemy instanceof Enemy.AncientBishop){
-                        bosses_killed++;
-                        System.out.println("BK: "+bosses_killed);
-                    }
-                    if(selected == JOptionPane.YES_OPTION){
-//                        battleSeq.removeFrame();
-
-                        bStart.doClick();
-                    }else if(selected == JOptionPane.NO_OPTION){
-                        //basta kani kay musave sha sa iya progress later ni nato iimplement
-
-                        System.out.println("EXIT");
-                    }
-                }
-            }
         });
 
 
@@ -697,6 +560,69 @@ public class Capstone extends JFrame {
                 throw new RuntimeException(io);
             }
         }
+
+    //I Just consolidate all performBattleAction into one since this is simpler
+    private void performBattleAction(BattleBuilder battleBuilder) {
+        Battle battle = battleBuilder.build();
+        BufferedWriter write_hs = null;
+        //if magmake ug antoher buffered writer declare lang diri pareha sa line 398
+        try {
+            write_hs = new BufferedWriter(new FileWriter(highScoreFile,true));
+            //and then declare new diri sa try catch pina line 401
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        try {
+            battle.performAction();
+            total_dmg += chosen.getTotal_dmg();
+        } catch (IllegalArgumentException a) {
+            JOptionPane.showMessageDialog(null, a.getMessage());
+            //lose diri ra masave sa highscores once mapildi na ayaw ni ninyo iadjust
+            try {
+                write_hs.append(chosen.name + "," + chosen.level + "," + total_dmg + "," + enemies_killed + "," + bosses_killed);
+                write_hs.newLine();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } finally {
+                try {
+                    write_hs.close();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+
+            if(!chosen.isAlive()){
+                battle_Sound.close();
+                battle_Sound = null;
+                main_Sound = MusicPlayer.startMusic("C:\\Users\\hp\\Downloads\\main.wav");
+            }
+            bSelect.doClick();
+        } catch (IllegalStateException b) {
+            int selected = JOptionPane.showConfirmDialog(null, b.getMessage());
+            chosen.gain_exp(10);
+            enemies_killed++;
+            System.out.println("EK: " + enemies_killed);
+            if (random_enemy instanceof Enemy.DarkStalker || random_enemy instanceof Enemy.AncientBishop) {
+                bosses_killed++;
+                System.out.println("BK: " + bosses_killed);
+            }
+            if (selected == JOptionPane.YES_OPTION) {
+
+                if(!chosen.isAlive()){
+                    battle_Sound.close();
+                    battle_Sound = null;
+                    main_Sound = MusicPlayer.startMusic("C:\\Users\\hp\\Downloads\\main.wav");
+                }
+                bStart.doClick();
+            } else if (selected == JOptionPane.NO_OPTION) {
+                //basta kani kay musave sha sa iya progress later ni nato iimplement
+                System.out.println("EXIT");
+            }
+        }
+    }
+
+
+
     // creates the enemy specified by the random generator
     private Enemy generateEnemy(int val) {
 
