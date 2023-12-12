@@ -43,12 +43,34 @@ interface MusicPlayer {
 
     }
 
-    static void stopMusic(Clip clip) {
-        if (clip.isRunning()) {
-            clip.stop();
-            clip.close();
+    static void startEffect(String filePath) {
+        Clip clip = null;
+        try {
+            File audioFile = new File(filePath);
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
+
+            // Create a new Clip
+            clip = AudioSystem.getClip();
+
+            // Open the Clip with the AudioInputStream
+            clip.open(audioInputStream);
+
+            // Start playing the audio
+            clip.start();
+
+
+        } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
+            e.printStackTrace();
         }
+
     }
+
+//    static void stopMusic(Clip clip) {
+//        if (clip.isRunning()) {
+//            clip.stop();
+//            clip.close();
+//        }
+//    }
 
 
 
