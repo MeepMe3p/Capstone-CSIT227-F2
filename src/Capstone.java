@@ -49,12 +49,7 @@ public class Capstone extends JFrame implements MusicPlayer{
     private JButton bNewGame;
     private JButton bLoadGame;
     private JPanel startPanel;
-    private JPanel loadPanel;
     private JButton bGoBack;
-    private JRadioButton rbGame2;
-    private JRadioButton rbGame1;
-    private JRadioButton rbGame3;
-    private JButton bStartBtn;
     private JTextArea textArea1;
     private Image image;
     private Image EnemyImage;
@@ -62,6 +57,7 @@ public class Capstone extends JFrame implements MusicPlayer{
     private Job chosen;
 
     private JScrollPane jScrollPane;
+    private JButton bStartMenu;
 
     private final String highScoreFile = "src/HighScores";
     private int total_dmg;
@@ -92,7 +88,6 @@ public class Capstone extends JFrame implements MusicPlayer{
         mainPanel.add(battlePanel,"BattlePanel");
         mainPanel.add(infoPanel,"InfoPanel");
         mainPanel.add(highscorePanel,"highScorePanel");
-        mainPanel.add(loadPanel, "LoadPanel");
 
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
 
@@ -196,36 +191,39 @@ public class Capstone extends JFrame implements MusicPlayer{
 
         bSelect.addActionListener(e->{
            //di mogana lolz
-            //if (chosen.hp <= 0) {
+            if (chosen.hp > 0) {
                 System.out.println("hi");
+                int i = JOptionPane.showConfirmDialog(this, "Would you like to save your character's progress?");
                 try {
-                    JOptionPane.showConfirmDialog(this, "Would you like to save your character's progress?");
-                int slot = 0;
-                    System.out.println(slot);
-                if (JOptionPane.YES_OPTION == 0) {
-                    //Close battle music
-                    if(battle_Sound != null){
-                        battle_Sound.close();
-                        battle_Sound = null;
-                        main_Sound = MusicPlayer.startMusic("src\\sounds\\main.wav");
-                    }
-
-                    String filePath = "src/gameProgress.txt";
-                    List<String> Stats = readBetween(filePath, '!');
-                        if (slot == 0 && chosen != null) {
-                            changeContent(filePath,'!');
-                        } else if (slot == 1) {
-                            changeContent(filePath,'@');
-                        } else if (slot == 2) {
-                            changeContent(filePath,'#');
-                        } else {
-                            JOptionPane.showConfirmDialog(this, "Slot is full.\n Would you like to replace slot 3?");
+                    if (JOptionPane.YES_OPTION == i) {
+                        //Close battle music
+                        if(battle_Sound != null){
+                            battle_Sound.close();
+                            battle_Sound = null;
+                            main_Sound = MusicPlayer.startMusic("src\\sounds\\main.wav");
                         }
-                }
+
+                        String filePath = "src/gameProgress.txt";
+                        List<String> Stats = readBetween(filePath, '!');
+                            if (chosen != null && Stats.get(0).equals("Empty")) {
+                                changeContent(filePath,'!');
+                            }else{
+                                int j = JOptionPane.showConfirmDialog(this, "Slot if full\nWould you like to replace the previously saved game?");
+                                if(j==JOptionPane.YES_OPTION){
+                                    changeContent(filePath,'!');
+                                }else if(j==JOptionPane.NO_OPTION){
+                                    cardLayout.show(mainPanel, "SelectPanel");
+                                }else{
+                                    return;
+                                }
+                            }
+                    }else{
+                        cardLayout.show(mainPanel, "SelectPanel");
+                    }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-           // }
+            }
                 cardLayout.show(mainPanel, "SelectPanel");
         });
 
@@ -406,104 +404,55 @@ public class Capstone extends JFrame implements MusicPlayer{
 
 
         bLoadGame.addActionListener(e -> {
-            cardLayout.show(mainPanel, "LoadPanel");
+            String symbol;
+            String Char = "src/gameProgress.txt";
+            String loadedFile;
+            List<String> Stats;
+            Battle bat;
+            Random ran;
+            int i = JOptionPane.showConfirmDialog(this,"Would you like to load your previous game?");
+            try {
+                if (i==JOptionPane.YES_OPTION) {
+                    Stats = readBetween(Char, '!');
+                    if (!(Stats.get(0).equals("Empty"))) {
+                        int j=JOptionPane.showConfirmDialog(this, "Stats: \n Type: " + Stats.get(0) +
+                                "\n Lvl: " + Stats.get(1) +
+                                "\n Dmg: " + Stats.get(2) +
+                                "\n Hp: " + Stats.get(3) +
+                                "\n Maxhp: " + Stats.get(4) +
+                                "\n Exp: " + Stats.get(5) +
+                                "\n Exp Pts: " + Stats.get(6));
+                        if (j == 0) {
+                            ran = new Random();
+                            int val = ran.nextInt(4);
+                            random_enemy = generateEnemy(val);
+
+                            loadJob(Stats);
+                            getEnemy();
+                            cardLayout.show(mainPanel, "BattlePanel");
+
+                        } else {
+                            return;
+                        }
+                    }else{
+                        int j = JOptionPane.showConfirmDialog(this,"No game found\nWould you like to start a new game?");
+                            if(j==JOptionPane.YES_OPTION){
+                                cardLayout.show(mainPanel,"SelectPanel");
+                            }
+                    }
+                }
+            }catch (Exception io){
+                throw new RuntimeException(io);
+            }
         });
-        bGoBack.addActionListener(e -> {
+
+        bStartMenu.addActionListener(e -> {
             cardLayout.show(mainPanel, "StartPanel");
         });
 
-        bStartBtn.addActionListener(e->{
-            String selected = "Game2";
+        bGoBack.addActionListener(e->{
+            cardLayout.show(mainPanel, "StartPanel");
 
-            String symbol;
-
-            if (selected != null) {
-                String Char = "src/gameProgress.txt";
-
-//                try {
-//                    String details = Files.readString(Paths.get(Char));
-//                    symbol = switch (selected) {
-//                        case "Game1" -> "!";
-//                        case "Game2" -> "@";
-//                        case "Game3" -> "#";
-//                        default -> "";
-//                    };
-//
-//                    int startSym = details.indexOf(symbol);
-//                    int endSym = details.indexOf(symbol, startSym + 1);
-//
-//                    if (startSym != -1 && endSym != -1) {
-//                        System.out.println(details.substring(startSym + symbol.length(), endSym));
-//                    }
-//                } catch (IOException io) {
-//                    throw new RuntimeException(io);
-//                }
-        String loadedFile;
-        List<String> Stats;
-        Battle bat;
-        Random ran;
-        try {
-            if (rbGame1.isSelected()) {
-                Stats = readBetween(Char,'!');
-                if (Stats.size() != 0) {
-                    JOptionPane.showConfirmDialog(this, "Stats: \n Type: " + Stats.get(0) +
-                            "\n Lvl: " + Stats.get(1) +
-                            "\n Dmg: " + Stats.get(2) +
-                            "\n Hp: " + Stats.get(3) +
-                            "\n Maxhp: " + Stats.get(4) +
-                            "\n Exp: " + Stats.get(5) +
-                            "\n Exp Pts: " + Stats.get(6));
-                if (JOptionPane.YES_OPTION == 0) {
-                    ran = new Random();
-                    int val = ran.nextInt(4);
-                    random_enemy = generateEnemy(val);
-
-                    loadJob(Stats);
-                    getEnemy();
-                    cardLayout.show(mainPanel, "BattlePanel");
-
-                } else if (JOptionPane.CANCEL_OPTION == 2) {
-                    return;
-                } else if (JOptionPane.NO_OPTION == 1) {
-                    return;
-                }
-                }else{
-                        System.out.println("No Game Found");
-                }
-            } else if(rbGame2.isSelected()){
-                Stats = readBetween(Char,'@');
-                if (Stats.size() != 0) {
-                    JOptionPane.showConfirmDialog(null, "Stats: \n Type: " + Stats.get(0) +
-                            "\n Lvl: " + Stats.get(1) +
-                            "\n Dmg: " + Stats.get(2) +
-                            "\n Hp: " + Stats.get(3) +
-                            "\n Maxhp: " + Stats.get(4) +
-                            "\n Exp: " + Stats.get(5) +
-                            "\n Exp Pts: " + Stats.get(6));
-                    if (JOptionPane.YES_OPTION == 0) {
-                        ran = new Random();
-                        int val = ran.nextInt(4);
-                        random_enemy = generateEnemy(val);
-
-                        loadJob(Stats);
-                        getEnemy();
-                        cardLayout.show(mainPanel, "BattlePanel");
-
-                    } else if (JOptionPane.CANCEL_OPTION == 2) {
-                        return;
-                    } else if (JOptionPane.NO_OPTION == 1) {
-                        return;
-                    }
-                }else{
-                    System.out.println("No Game Found");
-                }
-            } else if (rbGame3.isSelected()) {
-                bStart.doClick();
-            }
-        }catch (Exception io){
-            throw new RuntimeException(io);
-        }
-            }
         });
     }
     private void getEnemy() {
@@ -640,10 +589,6 @@ public class Capstone extends JFrame implements MusicPlayer{
         }
     }
 
-//    private static List<String> readAndAssign(String filePath) throws IOException{
-//        Path path = Paths.get(filePath);
-//        return Files.readAllLines(path);
-//    }
 
     private void loadJob(List<String> ally) {
         try {
@@ -715,11 +660,6 @@ public class Capstone extends JFrame implements MusicPlayer{
             return stats;
         }
     }
-    private int getSlot() throws IOException {
-        List<String> tempslot = readBetween("src/gameProgress.txt",'$');
-        int slot = Integer.parseInt(tempslot.toString());
-        return slot;
-    }
     private void writeStats(String path, char sym, List<String> content) throws IOException{
         List<String> fileContent = Files.readAllLines(Paths.get(path));
         List<String> newFileContent = new ArrayList<>();
@@ -754,9 +694,6 @@ public class Capstone extends JFrame implements MusicPlayer{
         saved.add(String.valueOf(chosen.getExp_points()));
         System.out.println(saved);
         writeStats(filePath,sym,saved);
-    }
-    private void addSlot(){
-        char sym = '$';
     }
 }
 
