@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 
@@ -36,31 +39,29 @@ public class Battle {
         this.tfEnemyHP = builder.tfEnemyHP;
         this.tfJobHP = builder.tfJobHP;
         this.battleSeq = builder.battleSeq;
-
     }
 
     public void performAction() {
+        if(job == null){
+            throw new NullPointerException("You need to choose a job!\nWould you like to go back?");
+        }
         if (attackButton) {
             battleSeq.append(job.attack(enemy)+"\n" );
-//            job.attack(enemy);
             tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxHp);
             tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxHp);
 
         } else if (skillButton) {
             battleSeq.append(job.skill(enemy)+"\n");
-//            job.skill(enemy);
             tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxHp);
             tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxHp);
         } else if (waitButton) {
             battleSeq.append(job.wait_and_see()+"\n");
-//            job.wait_and_see();
             tfJobHP.setText("HP: "+ job.hp+ " / "+ job.maxHp);
             tfEnemyHP.setText("HP: "+ enemy.hp+ " / " + enemy.maxHp);
         }
 
         determineEnemyType();
 
-        // note so ako ni gituyo lahi ang ithrow kay ako idea naay 2 ka catches depedning if win or lose
         if(job.hp <= 0){
             tfJobHP.setText("HP: 0 / "+ job.maxHp);
 
@@ -89,31 +90,32 @@ public class Battle {
             battleSeq.append(monster.skill(job, randomSkillIndex)+"\n");
         } else {
             battleSeq.append(monster.wait_and_see()+"\n");
-//            monster.wait_and_see();
         }
         battleSeq.setForeground(Color.WHITE);
     }
 
-//    private void determineEnemyType() {
-//        double[] probabilities = enemy.getProbabilities();
-//        EnemyActions monster = (EnemyActions) enemy;
-//        double randomAction = random.nextDouble();
-//        if(randomAction > 0 && randomAction <= probabilities[0])
-//        switch ( {
-//            case 0:
-//                monster.attack(job);
-//                break;
-//            case 1:
-//                int numberOfSkills = 1;
-//                int randomSkillIndex = random.nextInt(numberOfSkills);
-//                monster.skill(job, randomSkillIndex);
-//                break;
-//            case 2:
-//                monster.wait_and_see();
-//                break;
-//        }
-//    }
+    public void saveScore(int total_dmg,int enemies_killed,int bosses_killed){
+        BufferedWriter write_hs;
 
+        final String highScoreFile = "src/HighScores";
+        try {
+            write_hs = new BufferedWriter(new FileWriter(highScoreFile,true));
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        try {
+            write_hs.append(job.name + "," + job.level + "," + total_dmg + "," + enemies_killed + "," + bosses_killed);
+            write_hs.newLine();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            try {
+                write_hs.close();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
 
 }
 

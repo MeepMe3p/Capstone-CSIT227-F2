@@ -4,11 +4,23 @@ import java.io.IOException;
 import java.util.Objects;
 
 interface LevelUp{
+
+    /**KONICHIWANDAHOOY!!
+     *We separated the implementation for the level up of the enemies and jobs. Job's gain_exp is based on
+     * how much is the exp amount which  calls level up and improve the job's class
+     * @param exp_amount
+     */
     void gain_exp(int exp_amount);
     void level_up();
     void improve_stats();
 }
+/**
+ * Enemy level up is based on the hero's level, either -1, +0, +1 level of the Job's level level level level
+ * squared level level, improves stats too depending on level of le enemy
+ *
+ */
 interface Enemy_LevelUp{
+
     void level_up(Job job);
     void improve_stats();
     int give_exp();

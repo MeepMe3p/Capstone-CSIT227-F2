@@ -52,7 +52,7 @@ public abstract class Job extends Character implements LevelUp {
         }
 
         public Mage() {
-            super("Mage",1,7,75,75,20,0);
+            super("Mage",1,7,150,75,20,0);
         }
 
         @Override

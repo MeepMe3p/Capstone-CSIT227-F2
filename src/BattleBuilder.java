@@ -1,3 +1,4 @@
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 public class BattleBuilder {
@@ -10,10 +11,11 @@ public class BattleBuilder {
     JTextField tfJobHP;
     JTextArea battleSeq;
 
-    public BattleBuilder(Job job, Enemy enemy,/*,BattleSequence battleSeq*/JTextArea textField) {
+
+    public BattleBuilder(Job job, Enemy enemy,/*,BattleSequence battleSeq*/JTextArea textField,JButton bSelect) {
         this.job = job;
         this.enemy = enemy;
-      this.battleSeq = textField;
+        this.battleSeq = textField;
     }
 
     public BattleBuilder setTfEnemyHP(JTextField tfEnemyHP) {
@@ -43,4 +45,6 @@ public class BattleBuilder {
     public Battle build(){
         return new Battle(this);
     }
+
+
 }

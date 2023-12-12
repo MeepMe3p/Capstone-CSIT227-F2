@@ -5,6 +5,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * A wise man once said to beat a highscore you must
+ * "Stick out your gyat for the rizzler
+ * You’re so skibidi
+ * You’re so fanum tax
+ * I just wanna be your sigma
+ * Freaking come here
+ * Give me your ohio" a wise man indeed,
+ * this class sorts the previous games you lost depending on how you sort it using the comparators
+ */
+
 public class HighScore {
     JTextArea taHighScore;
     ArrayList <CharacterDetails> sortMeKudasai = new ArrayList<>();
@@ -19,8 +30,6 @@ public class HighScore {
         for(CharacterDetails cd: sortMeKudasai){
             taHighScore.append(cd.toString()+"\n");
         }
-//        taHighScore.append("dddddddddAAAAAAAAAA\n");
-
     }
     public void showByDamage(){
         sortMeKudasai = create();
@@ -28,8 +37,6 @@ public class HighScore {
         for(CharacterDetails cd: sortMeKudasai){
             taHighScore.append(cd.toString()+"\n");
         }
-//        taHighScore.append("cccccccccccAAAAAAAAAA\n");
-
     }
     public void showByEnemiesKilled(){
         sortMeKudasai = create();
@@ -37,18 +44,13 @@ public class HighScore {
         for(CharacterDetails cd: sortMeKudasai){
             taHighScore.append(cd.toString()+"\n");
         }
-//        taHighScore.append("BBBBBBBBBAAAAAAAA\n");
-
     }
     public void showByBossesKilled(){
         sortMeKudasai = create();
-        sortMeKudasai.sort(new SortByEnemiesKilled());
+        sortMeKudasai.sort(new SortByBossesKilled());
         for(CharacterDetails cd: sortMeKudasai){
             taHighScore.append(cd.toString()+"\n");
         }
-//        taHighScore.append("AAAAAAAAAAAAAAAAA\n");
-
-
     }
 
 
@@ -90,7 +92,6 @@ public class HighScore {
 
                 CharacterDetails amp = new CharacterDetails(name,level,dmg_dealt,enemies_killed,boss_killed);
                 details.add(amp);
-//                System.out.println(amp);
             }
 
         } catch (IOException ex) {
