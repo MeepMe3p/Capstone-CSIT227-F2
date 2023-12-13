@@ -38,7 +38,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         return level*5;
     }
 
-
+    //Enemy class type "Scorpion"
     public static class Scorpion extends Enemy implements EnemyActions{
         public Scorpion() {
             super("Scorpion", 1, 20, 100,100,  new double[]{0.4, 0.4});
@@ -47,7 +47,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         @Override
         public String attack(Job ally) {
             ally.hp -= this.dmg;
-            return this.name + " attacked dealing with " + this.dmg + " damage.";
+            return this.name + " attacked dealing " + this.dmg + " damage.";
         }
 
         @Override
@@ -71,6 +71,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
 
     }
 
+    //Enemy class type "Suicide Rock"
     public static class SuicideRock extends Enemy implements EnemyActions{
 
         public SuicideRock() {
@@ -134,6 +135,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         }
     }
 
+    //Enemy class type "Skeleton"
     public static class Skeleton extends Enemy implements EnemyActions{
 
         public Skeleton() {
@@ -196,6 +198,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         }
     }
 
+    //Enemy class type "Dark Stalker"
     public static class DarkStalker extends Enemy implements EnemyActions{
 
         public DarkStalker() {
@@ -259,6 +262,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
         }
 
     }
+    //Enemy class type "Ancient Bishop"
     public static class AncientBishop extends Enemy implements EnemyActions{
 
         public AncientBishop() {
@@ -274,7 +278,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
 
         @Override
         public String wait_and_see() {
-            return this.name + " prays and observing";
+            return this.name + " prays and observes";
         }
 
         @Override
@@ -282,7 +286,7 @@ public abstract class Enemy extends Character implements Enemy_LevelUp{
             if(index==0){
                 heal(ally);
             }
-            return this.name + " pierced " + ally.name + " with a beam and sucked every bit of your life force";
+            return this.name + " pierced " + ally.name + " with a beam";
         }
 
         private void heal(Job ally){

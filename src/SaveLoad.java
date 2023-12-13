@@ -29,7 +29,6 @@ public class SaveLoad {
     }
 
     public void save() {
-        System.out.println("hi");
         int i = JOptionPane.showConfirmDialog(null, "Would you like to save your character's progress?");
         try {
             if (JOptionPane.YES_OPTION == i) {
@@ -72,6 +71,8 @@ public class SaveLoad {
         int i = JOptionPane.showConfirmDialog(null, "Would you like to load your previous game?");
         try {
             if (i == JOptionPane.YES_OPTION) {
+                //reads the file and if there is a game already saved, it
+                //sets displays the stats of the character
                 Stats = readBetween(Char, '!');
                 if (!(Stats.isEmpty())) {
                     int j = JOptionPane.showConfirmDialog(null, "Stats: \n Type: " + Stats.get(0) +
@@ -89,13 +90,15 @@ public class SaveLoad {
                         chosen = loadJob(Stats);
                     }
                 } else {
+                    //if there is no game loaded, asks the user and then
+                    //goes to the select panel where the user can create a new gam
                     int j = JOptionPane.showConfirmDialog(null, "No game found\nWould you like to start a new game?");
                     if (j == JOptionPane.YES_OPTION) {
                         cardLayout.show(mainPanel, "SelectPanel");
                     }
                 }
             }else{
-                JOptionPane.showMessageDialog(null,"Pagshor dira");
+                JOptionPane.showMessageDialog(null,"Oki");
             }
         } catch (Exception io) {
             throw new RuntimeException(io);
@@ -127,6 +130,7 @@ public class SaveLoad {
         }
     }
 
+    //gets the current character's stats and writes it in the filepath
     private void changeContent(String filePath, char sym) throws IOException {
         List<String> saved = new ArrayList<>();
         saved.add(chosen.getName());
@@ -136,10 +140,10 @@ public class SaveLoad {
         saved.add(String.valueOf(chosen.maxHp));
         saved.add(String.valueOf(chosen.getExp()));
         saved.add(String.valueOf(chosen.getExp_points()));
-        System.out.println(saved);
         writeStats(filePath, sym, saved);
     }
 
+    //reads the content between the symbols
     private List<String> readBetween(String filePath, char symbol) throws IOException {
         char startSymbol, endSymbol;
         startSymbol = endSymbol = symbol;
@@ -160,6 +164,7 @@ public class SaveLoad {
         return between;
     }
 
+    //writes the stats in between the symbols
     private void writeStats(String path, char sym, List<String> content) throws IOException {
         List<String> fileContent = Files.readAllLines(Paths.get(path));
         List<String> newFileContent = new ArrayList<>();
@@ -183,7 +188,7 @@ public class SaveLoad {
 
         Files.write(Paths.get(path), newFileContent);
     }
-
+    //pretty self-explanatory, returns an enemy given the val
     private Enemy generateEnemy(int val) {
 
         switch (val) {
@@ -200,6 +205,8 @@ public class SaveLoad {
         }
     }
 
+    //gets the character's stats through the List, and then creates
+    //an instance of a job, with the necessary stats
     private Job loadJob(List<String> ally) {
         if (ally.get(0).equals("Priest")) {
             chosen = new Job.Priest("Priest", Integer.parseInt(ally.get(1)),

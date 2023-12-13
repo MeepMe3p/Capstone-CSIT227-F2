@@ -41,6 +41,9 @@ public class DisplayImage {
             attackPage();
         }
     }
+
+    //Basically gets the chosen Job and sets the default stats into the
+    //battle panel
     private void attackPage(){
         if(chosen == null){
             throw new NullPointerException("You need to choose a job!\nWould you like to go back?");
@@ -48,33 +51,31 @@ public class DisplayImage {
         try {
             if (chosen instanceof Job.Priest) {
                 lbAName.setText(chosen.name + " Lvl " + chosen.level);
-                tfHPChara.setText(chosen.hp + " / " + chosen.maxHp);
+                tfHPChara.setText("HP: " + chosen.hp + " / " + chosen.maxHp);
                 image = ImageIO.read(new File("src/JobImages/priest.png"));
                 ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
                 lbAPic.setIcon(icon);
             } else if (chosen instanceof Job.Knight) {
                 lbAName.setText(chosen.name + " Lvl " + chosen.level);
-                tfHPChara.setText(chosen.hp + " / " + chosen.maxHp);
+                tfHPChara.setText("HP: " + chosen.hp + " / " + chosen.maxHp);
                 image = ImageIO.read(new File("src/JobImages/knight.png"));
                 ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
                 lbAPic.setIcon(icon);
             } else if (chosen instanceof Job.Mage) {
                 lbAName.setText(chosen.name + " Lvl " + chosen.level);
-                tfHPChara.setText(chosen.hp + " / " + chosen.maxHp);
+                tfHPChara.setText("HP: " + chosen.hp + " / " + chosen.maxHp);
                 image = ImageIO.read(new File("src/JobImages/mage.png"));
                 ImageIcon icon = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
                 lbAPic.setIcon(icon);
             }
-
-            System.out.println("This is random enemy " + random_enemy);
         } catch (Exception io) {
             throw new RuntimeException(io);
         }
         try {
-
+            //the same as the one above, but this time for the enemy
             switch (enemy_val) {
                 case 0: {
-                    tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxHp);
+                    tfHPEnemy.setText("HP: " + random_enemy.hp + " / " + random_enemy.maxHp);
                     lbEName.setText(random_enemy.name + " Lvl " + random_enemy.level);
                     image = ImageIO.read(new File("src/EnemyImages/scorpion.png"));
                     ImageIcon icon2 = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
@@ -82,7 +83,7 @@ public class DisplayImage {
                     break;
                 }
                 case 1: {
-                    tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxHp);
+                    tfHPEnemy.setText("HP: " + random_enemy.hp + " / " + random_enemy.maxHp);
                     lbEName.setText(random_enemy.name + " Lvl " + random_enemy.level);
                     image = ImageIO.read(new File("src/EnemyImages/ancientbishop.png"));
                     ImageIcon icon2 = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
@@ -90,7 +91,7 @@ public class DisplayImage {
                     break;
                 }
                 case 2: {
-                    tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxHp);
+                    tfHPEnemy.setText("HP: " + random_enemy.hp + " / " + random_enemy.maxHp);
                     lbEName.setText(random_enemy.name + " Lvl " + random_enemy.level);
                     image = ImageIO.read(new File("src/EnemyImages/darkstalker.png"));
                     ImageIcon icon2 = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
@@ -98,7 +99,7 @@ public class DisplayImage {
                     break;
                 }
                 case 3: {
-                    tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxHp);
+                    tfHPEnemy.setText("HP: " + random_enemy.hp + " / " + random_enemy.maxHp);
                     lbEName.setText(random_enemy.name + " Lvl " + random_enemy.level);
                     image = ImageIO.read(new File("src/EnemyImages/skeleton.png"));
                     ImageIcon icon2 = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
@@ -106,7 +107,7 @@ public class DisplayImage {
                     break;
                 }
                 case 4: {
-                    tfHPEnemy.setText(random_enemy.hp + " / " + random_enemy.maxHp);
+                    tfHPEnemy.setText("HP: " + random_enemy.hp + " / " + random_enemy.maxHp);
                     lbEName.setText(random_enemy.name + " Lvl " + random_enemy.level);
                     image = ImageIO.read(new File("src/EnemyImages/suiciderock.png"));
                     ImageIcon icon2 = new ImageIcon(image.getScaledInstance(250, 250, Image.SCALE_SMOOTH));
@@ -121,13 +122,14 @@ public class DisplayImage {
 
 
     }
+
+    //shows images of the selected Job
     private void mainPage(){
         if(chosen instanceof Job.Knight){
             try {
                 image = ImageIO.read(new File("src/JobImages/knight.png"));
                 ImageIcon icon = new ImageIcon(image.getScaledInstance(250,250, Image.SCALE_SMOOTH));
                 imgLabel.setIcon(icon);
-                System.out.println("WOrk");
             } catch (IOException a) {
                 throw new RuntimeException(a);
             }
@@ -136,7 +138,6 @@ public class DisplayImage {
                 image = ImageIO.read(new File("src/JobImages/mage.png"));
                 ImageIcon icon = new ImageIcon(image.getScaledInstance(250,250,Image.SCALE_SMOOTH));
                 imgLabel.setIcon(icon);
-                System.out.println("WOrk");
             } catch (IOException a) {
                 throw new RuntimeException(a);
             }
@@ -146,7 +147,6 @@ public class DisplayImage {
                 image = ImageIO.read(new File("src/JobImages/priest.png"));
                 ImageIcon icon = new ImageIcon(image.getScaledInstance(250,250,Image.SCALE_SMOOTH));
                 imgLabel.setIcon(icon);
-                System.out.println("WOrk");
             } catch (IOException a) {
                 throw new RuntimeException(a);
             }

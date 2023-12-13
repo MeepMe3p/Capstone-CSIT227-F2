@@ -63,18 +63,22 @@ public class Game extends JFrame implements MusicPlayer{
             main_Sound = MusicPlayer.startMusic("src\\sounds\\main.wav");
         }
 
+        //creating the main JFrame
         JFrame frame = new JFrame("Group 8 Game");
         frame.setContentPane(this.mainPanel);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.pack();
         frame.setSize(700,800);
         frame.setVisible(true);
+
+        //adding the different types of Job
         cbJobs.addItem(new Job.Priest());
         cbJobs.addItem(new Job.Knight());
         cbJobs.addItem(new Job.Mage());
         cbJobs.setSelectedIndex(-1);
 
-
+        //adding the different panels to the mainPanel to
+        //put into a cardlayout
         mainPanel.add(startPanel, "StartPanel");
         mainPanel.add(selectPanel,"SelectPanel");
         mainPanel.add(battlePanel,"BattlePanel");
@@ -83,10 +87,9 @@ public class Game extends JFrame implements MusicPlayer{
 
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
 
-
+        //starts the battle
         bStart.addActionListener(e -> {
             chosen = (Job)cbJobs.getSelectedItem();
-            System.out.println(chosen+"aaaaaaaaaaaaa");
             cardLayout.show(mainPanel, "BattlePanel");
             textArea1 .setText("");
             // Added this so when creating a new chosen character will start music and end main
@@ -100,7 +103,8 @@ public class Game extends JFrame implements MusicPlayer{
 
         });
 
-
+        //goes to the infoPanel wherein it shows the information
+        //of the Jobs & Enemies
         bInfo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -124,6 +128,7 @@ public class Game extends JFrame implements MusicPlayer{
             }
         });
 
+        //goes to the selectPanel
         bSelect.addActionListener(e->{
             if(chosen == null){
                 cardLayout.show(mainPanel, "SelectPanel");
@@ -139,11 +144,13 @@ public class Game extends JFrame implements MusicPlayer{
             cardLayout.show(mainPanel, "SelectPanel");
         });
 
+        //goes to the selectPanel
         bSelect2.addActionListener(e->{
                 cardLayout.show(mainPanel, "SelectPanel");
         });
 
 
+        //shows the selected Job's info
         cbJobInfo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -158,6 +165,8 @@ public class Game extends JFrame implements MusicPlayer{
         bWaS.addActionListener(e -> performBattleAction(new BattleBuilder(chosen, random_enemy, /*,battleSeq*/ textArea1,bStart).setWaitButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy)));
         bAttack.addActionListener(e -> performBattleAction(new BattleBuilder(chosen, random_enemy, /*,battleSeq*/ textArea1,bStart).setAttackButton(true).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy)));
         bSkill.addActionListener(e -> performBattleAction(new BattleBuilder(chosen, random_enemy, textArea1,bStart).setTfJobHP(tfHPChara).setTfEnemyHP(tfHPEnemy).setSkillButton(true)));
+
+        //shows the selected Enemy's info
         cbEnemyInfo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -169,9 +178,7 @@ public class Game extends JFrame implements MusicPlayer{
 
         cbJobs.addActionListener(e -> {
 
-            System.out.println("work");
             chosen = (Job) cbJobs.getSelectedItem();
-            System.out.println(chosen);
             disp = new DispImageBuilder(chosen,random_enemy,image,1).setImgLabel(imgLabel).build();
             try{
                 disp.displayImages();
@@ -223,7 +230,7 @@ public class Game extends JFrame implements MusicPlayer{
             cardLayout.show(mainPanel, "SelectPanel");
         });
 
-
+        //loads a previous game
         bLoadGame.addActionListener(e -> {
             svl = new SaveLoad(chosen,random_enemy,main_Sound,battle_Sound,cardLayout,mainPanel);
             try{
@@ -231,7 +238,6 @@ public class Game extends JFrame implements MusicPlayer{
                 getEnemy();
                 cardLayout.show(mainPanel, "BattlePanel");
             }catch(NullPointerException a){
-                System.out.println("KATUGONN NAKOOO");
                 cardLayout.show(mainPanel,"startPanel");
             }
         });
@@ -245,6 +251,8 @@ public class Game extends JFrame implements MusicPlayer{
 
         });
     }
+
+    // gets a random enemy and sets the necessary stats on the battlepanel
     public void getEnemy() {
         Random random = new Random();
         int val;
