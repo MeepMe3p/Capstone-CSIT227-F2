@@ -133,6 +133,7 @@ public class Game extends JFrame implements MusicPlayer{
             if(chosen.hp > 0){
                 svl.save();
             }
+            resetCombobox(cbJobs);
             cbJobs.setSelectedIndex(-1);
             imgLabel.setIcon(null);
             cardLayout.show(mainPanel, "SelectPanel");
@@ -320,6 +321,12 @@ public class Game extends JFrame implements MusicPlayer{
             default:
                 return new Enemy.SuicideRock();
         }
+    }
+    private void resetCombobox(JComboBox<Job> jobs){
+        jobs.removeAllItems();
+        jobs.addItem(new Job.Priest());
+        jobs.addItem(new Job.Knight());
+        jobs.addItem(new Job.Mage());
     }
 }
 

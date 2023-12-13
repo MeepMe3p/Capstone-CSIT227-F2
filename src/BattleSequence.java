@@ -1,5 +1,9 @@
 import javax.swing.*;
 
+/**
+ * unused pien, opens a jframe for the battle seq but nvm nalang haha
+ */
+
 public class BattleSequence {
     private JTextArea textArea1;
     private JPanel battleSeqPanel;
