@@ -91,7 +91,6 @@ public class Game extends JFrame implements MusicPlayer{
 
         //starts the battle
         bStart.addActionListener(e -> {
-            chosen = (Job)cbJobs.getSelectedItem();
             cardLayout.show(mainPanel, "BattlePanel");
             textArea1 .setText("");
             // Added this so when creating a new chosen character will start music and end main
