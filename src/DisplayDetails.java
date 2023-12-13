@@ -3,6 +3,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * A class which encapsulates the displaying of the character information, location is used as a reference to know
+ * where will it be displayed, 1 = job text area 2 = enemy text area
+ */
 public class DisplayDetails {
     int location;
     String selected;

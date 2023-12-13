@@ -1,6 +1,10 @@
 import javax.swing.*;
 import java.awt.Image;
 
+/**
+ * Builder Design Pattern for the DisplayImages because of having lots of parameters and a also having a lot of
+ * optional parameters
+ */
 public class DispImageBuilder {
     Job chosen;
     Enemy random_enemy;

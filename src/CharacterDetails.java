@@ -1,4 +1,9 @@
+/**
+ * This class is used for saving the details in order for the highscore class to get the details of the character
+ * much more readable
+ */
 public class CharacterDetails {
+
     String name;
     int lvl;
     int dmg_dealt;

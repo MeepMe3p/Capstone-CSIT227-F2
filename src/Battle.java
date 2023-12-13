@@ -5,7 +5,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
-
+/**
+ * This is where all the battle details and the battle sequence is, this uses a BattleBuilder at its constructor
+ * because of optional parameters and a possibility for similar constructor parameters, this is also where the scores
+ * are saved into the file Highscores
+ */
 public class Battle {
     private Job job;
     private Enemy enemy;
@@ -30,7 +34,9 @@ public class Battle {
                 '}';
     }
 
-    protected Battle(BattleBuilder builder) {
+    protected Battle(BattleBuilder builder)
+    {
+
         this.job = builder.job;
         this.enemy = builder.enemy;
         this.attackButton = builder.attackButton;

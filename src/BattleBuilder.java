@@ -1,5 +1,9 @@
-import javax.sound.sampled.Clip;
 import javax.swing.*;
+
+/**
+ * A builder design pattern to create an instance of a Battle for the optional parameters and because you can't do
+ * method overloading of boolean in constructor parameters.
+ */
 
 public class BattleBuilder {
     Job job;

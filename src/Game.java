@@ -3,9 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
 import java.util.Random;
-public class Capstone extends JFrame implements MusicPlayer{
+public class Game extends JFrame implements MusicPlayer{
     private JPanel mainPanel;
     private JPanel selectPanel;
     private JPanel battlePanel;
@@ -59,12 +58,12 @@ public class Capstone extends JFrame implements MusicPlayer{
     private DisplayDetails entityDetails = null;
     private SaveLoad svl;
 
-    public Capstone(){
+    public Game(){
         if(main_Sound == null){
             main_Sound = MusicPlayer.startMusic("src\\sounds\\main.wav");
         }
 
-        JFrame frame = new JFrame("Group 8 Capstone");
+        JFrame frame = new JFrame("Group 8 Game");
         frame.setContentPane(this.mainPanel);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.pack();
@@ -86,6 +85,8 @@ public class Capstone extends JFrame implements MusicPlayer{
 
 
         bStart.addActionListener(e -> {
+            chosen = (Job)cbJobs.getSelectedItem();
+            System.out.println(chosen+"aaaaaaaaaaaaa");
             cardLayout.show(mainPanel, "BattlePanel");
             textArea1 .setText("");
             // Added this so when creating a new chosen character will start music and end main
@@ -132,6 +133,8 @@ public class Capstone extends JFrame implements MusicPlayer{
             if(chosen.hp > 0){
                 svl.save();
             }
+            cbJobs.setSelectedIndex(-1);
+            imgLabel.setIcon(null);
             cardLayout.show(mainPanel, "SelectPanel");
         });
 

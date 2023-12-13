@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+
 public class DisplayImage {
     private final Job chosen;
     private final Enemy random_enemy;

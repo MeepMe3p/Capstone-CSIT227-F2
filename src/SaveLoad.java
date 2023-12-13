@@ -1,8 +1,6 @@
-import javax.imageio.ImageIO;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,12 +12,12 @@ import java.util.List;
 import java.util.Random;
 
 public class SaveLoad {
-    Job chosen;
-    Enemy random_enemy;
-    Clip main_Sound;
-    Clip battle_Sound;
-    CardLayout cardLayout;
-    JPanel mainPanel;
+    private Job chosen;
+    private Enemy random_enemy;
+    private Clip main_Sound;
+    private Clip battle_Sound;
+    private CardLayout cardLayout;
+    private JPanel mainPanel;
 
     public SaveLoad(Job chosen, Enemy random_enemy, Clip main_Sound, Clip battle_Sound, CardLayout cardLayout, JPanel mainPanel) {
         this.chosen = chosen;
@@ -55,6 +53,11 @@ public class SaveLoad {
                     }
                 }
             } else {
+                if (battle_Sound != null) {
+                    battle_Sound.close();
+                    battle_Sound = null;
+                    main_Sound = MusicPlayer.startMusic("src\\sounds\\main.wav");
+                }
                 cardLayout.show(mainPanel, "SelectPanel");
             }
         } catch (IOException ex) {

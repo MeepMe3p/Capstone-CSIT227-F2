@@ -11,9 +11,9 @@ import java.util.Comparator;
  * You’re so skibidi
  * You’re so fanum tax
  * I just wanna be your sigma
- * Freaking come here
+ * Friggin come here
  * Give me your ohio" a wise man indeed,
- * this class sorts the previous games you lost depending on how you sort it using the comparators
+ * this class sorts the previous games you lost depending on how you want sort it using the comparators
  */
 
 public class HighScore {
