@@ -1,5 +1,6 @@
 import javax.sound.sampled.Clip;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -66,6 +67,7 @@ public class Game extends JFrame implements MusicPlayer{
         //creating the main JFrame
         JFrame frame = new JFrame("Group 8 Game");
         frame.setContentPane(this.mainPanel);
+        ((JComponent) frame.getContentPane()).setBorder(new EmptyBorder(20, 20, 20, 20));
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.pack();
         frame.setSize(700,800);
@@ -247,7 +249,7 @@ public class Game extends JFrame implements MusicPlayer{
         });
 
         bGoBack.addActionListener(e->{
-            cardLayout.show(mainPanel, "StartPanel");
+            cardLayout.show(mainPanel, "SelectPanel");
 
         });
     }
