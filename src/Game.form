@@ -34,18 +34,23 @@
           </component>
           <component id="34edb" class="javax.swing.JButton" binding="bSkill">
             <constraints>
-              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="100" height="30"/>
+              </grid>
             </constraints>
             <properties>
               <background color="-16777216"/>
               <font name="Courier New" size="14"/>
               <foreground color="-1"/>
               <text value="Skill"/>
+              <verticalAlignment value="0"/>
             </properties>
           </component>
           <component id="48767" class="javax.swing.JButton" binding="bWaS">
             <constraints>
-              <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="301" height="30"/>
+              </grid>
             </constraints>
             <properties>
               <background color="-16777216"/>
