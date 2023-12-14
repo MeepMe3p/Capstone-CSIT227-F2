@@ -25,6 +25,7 @@ public class Game extends JFrame implements MusicPlayer{
     private JButton bSkill;
     private JButton bWaS;
     private JButton bSelect;
+    private static ImageIcon logo = new ImageIcon("src/BuriedBornes_Logo.png");
     private JTextField tfHPEnemy;
     private JTextField tfHPChara;
     private JLabel lbEName;
@@ -69,13 +70,14 @@ public class Game extends JFrame implements MusicPlayer{
         }
 
         //creating the main JFrame
-        JFrame frame = new JFrame("Group 8 Game");
+        JFrame frame = new JFrame("BuriedBornes - Group 8");
         frame.setContentPane(this.mainPanel);
         ((JComponent) frame.getContentPane()).setBorder(new EmptyBorder(20, 20, 20, 20));
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.pack();
         frame.setSize(700,800);
         frame.setVisible(true);
+        frame.setIconImage(logo.getImage());
 
         JLabel bgImage = new JLabel();
         bgImage.setIcon(new ImageIcon("src/Images/start_bgImage.jpg"));
