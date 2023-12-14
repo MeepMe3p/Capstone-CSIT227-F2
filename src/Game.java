@@ -87,20 +87,9 @@ public class Game extends JFrame implements MusicPlayer{
         startPanel.setLayout(new BorderLayout());
         startPanel.add(start_bgImage);
 
-        Border border = BorderFactory.createLineBorder(Color.WHITE, 3);
-        bNewGame.setBorder(border);
-        bLoadGame.setBorder(border);
-        highscoresButton.setBorder(border);
-        bInfo.setBorder(border);
-        bStart.setBorder(border);
-        bStartMenu.setBorder(border);
-        bSelect.setBorder(border);
-        bAttack.setBorder(border);
-        bSkill.setBorder(border);
-        bWaS.setBorder(border);
+        borderButtons();
 
         //adding the different types of Job
-        cbJobs.setBorder(BorderFactory.createCompoundBorder(cbJobs.getBorder(), BorderFactory.createEmptyBorder(0,0,0,0)));
         cbJobs.addItem(new Job.Priest());
         cbJobs.addItem(new Job.Knight());
         cbJobs.addItem(new Job.Mage());
@@ -365,7 +354,19 @@ public class Game extends JFrame implements MusicPlayer{
         jobs.addItem(new Job.Mage());
     }
 
-
+    private void borderButtons() {
+        Border border = BorderFactory.createLineBorder(Color.WHITE, 3);
+        bNewGame.setBorder(border);
+        bLoadGame.setBorder(border);
+        highscoresButton.setBorder(border);
+        bInfo.setBorder(border);
+        bStart.setBorder(border);
+        bStartMenu.setBorder(border);
+        bSelect.setBorder(border);
+        bAttack.setBorder(border);
+        bSkill.setBorder(border);
+        bWaS.setBorder(border);
+    }
 }
 
 
